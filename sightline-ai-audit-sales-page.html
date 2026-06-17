@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Sightline Audit™ — Sightline AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --blackout:     #0A0A0A;
+  --deep-surface: #1E1E1E;
+  --red:          #CC2200;
+  --bone:         #F5F4F0;
+  --gray:         #888780;
+  --rule:         rgba(245,244,240,.08);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--blackout); color: var(--bone); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  background: rgba(10,10,10,.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-logo { display: flex; flex-direction: column; gap: 1px; text-decoration: none; line-height: 1; }
+.nav-logo-word { font-size: 13px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--bone); }
+.nav-logo-ai { font-size: 9px; letter-spacing: .26em; text-transform: uppercase; color: var(--red); }
+.nav-back { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray); text-decoration: none; transition: color .2s; }
+.nav-back:hover { color: var(--bone); }
+.nav-cta {
+  font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--bone); border: 1px solid var(--red); padding: 9px 20px; text-decoration: none; transition: background .2s;
+}
+.nav-cta:hover { background: var(--red); }
+
+/* ─── SHARED ─── */
+.sec-label {
+  font-size: 10px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
+}
+.sec-label::before { content: ''; width: 24px; height: 1px; background: var(--red); }
+h2 { font-size: clamp(26px, 3.5vw, 44px); font-weight: 500; letter-spacing: -.8px; line-height: 1.15; color: var(--bone); }
+h2 em { color: var(--red); font-style: normal; }
+.body-copy { font-size: 15px; font-weight: 300; color: var(--gray); line-height: 1.75; }
+.rule-h { width: 100%; height: 1px; background: var(--rule); }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--red); color: #fff;
+  font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+  padding: 16px 32px; border: none; cursor: pointer; text-decoration: none; transition: background .2s;
+}
+.btn-primary:hover { background: #aa1800; }
+.btn-primary svg { transition: transform .2s; }
+.btn-primary:hover svg { transform: translateX(4px); }
+.btn-ghost {
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--gray); text-decoration: none; border-bottom: 1px solid rgba(136,135,128,.3);
+  padding-bottom: 2px; transition: color .2s, border-color .2s;
+}
+.btn-ghost:hover { color: var(--bone); border-color: var(--gray); }
+
+section { padding: 100px 48px; }
+
+/* ─── HERO ─── */
+.hero {
+  padding-top: 160px; padding-bottom: 100px;
+  text-align: center; position: relative; overflow: hidden;
+}
+.hero-rule { position: absolute; top: 60px; left: 0; right: 0; height: 2px; background: var(--red); }
+.hero-bg-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .05; }
+.hero-eyebrow { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--red); margin-bottom: 28px; position: relative; }
+.hero-h1 {
+  font-size: clamp(36px, 6vw, 76px); font-weight: 500; letter-spacing: -2px; line-height: 1.05;
+  color: #fff; max-width: 880px; margin: 0 auto 28px; position: relative;
+}
+.hero-h1 em { color: var(--red); font-style: normal; }
+.hero-sub {
+  font-size: 17px; font-weight: 300; color: var(--gray); line-height: 1.7;
+  max-width: 540px; margin: 0 auto 44px; position: relative;
+}
+.hero-ctas { display: flex; align-items: center; justify-content: center; gap: 28px; flex-wrap: wrap; position: relative; margin-bottom: 32px; }
+.hero-price-note { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: rgba(136,135,128,.5); position: relative; }
+
+/* ─── WHO THIS IS FOR (condensed banner) ─── */
+.who-banner { background: var(--deep-surface); padding: 40px 48px; }
+.who-inner { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; justify-content: center; text-align: center; max-width: 900px; margin: 0 auto; }
+.who-text { font-size: 15px; font-weight: 300; color: var(--bone); line-height: 1.7; }
+.who-text strong { font-weight: 500; color: #fff; }
+.who-link { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--red); border-bottom: 1px solid var(--red); padding-bottom: 2px; white-space: nowrap; cursor: pointer; text-decoration: none; }
+
+/* ─── PROBLEM ─── */
+.problem { background: var(--blackout); }
+.problem-top { max-width: 680px; margin: 0 auto 64px; text-align: center; }
+.problem-top .sec-label { justify-content: center; }
+.problem-top .sec-label::before { display: none; }
+.problem-top .sec-label::after { content: ''; width: 24px; height: 1px; background: var(--red); }
+.problem-top h2 { margin-bottom: 20px; }
+
+.pain-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: var(--rule); max-width: 900px; margin: 0 auto; }
+.pain-card { background: var(--blackout); padding: 32px; display: flex; gap: 18px; align-items: flex-start; }
+.pain-num { font-size: 10px; color: var(--red); font-weight: 500; letter-spacing: .12em; min-width: 22px; margin-top: 3px; }
+.pain-text { font-size: 14px; font-weight: 300; color: var(--bone); line-height: 1.65; }
+.pain-text strong { font-weight: 500; }
+
+/* ─── WHAT YOU GET ─── */
+.offer { background: var(--bone); }
+.offer-top { text-align: center; max-width: 720px; margin: 0 auto 64px; }
+.offer-top .sec-label { color: var(--red); justify-content: center; }
+.offer-top .sec-label::before { display: none; }
+.offer-top .sec-label::after { content: ''; width: 24px; height: 1px; background: var(--red); }
+.offer-top h2 { color: var(--blackout); margin-bottom: 16px; }
+.offer-top p { font-size: 15px; font-weight: 300; color: #5a5955; line-height: 1.75; max-width: 600px; margin: 0 auto; }
+
+.offer-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; max-width: 1000px; margin: 0 auto; }
+.offer-card { background: #fff; padding: 36px 32px; }
+.offer-card-tag { font-size: 10px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--red); margin-bottom: 18px; }
+.offer-card-title { font-size: 16px; font-weight: 500; color: var(--blackout); margin-bottom: 12px; line-height: 1.35; }
+.offer-card-body { font-size: 13px; font-weight: 300; color: #5a5955; line-height: 1.65; }
+
+/* ─── PROCESS ─── */
+.process { background: var(--blackout); }
+.process-top { max-width: 680px; margin: 0 auto 64px; text-align: center; }
+.process-top .sec-label { justify-content: center; }
+.process-top .sec-label::before { display: none; }
+.process-top .sec-label::after { content: ''; width: 24px; height: 1px; background: var(--red); }
+.process-top h2 { margin-bottom: 16px; }
+.process-top p { max-width: 540px; margin: 0 auto; }
+
+.timeline-wrap { position: relative; margin-bottom: 48px; max-width: 1000px; margin-left: auto; margin-right: auto; }
+.timeline-line { position: absolute; top: 20px; left: 0; right: 0; height: 1px; background: var(--rule); }
+.timeline-redline {
+  position: absolute; top: 19px; left: 0; height: 2px; background: var(--red);
+  animation: growLine 1.8s ease .3s both; width: 0;
+}
+@keyframes growLine { to { width: 100%; } }
+.timeline { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; gap: 0; }
+.timeline-step { padding: 48px 24px 0 0; }
+.ts-dot { width: 8px; height: 8px; background: var(--red); border-radius: 50%; margin-bottom: 20px; }
+.ts-day { font-size: 10px; color: var(--red); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; font-weight: 500; }
+.ts-title { font-size: 16px; font-weight: 500; color: var(--bone); margin-bottom: 10px; }
+.ts-body { font-size: 13px; font-weight: 300; color: var(--gray); line-height: 1.65; }
+
+/* ─── DELIVERABLES ─── */
+.deliverables { background: var(--deep-surface); }
+.del-inner { max-width: 1000px; margin: 0 auto; }
+.del-top { max-width: 680px; margin-bottom: 64px; }
+.del-top h2 { margin-bottom: 16px; }
+.del-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.del-list { display: flex; flex-direction: column; }
+.del-item { display: flex; gap: 20px; align-items: flex-start; padding: 22px 0; border-bottom: 1px solid var(--rule); }
+.del-item:first-child { border-top: 1px solid var(--rule); }
+.del-counter { font-size: 10px; color: var(--red); font-weight: 500; letter-spacing: .1em; min-width: 20px; margin-top: 2px; }
+.del-title { font-size: 15px; font-weight: 500; color: var(--bone); margin-bottom: 6px; }
+.del-desc { font-size: 13px; font-weight: 300; color: var(--gray); line-height: 1.65; }
+
+.doc-mockup-wrap { display: flex; align-items: center; justify-content: center; }
+.doc-outer { background: var(--blackout); padding: 28px; border-top: 2px solid var(--red); max-width: 360px; width: 100%; }
+.doc-inner-page { background: #fff; margin-top: 20px; padding: 24px; }
+.doc-logo { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--gray); margin-bottom: 18px; }
+.doc-h { font-size: 17px; font-weight: 500; color: var(--blackout); margin-bottom: 4px; }
+.doc-sub { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--red); margin-bottom: 18px; }
+.doc-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 18px; }
+.doc-stat-cell { background: var(--bone); padding: 10px; }
+.doc-stat-n { font-size: 20px; font-weight: 500; color: var(--blackout); letter-spacing: -.5px; }
+.doc-stat-l { font-size: 8px; color: var(--gray); letter-spacing: .08em; text-transform: uppercase; margin-top: 2px; }
+.doc-rule { height: 1px; background: rgba(10,10,10,.1); margin-bottom: 14px; }
+.doc-section-h { font-size: 9px; color: var(--red); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; }
+.doc-lines { display: flex; flex-direction: column; gap: 6px; }
+.doc-line-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #5a5955; }
+.doc-line-item::before { content: ''; width: 4px; height: 4px; background: var(--red); border-radius: 50%; flex-shrink: 0; }
+.doc-footer-line { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--red); margin-top: 16px; }
+
+/* ─── TRUST ─── */
+.trust { background: var(--blackout); }
+.trust-grid { display: grid; grid-template-columns: 220px 1fr; gap: 48px; align-items: center; max-width: 1000px; margin: 0 auto; }
+.trust-photo { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-top: 2px solid var(--red); display: block; filter: grayscale(0.15) contrast(1.05); }
+.trust-photo-meta { margin-top: 14px; }
+.trust-name { font-size: 15px; font-weight: 500; color: #fff; }
+.trust-title { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--red); margin-top: 2px; }
+.trust-body p { font-size: 15px; font-weight: 300; color: var(--gray); line-height: 1.75; margin-bottom: 16px; }
+.trust-body p strong { color: var(--bone); font-weight: 500; }
+
+/* ─── PRICING ─── */
+.pricing { background: var(--bone); }
+.pricing-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+.pricing .sec-label { color: var(--red); justify-content: center; }
+.pricing .sec-label::before { display: none; }
+.pricing .sec-label::after { content: ''; width: 24px; height: 1px; background: var(--red); }
+.pricing h2 { color: var(--blackout); margin-bottom: 16px; }
+.pricing-sub { font-size: 15px; font-weight: 300; color: #5a5955; line-height: 1.75; max-width: 540px; margin: 0 auto 48px; }
+
+.price-card { background: var(--blackout); border-top: 2px solid var(--red); padding: 48px; text-align: left; }
+.price-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
+.price-num { font-size: 48px; font-weight: 500; color: #fff; letter-spacing: -2px; }
+.price-range { font-size: 13px; color: var(--gray); margin-top: 8px; }
+.price-slots { text-align: right; }
+.price-slots-num { font-size: 24px; font-weight: 500; color: var(--red); }
+.price-slots-label { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray); margin-top: 4px; }
+
+.price-includes { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+.price-include-item { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; font-weight: 300; color: var(--bone); line-height: 1.6; }
+.price-include-item span.mark { color: var(--red); font-weight: 500; min-width: 16px; }
+
+.price-cta { display: block; width: 100%; text-align: center; }
+
+/* ─── FAQ ─── */
+.faq { background: var(--blackout); }
+.faq-inner { max-width: 760px; margin: 0 auto; }
+.faq-top { text-align: center; margin-bottom: 56px; }
+.faq-top .sec-label { justify-content: center; }
+.faq-top .sec-label::before { display: none; }
+.faq-top .sec-label::after { content: ''; width: 24px; height: 1px; background: var(--red); }
+.faq-top h2 { margin-bottom: 0; }
+
+.faq-item { border-bottom: 1px solid var(--rule); padding: 28px 0; }
+.faq-item:first-child { border-top: 1px solid var(--rule); }
+.faq-q { font-size: 16px; font-weight: 500; color: var(--bone); margin-bottom: 10px; }
+.faq-a { font-size: 14px; font-weight: 300; color: var(--gray); line-height: 1.7; }
+.faq-a strong { color: var(--bone); font-weight: 500; }
+
+/* ─── FINAL CTA ─── */
+.final-cta { background: var(--blackout); padding: 140px 48px; text-align: center; position: relative; overflow: hidden; }
+.final-top-rule { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--red); }
+.final-bg-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .04; }
+.final-eyebrow { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--red); margin-bottom: 24px; position: relative; }
+.final-h2 { font-size: clamp(36px, 5.5vw, 72px); font-weight: 500; letter-spacing: -2px; color: #fff; line-height: 1.05; margin-bottom: 24px; position: relative; }
+.final-h2 em { color: var(--red); font-style: normal; }
+.final-sub { font-size: 15px; font-weight: 300; color: var(--gray); max-width: 420px; margin: 0 auto 40px; line-height: 1.7; position: relative; }
+.final-promise { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: rgba(136,135,128,.4); margin-top: 36px; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--deep-surface); padding: 40px 48px;
+  border-top: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.footer-logo { display: flex; flex-direction: column; gap: 2px; }
+.footer-logo-word { font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--bone); }
+.footer-logo-ai { font-size: 8px; letter-spacing: .26em; text-transform: uppercase; color: var(--red); }
+.footer-promise { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgba(136,135,128,.4); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 960px) {
+  nav { padding: 0 24px; }
+  section { padding: 64px 24px; }
+  .hero { padding-top: 120px; padding-bottom: 64px; }
+  .pain-grid, .offer-cards { grid-template-columns: 1fr; }
+  .timeline { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .del-grid { grid-template-columns: 1fr; gap: 40px; }
+  .trust-grid { grid-template-columns: 1fr; text-align: center; }
+  .trust-photo { max-width: 220px; margin: 0 auto; }
+  .price-card { padding: 32px 24px; }
+  .price-row { flex-direction: column; align-items: flex-start; }
+  .price-slots { text-align: left; }
+  .final-cta { padding: 90px 24px; }
+  footer { padding: 28px 24px; text-align: center; justify-content: center; flex-direction: column; }
+}
+@media (max-width: 600px) {
+  .timeline { grid-template-columns: 1fr; }
+  .who-inner { flex-direction: column; gap: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .timeline-redline { animation: none; width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="index.html" aria-label="Sightline AI home">
+    <span class="nav-logo-word">Sightline</span>
+    <span class="nav-logo-ai">AI</span>
+  </a>
+  <a href="index.html" class="nav-back">← Back to Sightline AI</a>
+  <a href="#pricing" class="nav-cta">Book the Audit</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-rule"></div>
+  <svg class="hero-bg-svg" viewBox="0 0 1200 700" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+    <path d="M 100 600 C 250 540, 380 460, 480 380 C 580 300, 620 220, 760 160 C 880 110, 1000 80, 1150 50"
+      stroke="#CC2200" stroke-width="1" fill="none"/>
+    <circle cx="1150" cy="50" r="10" stroke="#CC2200" stroke-width="1" fill="none"/>
+    <circle cx="1150" cy="50" r="3" fill="#CC2200"/>
+  </svg>
+
+  <p class="hero-eyebrow">The Sightline Audit™</p>
+  <h1 class="hero-h1">Most businesses don't have an AI problem. They have a constraint problem.</h1>
+  <p class="hero-sub">We identify what's actually limiting growth — then show you exactly where AI creates leverage. The Sightline Audit delivers The Line™, The Cost™, and The Leverage™ in 72 hours.</p>
+  <div class="hero-ctas">
+    <a href="#pricing" class="btn-primary">
+      Book the Sightline Audit
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="sightline-ai-sample-audit.html" class="btn-ghost">See a sample audit →</a>
+  </div>
+  <p class="hero-price-note">From $495 automated report · to $2,500–$5,000 executive review · Tier 3 custom post-discovery</p>
+</section>
+
+<!-- ── WHO THIS IS FOR (condensed) ── -->
+<section class="who-banner">
+  <div class="who-inner">
+    <p class="who-text"><strong>Built for 10–50 person operators</strong> — whether you've never touched AI or have it scattered across your team with no strategy behind it.</p>
+    <a href="index.html#fit" class="who-link">Full fit checklist →</a>
+  </div>
+</section>
+
+<div class="rule-h"></div>
+
+<!-- ── PROBLEM ── -->
+<section class="problem">
+  <div class="problem-top">
+    <p class="sec-label">The Problem</p>
+    <h2>You've read everything about AI. You still don't know what to do <em>Monday</em>.</h2>
+    <p class="body-copy" style="margin-top:20px;">Every operator in this position has tried to solve it the same way — by reading more, watching more, asking more people. None of that produces a plan. It just produces more noise.</p>
+  </div>
+
+  <div class="pain-grid">
+    <div class="pain-card">
+      <span class="pain-num">01</span>
+      <p class="pain-text"><strong>You don't know where to start.</strong> Every "AI strategy" article assumes a tech team you don't have.</p>
+    </div>
+    <div class="pain-card">
+      <span class="pain-num">02</span>
+      <p class="pain-text"><strong>You've already started — sort of.</strong> A few tools, no plan, no idea if it's working.</p>
+    </div>
+    <div class="pain-card">
+      <span class="pain-num">03</span>
+      <p class="pain-text"><strong>You're worried about getting it wrong.</strong> Time and money spent on the wrong thing is worse than doing nothing.</p>
+    </div>
+    <div class="pain-card">
+      <span class="pain-num">04</span>
+      <p class="pain-text"><strong>Every consultant wants a retainer.</strong> You want an answer — not a relationship.</p>
+    </div>
+  </div>
+</section>
+
+<div class="rule-h"></div>
+
+<!-- ── WHAT YOU GET ── -->
+<section class="offer">
+  <div class="offer-top">
+    <p class="sec-label">What You're Getting</p>
+    <h2>One audit. One clear line. Built for your business specifically.</h2>
+    <p>Not a framework. Not a course. A 72-hour diagnostic of your actual operation, with a sequenced plan at the end of it.</p>
+  </div>
+
+  <div class="offer-cards">
+    <div class="offer-card">
+      <p class="offer-card-tag">Clarity</p>
+      <p class="offer-card-title">Where AI creates value in your business right now</p>
+      <p class="offer-card-body">We map the specific workflows, decisions, and revenue gaps where AI delivers the fastest return — ranked by impact and ease of implementation.</p>
+    </div>
+    <div class="offer-card">
+      <p class="offer-card-tag">Direction</p>
+      <p class="offer-card-title">Where AI creates risk you haven't accounted for</p>
+      <p class="offer-card-body">Most operators only see the upside. We map the exposure — what breaks, what's vulnerable, and what to protect before you move.</p>
+    </div>
+    <div class="offer-card">
+      <p class="offer-card-tag">Insight</p>
+      <p class="offer-card-title">A 30-day action plan. Sequenced. Prioritized. Yours.</p>
+      <p class="offer-card-body">Quick wins, strategic shifts, and long-term plays — in order, with no ambiguity about what comes first.</p>
+    </div>
+  </div>
+</section>
+
+<div class="rule-h"></div>
+
+<!-- ── PROCESS ── -->
+<section class="process">
+  <div class="process-top">
+    <p class="sec-label">How It Works</p>
+    <h2>72 hours. Three phases. No retainer required.</h2>
+    <p class="body-copy">We don't need months to find your line. We need your time, your honesty about where things stand, and 72 hours to do the work.</p>
+  </div>
+
+  <div class="timeline-wrap">
+    <div class="timeline-line"></div>
+    <div class="timeline-redline"></div>
+    <div class="timeline">
+      <div class="timeline-step">
+        <div class="ts-dot"></div>
+        <p class="ts-day">Day 1 — Discover</p>
+        <p class="ts-title">We learn your operation</p>
+        <p class="ts-body">A focused 30-minute intake call. We ask about your real constraints, your revenue levers, and where you're already losing ground.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="ts-dot"></div>
+        <p class="ts-day">Day 1–2 — Analyze</p>
+        <p class="ts-title">We draw the line</p>
+        <p class="ts-body">We map your AI opportunity landscape against your specific business — filtered through one question: does this move the needle for you?</p>
+      </div>
+      <div class="timeline-step">
+        <div class="ts-dot"></div>
+        <p class="ts-day">Day 3 — Deliver</p>
+        <p class="ts-title">You receive the audit</p>
+        <p class="ts-body">Executive summary, opportunity map, risk assessment, and a sequenced 30-day action plan. Built to be executed, not filed away.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="ts-dot"></div>
+        <p class="ts-day">Day 3 — Move</p>
+        <p class="ts-title">You make the move</p>
+        <p class="ts-body">A 30-minute walkthrough call. We confirm the sequence and hand you complete ownership of the plan. From here, it's yours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule-h"></div>
+
+<!-- ── DELIVERABLES ── -->
+<section class="deliverables">
+  <div class="del-inner">
+    <div class="del-top">
+      <p class="sec-label">What You Receive</p>
+      <h2>A document worth more than the engagement it came from.</h2>
+    </div>
+
+    <div class="del-grid">
+      <div class="del-list">
+        <div class="del-item">
+          <span class="del-counter">01</span>
+          <div>
+            <p class="del-title">Executive Summary</p>
+            <p class="del-desc">A clean, one-page brief your whole leadership team can act on. No jargon. No theory. What matters, ranked.</p>
+          </div>
+        </div>
+        <div class="del-item">
+          <span class="del-counter">02</span>
+          <div>
+            <p class="del-title">Opportunity Map</p>
+            <p class="del-desc">Every AI opportunity plotted by impact and effort — so you sequence correctly from day one.</p>
+          </div>
+        </div>
+        <div class="del-item">
+          <span class="del-counter">03</span>
+          <div>
+            <p class="del-title">Risk Assessment</p>
+            <p class="del-desc">Where AI is already a threat to your model, and what to watch, protect, and avoid.</p>
+          </div>
+        </div>
+        <div class="del-item">
+          <span class="del-counter">04</span>
+          <div>
+            <p class="del-title">30-Day Action Plan</p>
+            <p class="del-desc">Quick wins (Week 1), strategic shifts (30 days), long-term plays (90+ days). No ambiguity. Just the next move.</p>
+          </div>
+        </div>
+        <div class="del-item">
+          <span class="del-counter">05</span>
+          <div>
+            <p class="del-title">Walkthrough Call</p>
+            <p class="del-desc">30 minutes to review the plan together, answer questions, and confirm the sequence before you start.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-mockup-wrap">
+        <div class="doc-outer">
+          <p style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);">Sightline AI</p>
+          <p style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-top:4px;">AI Clarity Assessment</p>
+          <div class="doc-inner-page">
+            <p class="doc-logo">Sightline AI</p>
+            <p class="doc-h">The Sightline Audit™</p>
+            <p class="doc-sub">AI Clarity Assessment</p>
+            <div class="doc-stats-row">
+              <div class="doc-stat-cell"><p class="doc-stat-n">3</p><p class="doc-stat-l">Opportunities</p></div>
+              <div class="doc-stat-cell"><p class="doc-stat-n">2</p><p class="doc-stat-l">Risk areas</p></div>
+              <div class="doc-stat-cell"><p class="doc-stat-n">7</p><p class="doc-stat-l">Actions</p></div>
+            </div>
+            <div class="doc-rule"></div>
+            <p class="doc-section-h">30-Day Plan — Quick Wins</p>
+            <div class="doc-lines">
+              <div class="doc-line-item">Automate highest-volume manual process</div>
+              <div class="doc-line-item">AI-assisted decision layer for sales</div>
+              <div class="doc-line-item">Deploy operator intel feed — weekly cadence</div>
+            </div>
+            <p class="doc-footer-line">We find the line. You make the move.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:48px;">
+      <a href="sightline-ai-sample-audit.html" class="btn-ghost">Want to see this with real findings? See a sample audit →</a>
+    </div>
+  </div>
+</section>
+
+<div class="rule-h"></div>
+
+<!-- ── TRUST ── -->
+<section class="trust">
+  <div class="trust-grid">
+    <div>
+      <img class="trust-photo" src="janae-headshot.jpg" alt="Janae Gilliam, founder of Sightline AI" />
+      <div class="trust-photo-meta">
+        <p class="trust-name">Janae Gilliam</p>
+        <p class="trust-title">Founder, Sightline AI</p>
+      </div>
+    </div>
+    <div class="trust-body">
+      <p class="sec-label">Why Operators Trust This</p>
+      <p>Sightline AI's methodology — <strong>AI Precision Architecture™</strong> — was built from 15+ years spent inside real revenue operations, not from a weekend with a chatbot. The same diagnostic thinking used to untangle complex, high-stakes sales organizations, scaled down to fit a 10–50 person operation.</p>
+      <p>This isn't a productized template wearing an AI label. It's a sharp operator's diagnostic, applied to your business, delivered in 72 hours.</p>
+    </div>
+  </div>
+</section>
+
+<div class="rule-h"></div>
+
+<!-- ── PRICING ── -->
+<section class="pricing" id="pricing">
+  <div class="pricing-inner" style="max-width:1000px;">
+    <p class="sec-label">Investment</p>
+    <h2>Three ways to engage. One diagnostic framework.</h2>
+    <p class="pricing-sub">Start with the automated report or go straight to the executive review. Either way, The Line™ gets drawn.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px;text-align:left;">
+
+      <!-- Tier 1 -->
+      <div style="background:var(--bone);padding:36px 32px;">
+        <p style="font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:16px;">Tier 1 — Sightline Report</p>
+        <p style="font-size:32px;font-weight:500;color:var(--blackout);letter-spacing:-1px;margin-bottom:4px;">$495–$995</p>
+        <p style="font-size:11px;color:var(--gray);letter-spacing:.08em;text-transform:uppercase;margin-bottom:24px;">100% automated · 24hr turnaround</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;">
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:#5a5955;"><span style="color:var(--red);font-weight:500;">+</span><span>The Line™ — one-sentence root-cause constraint</span></div>
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:#5a5955;"><span style="color:var(--red);font-weight:500;">+</span><span>Constraint Map™ across 5 categories</span></div>
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:#5a5955;"><span style="color:var(--red);font-weight:500;">+</span><span>Revenue Leakage Analysis™</span></div>
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:#5a5955;"><span style="color:var(--red);font-weight:500;">+</span><span>AI Opportunity Architecture™</span></div>
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:#5a5955;"><span style="color:var(--red);font-weight:500;">+</span><span>Risk Map + 30/60/90 Day Plan</span></div>
+        </div>
+        <a href="https://jgilliam1227.github.io/Sightline-ai-Intake/" class="btn-primary" style="display:inline-flex;font-size:10px;padding:12px 20px;">
+          Start the diagnostic →
+        </a>
+      </div>
+
+      <!-- Tier 2 -->
+      <div style="background:var(--blackout);padding:36px 32px;border-top:2px solid var(--red);">
+        <p style="font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:16px;">Tier 2 — Executive Review</p>
+        <p style="font-size:32px;font-weight:500;color:#fff;letter-spacing:-1px;margin-bottom:4px;">$2,500–$5,000</p>
+        <p style="font-size:11px;color:var(--gray);letter-spacing:.08em;text-transform:uppercase;margin-bottom:24px;">Human-reviewed · 72hr turnaround</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;">
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:var(--gray);"><span style="color:var(--red);font-weight:500;">+</span><span>Everything in Tier 1</span></div>
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:var(--gray);"><span style="color:var(--red);font-weight:500;">+</span><span>Human-reviewed findings</span></div>
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:var(--gray);"><span style="color:var(--red);font-weight:500;">+</span><span>Custom financial impact analysis</span></div>
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:var(--gray);"><span style="color:var(--red);font-weight:500;">+</span><span>90-minute live executive review</span></div>
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:var(--gray);"><span style="color:var(--red);font-weight:500;">+</span><span>Recorded leadership Q&A session</span></div>
+        </div>
+        <a href="https://jgilliam1227.github.io/Sightline-ai-Intake/" class="btn-primary" style="display:inline-flex;font-size:10px;padding:12px 20px;">
+          Book the review →
+        </a>
+      </div>
+
+      <!-- Tier 3 -->
+      <div style="background:var(--deep-surface);padding:36px 32px;">
+        <p style="font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:16px;">Tier 3 — Sightline Architecture</p>
+        <p style="font-size:32px;font-weight:500;color:#fff;letter-spacing:-1px;margin-bottom:4px;">Custom</p>
+        <p style="font-size:11px;color:var(--gray);letter-spacing:.08em;text-transform:uppercase;margin-bottom:24px;">Strategic engagement · Post-discovery only</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;">
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:var(--gray);"><span style="color:var(--red);font-weight:500;">+</span><span>Everything in Tier 2</span></div>
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:var(--gray);"><span style="color:var(--red);font-weight:500;">+</span><span>Implementation roadmap</span></div>
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:var(--gray);"><span style="color:var(--red);font-weight:500;">+</span><span>AI opportunity architecture</span></div>
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:var(--gray);"><span style="color:var(--red);font-weight:500;">+</span><span>KPI design + governance</span></div>
+          <div style="display:flex;gap:10px;font-size:13px;font-weight:300;color:var(--gray);"><span style="color:var(--red);font-weight:500;">+</span><span>Team enablement + quarterly reviews</span></div>
+        </div>
+        <p style="font-size:11px;color:var(--gray);line-height:1.6;">Pricing discussed after a personal discovery conversation. This tier is never self-serve.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="rule-h"></div>
+
+<!-- ── FAQ ── -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="faq-top">
+      <p class="sec-label">Questions</p>
+      <h2>Before you book — the honest answers.</h2>
+    </div>
+
+    <div class="faq-item">
+      <p class="faq-q">We've never used AI at all. Is this still for us?</p>
+      <p class="faq-a">Yes — and honestly, that's often the easiest audit. <strong>The same diagnostic applies whether you're starting from zero or starting from scattered tools.</strong> We build the line from wherever you currently stand.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">We already use ChatGPT and a couple of other tools. What does the audit add?</p>
+      <p class="faq-a">Most businesses in this position have tools but no strategy connecting them to revenue. <strong>The audit identifies what's working, what's not, and what's missing</strong> — then sequences the next moves so the tools you already have start pulling in the same direction.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">How is the final price determined?</p>
+      <p class="faq-a">During the intake call, we look at your team size, the number of workflows involved, and the complexity of what we're assessing. <strong>A 12-person business with straightforward operations sits closer to $2,500. A 45-person business with more moving parts sits closer to $5,000.</strong> You'll know the exact number before anything is booked.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">Do you implement the plan for us afterward?</p>
+      <p class="faq-a">No — and that's intentional. <strong>The audit is built so your team can execute it without us.</strong> If you'd like help with implementation after you've seen the plan, that's a separate conversation — never assumed, never required.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">Why only 72 hours? Doesn't a real audit take longer?</p>
+      <p class="faq-a">Most of what takes other consultants weeks is meetings, not analysis. <strong>We compress the analysis into 72 hours because clarity has a shelf life</strong> — the longer it takes to get the plan, the more has already changed by the time you receive it.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">What if the audit tells us AI isn't the right move right now?</p>
+      <p class="faq-a"><strong>Then that's exactly what you'll be told.</strong> The audit's job is clarity, not a sales pitch for AI adoption. If the highest-value move in your business right now has nothing to do with AI, the plan will say so.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FINAL CTA ── -->
+<section class="final-cta">
+  <div class="final-top-rule"></div>
+  <svg class="final-bg-svg" viewBox="0 0 1200 600" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+    <path d="M 100 500 C 200 400, 350 300, 500 250 C 650 200, 750 180, 900 120 C 1000 80, 1100 60, 1200 40"
+      stroke="white" stroke-width="1" fill="none"/>
+    <circle cx="1200" cy="40" r="12" stroke="white" stroke-width="1" fill="none"/>
+    <circle cx="1200" cy="40" r="4" fill="white"/>
+  </svg>
+  <p class="final-eyebrow">Three Slots Per Month</p>
+  <h2 class="final-h2">Let's draw <em>the line.</em></h2>
+  <p class="final-sub">If you're reading this far, you already know which side of the line you're on.</p>
+  <a href="#" class="btn-primary" style="display:inline-flex;">
+    Book the Sightline Audit
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <p class="final-promise">We find the line. You make the move.</p>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">
+    <span class="footer-logo-word">Sightline</span>
+    <span class="footer-logo-ai">AI</span>
+  </div>
+  <p class="footer-promise">We find the line. You make the move.</p>
+</footer>
+
+</body>
+</html>
