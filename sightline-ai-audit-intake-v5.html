@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Sightline Audit™ — Constraint Intelligence Questionnaire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --blackout:     #0A0A0A;
+  --red:          #CC2200;
+  --paper:        #FAF9F5;
+  --card:         #FFFFFF;
+  --ink:          #1A1A18;
+  --ink-soft:     #5A5955;
+  --line:         rgba(10,10,10,.10);
+  --sidebar-text: #F5F4F0;
+  --sidebar-muted:#9B9A92;
+  --sidebar-line: rgba(245,244,240,.08);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--paper); color: var(--ink); -webkit-font-smoothing: antialiased; }
+.serif { font-family: 'Source Serif 4', Georgia, serif; }
+
+.app { display: flex; min-height: 100vh; }
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  width: 280px; flex-shrink: 0; background: var(--blackout); color: var(--sidebar-text);
+  display: flex; flex-direction: column; padding: 32px 28px; position: sticky; top: 0; height: 100vh;
+}
+.sb-logo { display: flex; flex-direction: column; gap: 2px; margin-bottom: 36px; }
+.sb-logo-word { font-size: 14px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: #fff; }
+.sb-logo-ai { font-size: 9px; letter-spacing: .26em; text-transform: uppercase; color: var(--red); }
+
+.sb-progress-label { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--red); margin-bottom: 8px; }
+.sb-progress-pct { font-size: 36px; font-weight: 500; letter-spacing: -1px; color: #fff; margin-bottom: 4px; }
+.sb-progress-time { font-size: 11px; color: var(--sidebar-muted); margin-bottom: 14px; }
+.sb-progress-track { height: 3px; background: rgba(245,244,240,.1); margin-bottom: 32px; }
+.sb-progress-fill { height: 100%; background: var(--red); width: 8%; transition: width .3s ease; }
+
+.sb-nav { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; margin: 0 -8px; padding: 0 8px; }
+.sb-item {
+  display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; cursor: pointer;
+  border-left: 2px solid transparent; padding-left: 12px; margin-left: -14px; transition: border-color .15s;
+}
+.sb-item.active { border-left-color: var(--red); }
+.sb-num {
+  width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(245,244,240,.2);
+  display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; margin-top: 1px;
+  color: var(--sidebar-muted); transition: all .15s;
+}
+.sb-item.active .sb-num { border-color: var(--red); color: var(--red); }
+.sb-item.done .sb-num { border-color: var(--red); background: var(--red); color: #fff; }
+.sb-text-title { font-size: 13px; font-weight: 500; color: var(--sidebar-muted); line-height: 1.4; transition: color .15s; }
+.sb-item.active .sb-text-title { color: #fff; }
+.sb-text-sub { font-size: 11px; color: rgba(155,154,146,.6); margin-top: 2px; }
+
+.sb-help {
+  margin-top: 24px; padding: 18px; border: 1px solid var(--sidebar-line); border-radius: 6px;
+}
+.sb-help-title { font-size: 12px; font-weight: 500; color: #fff; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.sb-help-body { font-size: 11px; color: var(--sidebar-muted); line-height: 1.6; margin-bottom: 8px; }
+.sb-help-link { font-size: 11px; font-weight: 500; color: var(--red); text-decoration: none; }
+
+.sb-footer { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--sidebar-line); }
+.sb-footer-logo { display: flex; flex-direction: column; gap: 2px; margin-bottom: 10px; }
+.sb-footer-tagline { font-size: 11px; color: var(--sidebar-muted); line-height: 1.6; }
+.sb-footer-tagline span { color: var(--red); }
+
+/* ─── MAIN ─── */
+.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.main-header { padding: 40px 56px 28px; border-bottom: 1px solid var(--line); position: relative; }
+.mh-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--red); margin-bottom: 12px; }
+.mh-title { font-size: clamp(28px, 4vw, 42px); font-weight: 500; line-height: 1.15; letter-spacing: -.5px; margin-bottom: 12px; max-width: 600px; }
+.mh-sub { font-size: 15px; color: var(--ink-soft); line-height: 1.6; max-width: 520px; }
+.mh-secure {
+  position: absolute; top: 40px; right: 56px; display: flex; align-items: center; gap: 10px;
+  font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); text-align: right; line-height: 1.6; max-width: 200px;
+}
+.mh-secure svg { flex-shrink: 0; color: var(--ink-soft); }
+
+.info-row {
+  display: flex; gap: 0; padding: 22px 56px; border-bottom: 1px solid var(--line);
+  background: var(--card);
+}
+.info-item { display: flex; align-items: center; gap: 12px; padding-right: 40px; border-right: 1px solid var(--line); margin-right: 40px; }
+.info-item:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+.info-icon { color: var(--red); flex-shrink: 0; }
+.info-label { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 2px; }
+.info-val { font-size: 14px; font-weight: 500; color: var(--ink); }
+
+.content { flex: 1; padding: 40px 56px 60px; }
+.step { display: none; max-width: 640px; }
+.step.active { display: block; }
+
+.step-label { font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
+.step-title { font-size: clamp(24px, 3vw, 32px); font-weight: 500; letter-spacing: -.4px; margin-bottom: 14px; }
+.step-rule { width: 48px; height: 2px; background: var(--red); margin-bottom: 18px; }
+.step-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 36px; }
+
+.field { margin-bottom: 30px; }
+.field:last-child { margin-bottom: 0; }
+.field-head { display: flex; gap: 10px; margin-bottom: 12px; }
+.field-num { font-size: 14px; font-weight: 500; color: var(--red); flex-shrink: 0; }
+.field-title { font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.4; }
+.field-help { font-size: 12px; color: var(--ink-soft); margin-top: 2px; line-height: 1.5; }
+
+.field-input, .field-textarea, .field-select {
+  width: 100%; background: var(--card); border: 1px solid var(--line);
+  color: var(--ink); font-family: 'Inter', sans-serif; font-size: 14px;
+  padding: 13px 16px; outline: none; transition: border-color .15s; border-radius: 6px;
+}
+.field-textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+.field-input::placeholder, .field-textarea::placeholder { color: #B8B6AC; }
+.field-input:focus, .field-textarea:focus, .field-select:focus { border-color: var(--red); }
+.field-select { appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235A5955' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+
+.currency-wrap { position: relative; }
+.currency-wrap .field-input { padding-left: 30px; }
+.currency-sign { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--ink-soft); font-size: 14px; pointer-events: none; }
+
+.grid-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.grid-option { flex: 1 1 130px; }
+.grid-option input { display: none; }
+.grid-option label {
+  display: block; text-align: center; padding: 13px 10px; font-size: 13px; font-weight: 500;
+  background: var(--card); border: 1px solid var(--line); border-radius: 6px; color: var(--ink-soft);
+  cursor: pointer; transition: all .15s;
+}
+.grid-option input:checked + label { border-color: var(--red); color: var(--red); background: rgba(204,34,0,.04); }
+
+.rank-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.rank-item label { font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--red); margin-bottom: 6px; display: block; }
+
+/* ─── FOOTER NAV ─── */
+.footer-nav {
+  padding: 24px 56px; border-top: 1px solid var(--line); background: var(--card);
+  display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.btn-save {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 500; color: var(--ink-soft); background: var(--paper);
+  border: 1px solid var(--line); border-radius: 6px; padding: 13px 22px; cursor: pointer; transition: color .15s, border-color .15s;
+}
+.btn-save:hover { color: var(--ink); border-color: var(--ink-soft); }
+.btn-save:disabled { opacity: .4; cursor: not-allowed; }
+.fn-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.btn-continue {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--red); color: #fff; border: none; border-radius: 6px;
+  font-size: 13px; font-weight: 500; padding: 14px 28px; cursor: pointer; transition: background .15s;
+}
+.btn-continue:hover { background: #aa1800; }
+.fn-next { font-size: 11px; color: var(--ink-soft); }
+
+/* ─── SECURITY STRIP ─── */
+.security-strip {
+  display: flex; gap: 56px; padding: 18px 56px; border-top: 1px solid var(--line);
+  background: var(--paper); flex-wrap: wrap;
+}
+.ss-item { display: flex; align-items: flex-start; gap: 10px; }
+.ss-item svg { color: var(--ink-soft); flex-shrink: 0; margin-top: 2px; }
+.ss-title { font-size: 12px; font-weight: 500; color: var(--ink); }
+.ss-sub { font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
+
+/* ─── INTRO / SUBMITTED OVERLAYS ─── */
+.full-screen { display: none; flex: 1; align-items: center; justify-content: center; text-align: center; padding: 80px 56px; }
+.full-screen.active { display: flex; }
+.full-screen-inner { max-width: 480px; }
+.full-screen h2 { font-size: clamp(26px,3.5vw,38px); font-weight: 500; margin-bottom: 16px; letter-spacing: -.5px; }
+.full-screen p { font-size: 14px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 28px; }
+
+/* ─── SETUP NOTE ─── */
+.setup-note {
+  background: var(--blackout); color: var(--sidebar-muted); border-left: 3px solid var(--red);
+  padding: 16px 24px; font-size: 12px; line-height: 1.7;
+}
+.setup-note strong { color: #fff; }
+.setup-note code { background: rgba(255,255,255,.08); padding: 2px 6px; color: var(--red); font-size: 11px; border-radius: 3px; }
+
+@media (max-width: 900px) {
+  .app { flex-direction: column; }
+  .sidebar { width: 100%; height: auto; position: relative; padding: 24px; }
+  .sb-nav { max-height: 220px; }
+  .main-header, .info-row, .content, .footer-nav, .security-strip { padding-left: 24px; padding-right: 24px; }
+  .mh-secure { position: static; margin-top: 16px; max-width: none; }
+  .info-row { flex-wrap: wrap; gap: 16px; }
+  .info-item { border-right: none; margin-right: 0; padding-right: 0; }
+  .rank-grid { grid-template-columns: 1fr; }
+  .security-strip { gap: 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <span class="sb-logo-word">Sightline</span>
+      <span class="sb-logo-ai">AI</span>
+    </div>
+
+    <p class="sb-progress-label">Your progress</p>
+    <p class="sb-progress-pct" id="sb-pct">8%</p>
+    <p class="sb-progress-time" id="sb-time">4 of 50 minutes</p>
+    <div class="sb-progress-track"><div class="sb-progress-fill" id="sb-progress-fill"></div></div>
+
+    <nav class="sb-nav" id="sb-nav"></nav>
+
+    <div class="sb-help">
+      <p class="sb-help-title">Need help?</p>
+      <p class="sb-help-body">If you have any questions about the assessment, we're here to help.</p>
+      <a class="sb-help-link" href="#">Contact support →</a>
+    </div>
+
+    <div class="sb-footer">
+      <div class="sb-footer-logo">
+        <span class="sb-logo-word">Sightline</span>
+        <span class="sb-logo-ai">AI</span>
+      </div>
+      <p class="sb-footer-tagline">Clarity. Direction. Leverage.<br/>That's your <span>Sightline</span>.</p>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- INTRO -->
+    <div class="full-screen active" id="intro-screen">
+      <div class="full-screen-inner">
+        <p class="mh-eyebrow" style="text-align:center;">The Sightline Audit™</p>
+        <h2 class="serif">Constraint Intelligence Questionnaire</h2>
+        <p>A Constraint Intelligence diagnostic built for your business — delivered in 24–72 hours depending on tier. This takes about 25–35 minutes across 11 short sections — you'll always know where you are, and you can save and return anytime.</p>
+        <button class="btn-continue" id="start-btn" style="margin:0 auto;">
+          Begin the diagnostic
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- SUBMITTED -->
+    <div class="full-screen" id="submitted-screen">
+      <div class="full-screen-inner">
+        <p class="mh-eyebrow" style="text-align:center;">Submitted</p>
+        <h2 class="serif">That's the line drawn.</h2>
+        <p>Thank you — this goes straight into the diagnostic. We'll be in touch with what it finds.</p>
+        <p style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);">We find the line. You make the move.</p>
+      </div>
+    </div>
+
+    <!-- FORM SHELL -->
+    <div id="form-shell" style="display:none;">
+      <header class="main-header">
+        <p class="mh-eyebrow">The Sightline Audit™</p>
+        <h1 class="mh-title serif">Constraint Intelligence Questionnaire</h1>
+        <p class="mh-sub">A Constraint Intelligence diagnostic built for your business. Not a template.</p>
+        <div class="mh-secure">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          <span>Your responses are secure and confidential</span>
+        </div>
+      </header>
+
+      <div class="info-row">
+        <div class="info-item">
+          <svg class="info-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <div><p class="info-label">Estimated time</p><p class="info-val">25–35 minutes</p></div>
+        </div>
+        <div class="info-item">
+          <svg class="info-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="8" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="8" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>
+          <div><p class="info-label">Total questions</p><p class="info-val">49</p></div>
+        </div>
+        <div class="info-item">
+          <svg class="info-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          <div><p class="info-label">Save &amp; continue</p><p class="info-val">Anytime</p></div>
+        </div>
+      </div>
+
+      <div class="content">
+        <form id="audit-form">
+          <input type="hidden" name="_subject" value="New Sightline Audit Diagnostic Submission"/>
+          <div id="steps-container"></div>
+        </form>
+      </div>
+
+      <div class="footer-nav">
+        <button type="button" class="btn-save" id="back-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+          Back
+        </button>
+        <div class="fn-right">
+          <button type="button" class="btn-continue" id="next-btn">
+            Continue
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <p class="fn-next" id="fn-next">Next: Question 6 of 65</p>
+        </div>
+      </div>
+
+      <div class="security-strip">
+        <div class="ss-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          <div><p class="ss-title">Your information is secure and confidential.</p><p class="ss-sub">We will never share your data.</p></div>
+        </div>
+        <div class="ss-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <div><p class="ss-title">Your time matters.</p><p class="ss-sub">Save your progress and return anytime.</p></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const REVENUE_OPTIONS = ["Under $1M","$1M–$3M","$3M–$5M","$5M–$10M","$10M–$30M","Over $30M"];
+const EMPLOYEE_OPTIONS = ["1–10","11–25","26–50","51–100","101–250","250+"];
+const PCT_OPTIONS = ["Less than 10%","10-25%","25-50%","50-75%","More than 75%"];
+const CHANGE_OPTIONS = ["Immediately","Within 30 Days","Within 90 Days","Within 6 Months","Unsure"];
+const TREND_OPTIONS = ["Increased","Decreased","Remained flat"];
+
+const sections = [
+  { name: "Business Snapshot", desc: "Before we identify the line, we need to understand the terrain. Let's start with the essentials.", fields: [
+    { id:"q1", label:"Company name", help:"Let's start with the basics.", type:"text", placeholder:"Enter your company name" },
+    { id:"q2", label:"Industry", help:"Select or describe your primary industry.", type:"text", placeholder:"e.g. Professional services, manufacturing, retail" },
+    { id:"q3", label:"Number of employees", help:"Select the range that best fits your company.", type:"grid", options:EMPLOYEE_OPTIONS },
+    { id:"q4", label:"Approximate annual revenue", help:"Select the range that best fits your company.", type:"grid", options:REVENUE_OPTIONS },
+    { id:"q5", label:"What was your approximate revenue last year?", help:"Enter amount in USD.", type:"currency" },
+    { id:"q6", label:"What was your approximate revenue two years ago?", help:"Enter amount in USD.", type:"currency" },
+    { id:"q7", label:"What is your revenue goal for the next 12 months?", help:"Enter amount in USD.", type:"currency" },
+    { id:"q8", label:"What does your company do?", help:"In a sentence or two — what you do, and who it's for.", type:"textarea" },
+    { id:"q9", label:"If you could fix one thing immediately, what would it be?", help:"Don't overthink this — we'll come back to root cause later. Just name the thing you'd fix first.", type:"textarea" },
+  ]},
+  { name: "Growth & Revenue", desc: "Now let's look at where growth comes from, and where it stalls.", fields: [
+    { id:"q10", label:"Where does most new business currently come from?", type:"textarea" },
+    { id:"q11", label:"What slows growth today?", type:"textarea" },
+    { id:"q12", label:"Do you know what stage of your sales process prospects, opportunities, or customers stall?", type:"textarea" },
+    { id:"q13", label:"Approximately what percentage of revenue depends on one individual?", help:"Your best estimate is fine.", type:"grid", options:PCT_OPTIONS },
+    { id:"q14", label:"If revenue doubled tomorrow, what breaks first?", type:"textarea" },
+    { id:"q15", label:"What opportunity do you believe you're currently missing?", type:"textarea" },
+  ]},
+  { name: "Customer Signals", desc: "Constraints often show up with customers before leadership names them. Be candid here.", fields: [
+    { id:"q16", label:"What do customers complain about most often?", type:"textarea" },
+    { id:"q17", label:"Why do customers leave?", type:"textarea" },
+  ]},
+  { name: "Bottleneck Detection", desc: "Where does work get stuck, and who feels it?", fields: [
+    { id:"q18", label:"What problem has existed for more than 12 months — and what is the consequence of not solving it?", type:"textarea" },
+    { id:"q19", label:"What does everyone complain about but nobody owns?", type:"textarea" },
+    { id:"q20", label:"What gets escalated to leadership most often?", help:"This may overlap with what you named above — escalation patterns often reveal a different constraint than general complaints.", type:"textarea" },
+  ]},
+  { name: "Business Impact", desc: "Now let's attach a cost to what you've described so far.", fields: [
+    { id:"q21", label:"What problem is currently costing the business the most money?", help:"This may be the same problem you named in Section 4 — or a different one entirely. Either answer is useful.", type:"textarea" },
+    { id:"q22", label:"What problem consumes the most leadership attention?", type:"textarea" },
+    { id:"q23", label:"If this issue disappeared tomorrow, what would improve first?", type:"textarea" },
+  ]},
+  { name: "Dependency Analysis", desc: "These three questions are intentionally specific — each one surfaces a different type of dependency. Answer each one separately even if your answers feel similar.", fields: [
+    { id:"q24", label:"If your CEO (or you) disappeared for 30 days, what stops?", type:"textarea" },
+    { id:"q25", label:"Who would be hardest to replace?", type:"textarea" },
+    { id:"q26", label:"What critical knowledge exists in only one person's head?", type:"textarea" },
+  ]},
+  { name: "Visibility & Decisions", desc: "What does leadership see clearly, and what stays foggy?", fields: [
+    { id:"q27", label:"What information do you wish you had every Monday morning?", type:"textarea" },
+    { id:"q28", label:"What are three decisions leadership repeatedly revisits?", type:"textarea" },
+    { id:"q29", label:"What metrics matter most?", type:"textarea" },
+    { id:"q30", label:"What metrics are currently difficult to access?", type:"textarea" },
+    { id:"q31", label:"Where are decisions made with incomplete information?", type:"textarea" },
+  ]},
+  { name: "Technology & AI", desc: "What's in place today, what's been tried, and where AI may help.", fields: [
+    { id:"q32", label:"What software tools do you currently use?", type:"textarea" },
+    { id:"q33", label:"What have you attempted to automate?", type:"textarea" },
+    { id:"q34", label:"What failed?", type:"textarea" },
+    { id:"q35", label:"What work is still highly manual?", type:"textarea" },
+    { id:"q36", label:"Where does duplicate work occur?", type:"textarea" },
+    { id:"q37", label:"What information do people regularly ask for that should be easy to access?", type:"textarea" },
+    { id:"q38", label:"What is your team's attitude toward AI and automation?", type:"textarea" },
+  ]},
+  { name: "Strategic Priorities & Risk", desc: "What does leadership believe matters most — and what's the exposure if it doesn't happen?", fields: [
+    { id:"q39", label:"What are your top three priorities for the next 12 months?", type:"textarea" },
+    { id:"q40", label:"What would be most damaging if it happened?", type:"textarea" },
+    { id:"q41", label:"What are your competitors doing that worries you?", type:"textarea" },
+    { id:"q42", label:"If those top three priorities succeeded, what would success look like to you?", help:"Your answer here will be compared against what the diagnostic finds — this is one of the most important questions in the assessment.", type:"textarea" },
+  ]},
+  { name: "Change Readiness", desc: "How ready is the organization to actually act on what this finds?", fields: [
+    { id:"q43", label:"How quickly are you willing to implement changes?", type:"grid", options:CHANGE_OPTIONS },
+    { id:"q44", label:"Have previous improvement initiatives succeeded? Why or why not?", type:"textarea" },
+  ]},
+  { name: "Future State & The Real Diagnosis", desc: "Last section. This is where the real diagnosis often comes into focus.", fields: [
+    { id:"q45", label:"What would success look like in 90 days?", help:"Think operationally here — not strategy. What would a normal week look like 90 days from now if things improved?", type:"textarea" },
+    { id:"q46", label:"What are you unwilling to change?", type:"textarea" },
+    { id:"q47", label:"Of everything you've described above, which THREE issues create the greatest negative impact?", help:"Rank them #1, #2, #3 — and explain why.", type:"rank" },
+    { id:"q48", label:"If you had to bet your own money — what do you believe is the REAL reason this problem exists?", help:"You've just ranked your biggest issues — now step back. In your gut, what's actually causing them?", type:"textarea" },
+    { id:"q49", label:"Anything else we should know?", type:"textarea" },
+  ]},
+];
+
+let currentStep = 0;
+const total = sections.length;
+const container = document.getElementById('steps-container');
+const sbNav = document.getElementById('sb-nav');
+
+let qCounter = 1;
+const sectionStartQ = [];
+sections.forEach((section, sIdx) => {
+  sectionStartQ.push(qCounter);
+
+  // sidebar nav item
+  const item = document.createElement('div');
+  item.className = 'sb-item' + (sIdx === 0 ? ' active' : '');
+  item.dataset.step = sIdx;
+  item.innerHTML = `<div class="sb-num">${sIdx+1}</div><div><div class="sb-text-title">${section.name}</div><div class="sb-text-sub">${section.fields.length} questions</div></div>`;
+  item.addEventListener('click', () => { currentStep = sIdx; render(); });
+  sbNav.appendChild(item);
+
+  // step content
+  const stepDiv = document.createElement('div');
+  stepDiv.className = 'step' + (sIdx === 0 ? ' active' : '');
+  stepDiv.dataset.step = sIdx;
+
+  stepDiv.innerHTML = `
+    <p class="step-label">Section ${sIdx+1} of ${total}</p>
+    <h2 class="step-title serif">${section.name}</h2>
+    <div class="step-rule"></div>
+    <p class="step-desc">${section.desc}</p>
+  `;
+
+  section.fields.forEach(f => {
+    const field = document.createElement('div');
+    field.className = 'field';
+
+    const head = document.createElement('div');
+    head.className = 'field-head';
+    head.innerHTML = `<span class="field-num">${qCounter}.</span><div><div class="field-title">${f.label}</div>${f.help ? `<div class="field-help">${f.help}</div>` : ''}</div>`;
+    field.appendChild(head);
+
+    if (f.type === 'text') {
+      const input = document.createElement('input');
+      input.type = 'text'; input.className = 'field-input'; input.name = f.id; input.id = f.id;
+      if (f.placeholder) input.placeholder = f.placeholder;
+      field.appendChild(input);
+    } else if (f.type === 'textarea') {
+      const ta = document.createElement('textarea');
+      ta.className = 'field-textarea'; ta.name = f.id; ta.id = f.id;
+      field.appendChild(ta);
+    } else if (f.type === 'currency') {
+      const wrap = document.createElement('div');
+      wrap.className = 'currency-wrap';
+      wrap.innerHTML = `<span class="currency-sign">$</span>`;
+      const input = document.createElement('input');
+      input.type = 'text'; input.className = 'field-input'; input.name = f.id; input.id = f.id;
+      input.placeholder = '0';
+      wrap.appendChild(input);
+      field.appendChild(wrap);
+    } else if (f.type === 'grid') {
+      const row = document.createElement('div');
+      row.className = 'grid-row';
+      f.options.forEach((o, i) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'grid-option';
+        const inp = document.createElement('input');
+        inp.type = 'radio'; inp.name = f.id; inp.id = f.id + '_' + i; inp.value = o;
+        const lab = document.createElement('label');
+        lab.setAttribute('for', f.id + '_' + i);
+        lab.textContent = o;
+        wrap.appendChild(inp); wrap.appendChild(lab);
+        row.appendChild(wrap);
+      });
+      field.appendChild(row);
+    } else if (f.type === 'rank') {
+      const grid = document.createElement('div');
+      grid.className = 'rank-grid';
+      ['Rank #1','Rank #2','Rank #3'].forEach((r, i) => {
+        const item = document.createElement('div');
+        item.className = 'rank-item';
+        const lab = document.createElement('label');
+        lab.textContent = r;
+        const inp = document.createElement('input');
+        inp.type = 'text'; inp.className = 'field-input'; inp.name = f.id + '_rank' + (i+1);
+        inp.placeholder = 'Issue';
+        item.appendChild(lab); item.appendChild(inp);
+        grid.appendChild(item);
+      });
+      field.appendChild(grid);
+      const why = document.createElement('textarea');
+      why.className = 'field-textarea'; why.name = f.id + '_why';
+      why.placeholder = 'Why these three, in this order?';
+      why.style.marginTop = '10px';
+      field.appendChild(why);
+    }
+
+    stepDiv.appendChild(field);
+    qCounter++;
+  });
+
+  container.appendChild(stepDiv);
+});
+
+function render() {
+  document.querySelectorAll('.step').forEach((s,i) => s.classList.toggle('active', i === currentStep));
+  document.querySelectorAll('.sb-item').forEach((s,i) => {
+    s.classList.toggle('active', i === currentStep);
+    s.classList.toggle('done', i < currentStep);
+  });
+  const pct = Math.round(((currentStep+1)/total)*100);
+  document.getElementById('sb-pct').textContent = pct + '%';
+  document.getElementById('sb-time').textContent = Math.round(((currentStep+1)/total)*35) + ' of 35 minutes';
+  document.getElementById('sb-progress-fill').style.width = pct + '%';
+  document.getElementById('back-btn').disabled = currentStep === 0;
+
+  const nextBtn = document.getElementById('next-btn');
+  const fnNext = document.getElementById('fn-next');
+  if (currentStep === total - 1) {
+    nextBtn.innerHTML = 'Submit diagnostic <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    fnNext.textContent = 'Final section';
+  } else {
+    nextBtn.innerHTML = 'Continue <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    fnNext.textContent = 'Next: Question ' + sectionStartQ[currentStep+1] + ' of 49';
+  }
+  window.scrollTo(0,0);
+}
+
+document.getElementById('start-btn').addEventListener('click', () => {
+  document.getElementById('intro-screen').classList.remove('active');
+  document.getElementById('form-shell').style.display = 'block';
+  render();
+});
+
+document.getElementById('back-btn').addEventListener('click', () => {
+  if (currentStep > 0) { currentStep--; render(); }
+});
+
+document.getElementById('next-btn').addEventListener('click', () => {
+  if (currentStep < total - 1) { currentStep++; render(); }
+  else { document.getElementById('audit-form').requestSubmit(); }
+});
+
+document.getElementById('audit-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const action = "https://formspree.io/f/xojzryyy";
+  fetch(action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+    .then(() => {
+      document.getElementById('form-shell').style.display = 'none';
+      document.getElementById('submitted-screen').classList.add('active');
+    })
+    .catch(() => { alert('Something went wrong submitting. Please check your connection and try again.'); });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sample Audit — Sightline AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&display=swap" rel="stylesheet"/>
+<style>
+:root{--blackout:#0A0A0A;--deep-surface:#1A1A1A;--red:#CC2200;--bone:#F5F4F0;--paper:#FAFAF8;--ink:#1A1A18;--ink-soft:#5A5955;--gray:#888780;--rule:rgba(10,10,10,.1);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+.serif{font-family:'Source Serif 4',Georgia,serif;}
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(10,10,10,.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(245,244,240,.06);}
+.nav-logo{display:flex;flex-direction:column;gap:1px;text-decoration:none;}
+.nav-logo-word{font-size:13px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--bone);}
+.nav-logo-ai{font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--red);}
+.nav-back{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);text-decoration:none;}
+.nav-cta{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--bone);border:1px solid var(--red);padding:9px 20px;text-decoration:none;}
+.intro{padding:130px 48px 56px;background:var(--blackout);border-bottom:2px solid var(--red);}
+.intro-inner{max-width:760px;margin:0 auto;}
+.intro-eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+.intro-eyebrow::before{content:'';width:24px;height:1px;background:var(--red);}
+.intro h1{font-size:clamp(28px,4vw,44px);font-weight:400;letter-spacing:-1px;color:#fff;line-height:1.15;margin-bottom:16px;}
+.intro h1 em{color:var(--red);font-style:normal;}
+.intro p{font-size:15px;font-weight:300;color:var(--gray);line-height:1.7;max-width:580px;}
+.intro-badge{display:inline-flex;align-items:center;gap:10px;margin-top:24px;background:var(--deep-surface);border-left:2px solid var(--red);padding:10px 18px;font-size:12px;font-weight:300;color:var(--gray);}
+.intro-badge strong{color:var(--bone);font-weight:500;}
+.doc-wrap{max-width:860px;margin:0 auto;padding:56px 48px 120px;}
+.doc-header{background:var(--blackout);border-top:2px solid var(--red);padding:28px 36px;margin-bottom:2px;display:flex;justify-content:space-between;align-items:flex-start;}
+.dh-logo{display:flex;flex-direction:column;gap:2px;}
+.dh-logo-word{font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--bone);}
+.dh-logo-ai{font-size:8px;letter-spacing:.26em;text-transform:uppercase;color:var(--red);}
+.dh-meta{text-align:right;}
+.dh-meta-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:2px;}
+.dh-meta-val{font-size:12px;font-weight:400;color:var(--bone);}
+.doc-page{background:#fff;padding:48px;margin-bottom:2px;position:relative;}
+.pg-eyebrow{font-size:9px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.pg-eyebrow::after{content:'';flex:1;height:1px;background:rgba(204,34,0,.2);}
+.pg-h{font-size:clamp(22px,3vw,32px);font-weight:400;letter-spacing:-.4px;line-height:1.2;color:var(--ink);margin-bottom:24px;}
+.pg-body{font-size:14px;font-weight:300;color:var(--ink-soft);line-height:1.75;}
+.the-line-box{background:var(--blackout);border-left:3px solid var(--red);padding:28px 32px;margin:24px 0;}
+.tl-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:12px;}
+.tl-text{font-size:clamp(15px,2vw,19px);font-weight:300;color:#fff;line-height:1.55;}
+.evidence{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
+.ev-item{display:flex;gap:12px;align-items:flex-start;}
+.ev-marker{font-size:9px;color:var(--red);font-weight:500;letter-spacing:.1em;min-width:20px;margin-top:3px;}
+.ev-text{font-size:13px;font-weight:300;color:var(--ink-soft);line-height:1.65;}
+.ev-text strong{font-weight:500;color:var(--ink);}
+.impact-box{background:var(--bone);padding:20px 24px;margin-top:20px;border-left:2px solid rgba(204,34,0,.3);}
+.impact-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.impact-text{font-size:13px;font-weight:300;color:var(--ink-soft);line-height:1.7;}
+.avr-table{width:100%;border-collapse:collapse;margin-top:24px;}
+.avr-table th{font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:10px 18px;text-align:left;border-bottom:2px solid var(--rule);}
+.avr-table th.a{color:var(--gray);width:50%;}
+.avr-table th.b{color:var(--red);}
+.avr-table td{padding:16px 18px;font-size:13px;font-weight:300;line-height:1.6;vertical-align:top;border-bottom:1px solid rgba(10,10,10,.06);}
+.avr-table td.a{color:var(--ink-soft);}
+.avr-table td.b{color:var(--ink);font-weight:400;border-left:1px solid rgba(10,10,10,.06);}
+.constraint-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:24px;}
+.c-col{padding:20px 16px;background:var(--bone);text-align:center;position:relative;}
+.c-col.primary{background:var(--blackout);}
+.c-col-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;}
+.c-col.primary .c-col-label{color:var(--red);}
+.c-dot{border-radius:50%;background:rgba(204,34,0,.15);margin:0 auto 12px;}
+.c-col.primary .c-dot{background:var(--red);}
+.c-text{font-size:11px;font-weight:300;color:var(--ink-soft);line-height:1.5;}
+.c-col.primary .c-text{color:var(--bone);}
+.primary-tag{position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:8px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;white-space:nowrap;}
+.leakage-table{width:100%;border-collapse:collapse;margin-top:24px;}
+.leakage-table thead th{font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:8px 16px;text-align:left;border-bottom:2px solid var(--rule);color:var(--gray);}
+.leakage-table thead th:last-child{text-align:right;}
+.leakage-table tbody td{padding:16px;font-size:13px;font-weight:300;color:var(--ink-soft);border-bottom:1px solid rgba(10,10,10,.06);vertical-align:top;}
+.leakage-table tbody td:last-child{text-align:right;font-weight:500;color:var(--ink);}
+.leakage-total{background:var(--blackout);padding:18px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:2px;}
+.lt-label{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--bone);}
+.lt-val{font-size:22px;font-weight:500;color:var(--red);letter-spacing:-1px;}
+.opp{padding:24px 28px;margin-bottom:2px;background:var(--bone);border-left:3px solid transparent;}
+.opp.primary{background:#fff;border-left-color:var(--red);box-shadow:0 1px 12px rgba(10,10,10,.06);}
+.opp-num{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.opp-title{font-size:16px;font-weight:500;color:var(--ink);margin-bottom:20px;}
+.opp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.opp-field-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:5px;}
+.opp-field-val{font-size:13px;font-weight:300;color:var(--ink-soft);line-height:1.6;}
+.opp-field-val strong{font-weight:500;color:var(--ink);}
+.opp-diff{display:inline-block;font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;margin-top:14px;}
+.diff-low{background:rgba(0,120,40,.08);color:#1a5c2a;}
+.diff-med{background:rgba(180,100,0,.08);color:#7a4400;}
+.doc-footer-line{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-top:28px;padding-top:16px;border-top:1px solid var(--rule);}
+.locked-wrap{position:relative;}
+.locked-content{filter:blur(5px);user-select:none;pointer-events:none;}
+.locked-content.revealed{filter:none;user-select:auto;pointer-events:auto;}
+.lock-overlay{position:absolute;inset:0;z-index:10;background:linear-gradient(to bottom,rgba(250,250,248,0) 0%,rgba(250,250,248,.97) 30%);display:flex;align-items:center;justify-content:center;transition:opacity .3s;}
+.lock-overlay.hidden{opacity:0;pointer-events:none;}
+.lock-card{text-align:center;padding:24px;max-width:340px;}
+.lock-eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.lock-title{font-size:18px;font-weight:500;color:var(--ink);margin-bottom:8px;letter-spacing:-.2px;}
+.lock-sub{font-size:13px;font-weight:300;color:var(--ink-soft);line-height:1.6;}
+.unlock-bar{position:sticky;bottom:0;left:0;right:0;z-index:250;background:var(--blackout);border-top:2px solid var(--red);padding:18px 48px;display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;transition:transform .4s ease;}
+.unlock-bar.gone{transform:translateY(100%);}
+.unlock-text{font-size:13px;font-weight:300;color:var(--bone);}
+.unlock-text strong{font-weight:500;color:#fff;}
+.unlock-form{display:flex;gap:2px;}
+.unlock-input{background:var(--deep-surface);border:1px solid rgba(245,244,240,.15);color:var(--bone);font-family:'Inter',sans-serif;font-size:13px;padding:10px 14px;outline:none;min-width:210px;transition:border-color .2s;}
+.unlock-input:focus{border-color:var(--red);}
+.unlock-input::placeholder{color:var(--gray);}
+.unlock-submit{background:var(--red);color:#fff;border:none;font-family:'Inter',sans-serif;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:10px 18px;cursor:pointer;}
+.unlock-success{font-size:13px;color:var(--bone);display:none;}
+.unlock-success strong{color:var(--red);}
+.sample-footer{background:var(--blackout);text-align:center;padding:80px 48px;}
+.sample-footer h2{font-size:clamp(22px,3vw,34px);font-weight:400;color:#fff;letter-spacing:-.5px;margin-bottom:14px;}
+.sample-footer h2 em{color:var(--red);font-style:normal;}
+.sample-footer p{font-size:14px;font-weight:300;color:var(--gray);line-height:1.7;max-width:480px;margin:0 auto 32px;}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:14px 28px;border:none;cursor:pointer;text-decoration:none;}
+@media(max-width:860px){nav{padding:0 24px;}.intro{padding:110px 24px 48px;}.doc-wrap{padding:40px 24px 80px;}.doc-page{padding:32px 24px;}.doc-header{padding:20px 24px;flex-direction:column;gap:12px;}.dh-meta{text-align:left;}.constraint-grid{grid-template-columns:1fr 1fr;}.opp-grid{grid-template-columns:1fr;}.unlock-bar{padding:16px 24px;flex-direction:column;}.unlock-form{width:100%;}.unlock-input{flex:1;min-width:0;}.sample-footer{padding:60px 24px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="sightline-ai-audit-sales-page.html">
+    <span class="nav-logo-word">Sightline</span>
+    <span class="nav-logo-ai">AI</span>
+  </a>
+  <a href="sightline-ai-audit-sales-page.html" class="nav-back">← Back to the audit</a>
+  <a href="sightline-ai-audit-sales-page.html#pricing" class="nav-cta">Book the audit</a>
+</nav>
+
+<section class="intro">
+  <div class="intro-inner">
+    <p class="intro-eyebrow">Sample Audit Preview</p>
+    <h1 class="serif">This is what the audit <em>actually</em> looks like.</h1>
+    <p>Below is a real excerpt from a Sightline Audit — built for a fictional company so you can see the structure, depth, and tone. Your audit will be built entirely around your business.</p>
+    <div class="intro-badge"><strong>Sample profile:</strong> Atlas Mechanical Services — 28-person HVAC &amp; field service company, Denver metro</div>
+  </div>
+</section>
+
+<div class="doc-wrap">
+
+  <div class="doc-header">
+    <div class="dh-logo">
+      <span class="dh-logo-word">Sightline</span>
+      <span class="dh-logo-ai">AI</span>
+    </div>
+    <div class="dh-meta">
+      <p class="dh-meta-label">Prepared for</p>
+      <p class="dh-meta-val">Atlas Mechanical Services (Sample)</p>
+      <p class="dh-meta-label" style="margin-top:8px;">Engagement</p>
+      <p class="dh-meta-val">Tier 2 — Executive Review</p>
+    </div>
+  </div>
+
+  <div class="doc-page">
+    <p class="pg-eyebrow">Page 01 — The Line™</p>
+    <h2 class="pg-h serif">Here is what's actually happening.</h2>
+    <div class="the-line-box">
+      <p class="tl-label">The Constraint</p>
+      <p class="tl-text">Atlas Mechanical is not constrained by technician capacity or service demand. It is constrained by a scheduling and dispatch process that cannot sequence jobs intelligently — creating daily windshield time waste that caps revenue without adding a single person to the payroll.</p>
+    </div>
+    <h3 style="font-size:14px;font-weight:500;color:var(--ink);margin:24px 0 14px;">The evidence behind this finding</h3>
+    <div class="evidence">
+      <div class="ev-item"><span class="ev-marker">01</span><p class="ev-text"><strong>Dispatch is first-come, first-served</strong> — inbound service calls are routed to whoever picks up, not to the technician closest to the job or most appropriate for the work type.</p></div>
+      <div class="ev-item"><span class="ev-marker">02</span><p class="ev-text"><strong>Technicians average 90+ minutes of windshield time per shift</strong> — cross-town routing is the most common complaint escalated to ownership. This is a sequencing problem, not a staffing problem.</p></div>
+      <div class="ev-item"><span class="ev-marker">03</span><p class="ev-text"><strong>"If demand doubled tomorrow, dispatch would break first"</strong> — the client identified this unprompted. That's not a prediction; it's an acknowledgment of a known existing gap.</p></div>
+      <div class="ev-item"><span class="ev-marker">04</span><p class="ev-text"><strong>Customers complain about response time, not quality</strong> — this is downstream of the same dispatch bottleneck, not a separate problem.</p></div>
+    </div>
+    <div class="impact-box">
+      <p class="impact-label">Why This Matters Now</p>
+      <p class="impact-text">Revenue has been flat for two years despite consistent inbound demand. The business has the customers. It has the technicians. The constraint is in the middle — the system connecting them.</p>
+    </div>
+    <p class="doc-footer-line">We find the line. You make the move.</p>
+  </div>
+
+  <div class="doc-page">
+    <p class="pg-eyebrow">Page 02 — Reality Check</p>
+    <h2 class="pg-h serif">What you think is happening vs. what's actually happening.</h2>
+    <table class="avr-table">
+      <thead><tr><th class="a">What you said / assumed</th><th class="b">What the data shows</th></tr></thead>
+      <tbody>
+        <tr><td class="a">"We need to hire more technicians to grow."</td><td class="b">Current technicians have unused capacity every shift due to routing inefficiency. You don't have a headcount problem. You have a sequencing problem.</td></tr>
+        <tr><td class="a">"Customer complaints are about wait times — that's just the nature of the business."</td><td class="b">Wait time complaints are almost entirely driven by dispatch sequencing, not actual technician availability. The same demand, routed intelligently, would reduce wait times by an estimated 30–40%.</td></tr>
+        <tr><td class="a">"We've tried scheduling software before and it didn't stick."</td><td class="b">Past tools failed because they automated a broken process. Fix the logic first; the tool becomes easy.</td></tr>
+        <tr><td class="a">"The real problem is lead generation — we need more jobs coming in."</td><td class="b">There are already more jobs than the current system can handle efficiently. Adding more leads into a broken dispatch process doesn't grow revenue — it grows frustration.</td></tr>
+      </tbody>
+    </table>
+    <p class="doc-footer-line">We find the line. You make the move.</p>
+  </div>
+
+  <div class="doc-page">
+    <p class="pg-eyebrow">Page 03 — Constraint Map™</p>
+    <h2 class="pg-h serif">Where the constraint shows up across the operation.</h2>
+    <div class="constraint-grid">
+      <div class="c-col"><p class="c-col-label">People</p><div class="c-dot" style="width:20px;height:20px;"></div><p class="c-text">Technicians are skilled. No constraint here — the issue is how their time is allocated.</p></div>
+      <div class="c-col primary"><div class="primary-tag">Primary</div><p class="c-col-label">Process</p><div class="c-dot" style="width:44px;height:44px;"></div><p class="c-text">Dispatch sequencing is the root. Manual, reactive, unable to optimize across multiple jobs.</p></div>
+      <div class="c-col"><p class="c-col-label">Technology</p><div class="c-dot" style="width:28px;height:28px;"></div><p class="c-text">Existing scheduling tool underutilized — no routing intelligence configured.</p></div>
+      <div class="c-col"><p class="c-col-label">Data</p><div class="c-dot" style="width:16px;height:16px;"></div><p class="c-text">Job history and technician zones exist but aren't used to inform routing in real time.</p></div>
+      <div class="c-col"><p class="c-col-label">Decisions</p><div class="c-dot" style="width:24px;height:24px;"></div><p class="c-text">Dispatch decisions happen under time pressure without the information to make them well.</p></div>
+    </div>
+    <p class="doc-footer-line">We find the line. You make the move.</p>
+  </div>
+
+  <div class="doc-page">
+    <p class="pg-eyebrow">Page 04 — Revenue Leakage Analysis™</p>
+    <h2 class="pg-h serif">What this constraint is costing Atlas Mechanical.</h2>
+    <p class="pg-body" style="margin-bottom:0;">Directional estimates based on Atlas's intake data and a 28-person field service operation. Not audited figures — a working order of magnitude.</p>
+    <table class="leakage-table">
+      <thead><tr><th>Source of Leakage</th><th>Notes</th><th>Est. Annual Impact</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Capacity Leakage</strong></td><td>Estimated 1.5–2 jobs/day lost to routing inefficiency across the fleet</td><td>$180K–$320K</td></tr>
+        <tr><td><strong>Customer Churn</strong></td><td>Response time complaints are the primary stated reason for customer loss</td><td>$90K–$200K</td></tr>
+        <tr><td><strong>Overtime &amp; Inefficiency</strong></td><td>Cross-town routing drives after-hours calls avoidable with better sequencing</td><td>$60K–$140K</td></tr>
+        <tr><td><strong>Missed Same-Day Capacity</strong></td><td>Inbound same-day requests declined due to perceived unavailability</td><td>$80K–$180K</td></tr>
+      </tbody>
+    </table>
+    <div class="leakage-total">
+      <p class="lt-label">Potential Recoverable Value</p>
+      <p class="lt-val">$410K–$840K / year</p>
+    </div>
+    <p class="doc-footer-line">We find the line. You make the move.</p>
+  </div>
+
+  <div class="doc-page">
+    <p class="pg-eyebrow">Page 05 — AI Opportunity Architecture™</p>
+    <h2 class="pg-h serif">Where AI creates leverage at Atlas Mechanical.</h2>
+    <p class="pg-body" style="margin-bottom:24px;">Three specific AI implementations — sequenced by impact and readiness. Opportunity 01 directly addresses The Line.</p>
+
+    <div class="opp primary">
+      <p class="opp-num">Opportunity 01 — Highest Priority</p>
+      <p class="opp-title">AI-assisted dispatch triage and job sequencing</p>
+      <div class="opp-grid">
+        <div><p class="opp-field-label">Current State</p><p class="opp-field-val">Inbound service calls routed manually based on who answers the phone. No real-time visibility into technician location, job duration, or zone clustering.</p></div>
+        <div><p class="opp-field-label">Future State</p><p class="opp-field-val">AI-assisted intake layer categorizes each call by job type and urgency, then proposes optimal routing based on location, workload, and zone clustering — in real time.</p></div>
+        <div><p class="opp-field-label">Estimated Outcome</p><p class="opp-field-val"><strong>2–3 additional jobs per day</strong> from reclaimed windshield time — $180K–$300K in added annual revenue without adding headcount.</p></div>
+        <div><p class="opp-field-label">Recommended Approach</p><p class="opp-field-val">Configure routing intelligence within existing scheduling software (no new tool required). Pilot with 3 technician zones before full rollout.</p></div>
+      </div>
+      <span class="opp-diff diff-low">Difficulty: Low</span>
+    </div>
+
+    <div class="locked-wrap">
+      <div class="locked-content" id="opp-locked">
+        <div class="opp" style="margin-top:2px;">
+          <p class="opp-num">Opportunity 02</p>
+          <p class="opp-title">Automated post-job follow-up and review generation</p>
+          <div class="opp-grid">
+            <div><p class="opp-field-label">Current State</p><p class="opp-field-val">Post-job follow-up is entirely manual and inconsistent. Review requests and repeat-service reminders are sent when someone remembers.</p></div>
+            <div><p class="opp-field-label">Future State</p><p class="opp-field-val">AI-drafted follow-up sequences trigger automatically within 2 hours of job completion — personalized to job type, technician, and customer history.</p></div>
+            <div><p class="opp-field-label">Estimated Outcome</p><p class="opp-field-val"><strong>15–25% increase in Google review volume</strong> and $60K–$120K in recovered repeat-service revenue annually.</p></div>
+            <div><p class="opp-field-label">Recommended Approach</p><p class="opp-field-val">AI-assisted sequences layered onto existing CRM, triggered by job completion status.</p></div>
+          </div>
+          <span class="opp-diff diff-low">Difficulty: Low</span>
+        </div>
+        <div class="opp" style="margin-top:2px;">
+          <p class="opp-num">Opportunity 03</p>
+          <p class="opp-title">AI-assisted commercial estimate drafting</p>
+          <div class="opp-grid">
+            <div><p class="opp-field-label">Current State</p><p class="opp-field-val">Commercial estimates take 2–3 hours each, built from memory. Errors are common; turnaround is slow.</p></div>
+            <div><p class="opp-field-label">Future State</p><p class="opp-field-val">AI drafts a first-pass estimate using historical Atlas job data within 20 minutes. Staff refines rather than starts from scratch.</p></div>
+            <div><p class="opp-field-label">Estimated Outcome</p><p class="opp-field-val"><strong>8–12 hours/week reclaimed</strong> plus $80K–$180K in commercial contracts won through faster response.</p></div>
+            <div><p class="opp-field-label">Recommended Approach</p><p class="opp-field-val">AI drafting workflow built on Atlas's own historical job data. Requires data cleanup first.</p></div>
+          </div>
+          <span class="opp-diff diff-med">Difficulty: Medium</span>
+        </div>
+      </div>
+      <div class="lock-overlay" id="opp-overlay">
+        <div class="lock-card">
+          <p class="lock-eyebrow">Locked</p>
+          <p class="lock-title">2 more AI opportunities in this audit</p>
+          <p class="lock-sub">Subscribe to Clear Line — free weekly AI intel for operators — to unlock the rest of this sample.</p>
+        </div>
+      </div>
+    </div>
+    <p class="doc-footer-line" style="margin-top:28px;">We find the line. You make the move.</p>
+  </div>
+
+  <div class="doc-page" style="background:var(--bone);">
+    <p class="pg-eyebrow">Pages 06–11</p>
+    <div class="locked-wrap">
+      <div class="locked-content" id="pages-locked" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;">
+        <div style="background:#fff;padding:24px;"><p style="font-size:9px;color:var(--red);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">Page 06</p><p style="font-size:15px;font-weight:500;color:var(--ink);margin-bottom:6px;">Risk Map™</p><p style="font-size:12px;font-weight:300;color:var(--ink-soft);line-height:1.6;">Three risks — probability and severity rated, with specific mitigation for each.</p></div>
+        <div style="background:#fff;padding:24px;"><p style="font-size:9px;color:var(--red);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">Page 07</p><p style="font-size:15px;font-weight:500;color:var(--ink);margin-bottom:6px;">Executive Decisions™</p><p style="font-size:12px;font-weight:300;color:var(--ink-soft);line-height:1.6;">Three decisions only leadership can make — framed as binary choices with consequences.</p></div>
+        <div style="background:#fff;padding:24px;"><p style="font-size:9px;color:var(--red);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">Page 08</p><p style="font-size:15px;font-weight:500;color:var(--ink);margin-bottom:6px;">Working Examples™</p><p style="font-size:12px;font-weight:300;color:var(--ink-soft);line-height:1.6;">A fully built-out artifact for Opportunity 01 — not described. Shown.</p></div>
+        <div style="background:#fff;padding:24px;"><p style="font-size:9px;color:var(--red);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">Page 09</p><p style="font-size:15px;font-weight:500;color:var(--ink);margin-bottom:6px;">30/60/90 Day Path™</p><p style="font-size:12px;font-weight:300;color:var(--ink-soft);line-height:1.6;">Sequenced actions across quick wins, constraint reduction, and scale preparation.</p></div>
+        <div style="background:#fff;padding:24px;"><p style="font-size:9px;color:var(--red);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">Pages 10–11</p><p style="font-size:15px;font-weight:500;color:var(--ink);margin-bottom:6px;">Two Futures</p><p style="font-size:12px;font-weight:300;color:var(--ink-soft);line-height:1.6;">If nothing changes vs. if this is executed — side by side, in plain terms.</p></div>
+        <div style="background:var(--blackout);padding:24px;display:flex;align-items:center;justify-content:center;"><p style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);text-align:center;">We find the line.<br/>You make the move.</p></div>
+      </div>
+      <div class="lock-overlay" id="pages-overlay">
+        <div class="lock-card">
+          <p class="lock-eyebrow">Locked</p>
+          <p class="lock-title">Pages 06–11 of this audit</p>
+          <p class="lock-sub">Subscribe to Clear Line to unlock the complete sample — including the working example and both futures.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<section class="sample-footer">
+  <h2 class="serif">Yours will be built around <em>your</em> business.</h2>
+  <p>Same structure. Same depth. Different findings — because your operation, your constraint, and your AI opportunities are nothing like Atlas Mechanical's.</p>
+  <a href="sightline-ai-audit-sales-page.html#pricing" class="btn-primary">Book the Sightline Audit <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</section>
+
+<div class="unlock-bar" id="unlock-bar">
+  <p class="unlock-text" id="unlock-text"><strong>Unlock the rest of this sample.</strong> Get Clear Line — free weekly AI intel for operators.</p>
+  <p class="unlock-success" id="unlock-success">You're in. <strong>Scroll up</strong> — the rest is unlocked.</p>
+  <form class="unlock-form" id="unlock-form" onsubmit="unlock(event)">
+    <input class="unlock-input" type="email" placeholder="your@email.com" required/>
+    <button class="unlock-submit" type="submit">Unlock Sample</button>
+  </form>
+</div>
+
+<script>
+function unlock(e){
+  e.preventDefault();
+  document.querySelectorAll('.locked-content').forEach(el=>el.classList.add('revealed'));
+  document.querySelectorAll('.lock-overlay').forEach(el=>el.classList.add('hidden'));
+  document.getElementById('unlock-text').style.display='none';
+  document.getElementById('unlock-form').style.display='none';
+  document.getElementById('unlock-success').style.display='block';
+  setTimeout(()=>document.getElementById('unlock-bar').classList.add('gone'),3000);
+}
+</script>
+</body>
+</html>
