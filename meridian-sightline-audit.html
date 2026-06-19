@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Sightline Audit™ — Meridian Architectural Signage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --black: #0A0A0A; --deep: #1A1A1A; --red: #CC2200;
+  --bone: #F5F4F0; --paper: #FAFAF8; --ink: #1A1A18;
+  --soft: #5A5955; --gray: #888780; --rule: rgba(10,10,10,.1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+.serif{font-family:'Source Serif 4',Georgia,serif;}
+
+/* ── COVER ── */
+.cover{min-height:100vh;background:var(--black);display:grid;grid-template-rows:auto 1fr auto;position:relative;overflow:hidden;}
+.cover-top-rule{height:3px;background:var(--red);}
+.cover-inner{display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:80px;}
+.cover-left{z-index:2;}
+.cover-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:32px;}
+.cover-h1{font-size:clamp(36px,5vw,60px);font-weight:400;letter-spacing:-1.5px;line-height:1.08;color:#fff;margin-bottom:20px;}
+.cover-h1 em{color:var(--red);font-style:normal;}
+.cover-divider{width:48px;height:2px;background:var(--red);margin-bottom:28px;}
+.cover-meta{display:flex;flex-direction:column;gap:16px;}
+.cover-meta-item .label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:4px;}
+.cover-meta-item .val{font-size:14px;color:var(--bone);font-weight:400;}
+
+/* Line Reveal Animation */
+.cover-right{position:relative;display:flex;align-items:center;justify-content:center;}
+.line-reveal-wrap{width:100%;max-width:400px;position:relative;}
+#line-reveal-svg{width:100%;height:300px;}
+.reveal-label{position:absolute;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);opacity:0;transition:opacity .5s;}
+.reveal-label.current{top:20%;left:5%;}
+.reveal-label.constraint{top:48%;left:30%;}
+.reveal-label.clarity{top:18%;right:5%;}
+.reveal-label.show{opacity:1;}
+.line-status{text-align:center;margin-top:24px;}
+.line-status-text{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);min-height:20px;}
+.line-status-text.identified{color:var(--red);}
+
+.cover-footer{padding:24px 80px;border-top:1px solid rgba(245,244,240,.06);display:flex;justify-content:space-between;align-items:center;}
+.cover-promise{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(136,135,128,.4);}
+.cover-client-meta{font-size:11px;color:rgba(136,135,128,.4);}
+.cover-bottom-rule{height:3px;background:var(--red);}
+
+/* ── JOURNEY PROGRESS BAR ── */
+.journey-bar{position:sticky;top:0;z-index:200;background:var(--black);border-bottom:1px solid rgba(245,244,240,.06);padding:10px 48px;display:flex;align-items:center;gap:0;}
+.journey-step{display:flex;align-items:center;gap:0;flex:1;}
+.journey-step-label{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);white-space:nowrap;padding:0 8px;}
+.journey-step-label.active{color:var(--red);}
+.journey-line-seg{flex:1;height:1px;background:rgba(136,135,128,.2);}
+.journey-line-seg.done{background:var(--red);}
+.journey-dot{width:6px;height:6px;border-radius:50%;background:var(--gray);flex-shrink:0;}
+.journey-dot.active{background:var(--red);box-shadow:0 0 8px rgba(204,34,0,.5);}
+
+/* ── PAGES ── */
+.page{padding:80px 80px 72px;border-bottom:1px solid var(--rule);position:relative;max-width:1100px;margin:0 auto;}
+.page-num{position:absolute;top:80px;right:80px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);}
+.pg-eyebrow{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.pg-eyebrow::after{content:'';flex:1;height:1px;background:rgba(204,34,0,.25);}
+.pg-h{font-size:clamp(24px,3.5vw,40px);font-weight:400;letter-spacing:-.5px;line-height:1.15;color:var(--ink);margin-bottom:28px;}
+.pg-body{font-size:14px;font-weight:300;color:var(--soft);line-height:1.75;}
+.pg-body p{margin-bottom:14px;}
+.pg-body strong{font-weight:500;color:var(--ink);}
+
+/* THE LINE statement */
+.the-line-box{background:var(--black);border-left:3px solid var(--red);padding:32px 36px;margin:28px 0;position:relative;}
+.tl-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:14px;}
+.tl-text{font-size:clamp(16px,2vw,20px);font-weight:300;color:#fff;line-height:1.6;}
+.tl-pulse{position:absolute;right:28px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:var(--red);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(204,34,0,.4);}50%{box-shadow:0 0 0 8px rgba(204,34,0,0);}}
+
+/* Evidence */
+.evidence-list{display:flex;flex-direction:column;gap:14px;margin:28px 0;}
+.ev-item{display:flex;gap:14px;align-items:flex-start;}
+.ev-num{font-size:10px;color:var(--red);font-weight:600;letter-spacing:.1em;min-width:22px;margin-top:2px;}
+.ev-text{font-size:13px;font-weight:300;color:var(--soft);line-height:1.65;}
+.ev-text strong{font-weight:500;color:var(--ink);}
+
+/* Impact box */
+.impact-box{background:var(--bone);padding:22px 28px;border-left:2px solid rgba(204,34,0,.3);margin-top:24px;}
+.impact-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.impact-text{font-size:13px;font-weight:300;color:var(--soft);line-height:1.7;}
+
+/* Page 2 — Assumption table */
+.avr-table{width:100%;border-collapse:collapse;margin-top:28px;}
+.avr-table thead th{font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:10px 20px;text-align:left;border-bottom:2px solid var(--rule);}
+.avr-table thead th.col-a{color:var(--gray);}
+.avr-table thead th.col-b{color:var(--red);}
+.avr-table tbody td{padding:18px 20px;font-size:13px;font-weight:300;line-height:1.65;vertical-align:top;border-bottom:1px solid rgba(10,10,10,.05);}
+.avr-table tbody td.col-a{color:var(--soft);width:45%;}
+.avr-table tbody td.col-b{color:var(--ink);font-weight:400;border-left:1px solid rgba(10,10,10,.05);}
+
+/* Page 3 — Constraint Map */
+.constraint-map-visual{margin-top:36px;position:relative;}
+.constraint-categories{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;}
+.c-cat{padding:24px 16px;text-align:center;position:relative;}
+.c-cat.primary{background:var(--black);}
+.c-cat.secondary{background:var(--bone);}
+.c-cat.minor{background:rgba(245,244,240,.4);}
+.c-cat-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;}
+.c-cat.primary .c-cat-label{color:var(--red);}
+.c-cat.secondary .c-cat-label{color:var(--gray);}
+.c-cat.minor .c-cat-label{color:var(--gray);}
+.c-dot-wrap{display:flex;justify-content:center;margin-bottom:14px;}
+.c-dot{border-radius:50%;}
+.c-cat.primary .c-dot{background:var(--red);}
+.c-cat.secondary .c-dot{background:rgba(204,34,0,.25);}
+.c-cat.minor .c-dot{background:rgba(204,34,0,.1);}
+.c-text{font-size:11px;font-weight:300;line-height:1.55;}
+.c-cat.primary .c-text{color:var(--bone);}
+.c-cat.secondary .c-text{color:var(--soft);}
+.c-cat.minor .c-text{color:var(--gray);}
+.primary-badge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;white-space:nowrap;}
+
+/* Line path through map */
+.constraint-line-path{width:100%;height:40px;margin-top:0;}
+
+/* Page 4 — Revenue Leakage */
+.leakage-table{width:100%;border-collapse:collapse;margin-top:28px;}
+.leakage-table thead th{font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:10px 18px;text-align:left;border-bottom:2px solid var(--rule);color:var(--gray);}
+.leakage-table thead th:last-child{text-align:right;}
+.leakage-table tbody td{padding:18px;font-size:13px;font-weight:300;color:var(--soft);border-bottom:1px solid rgba(10,10,10,.05);vertical-align:top;}
+.leakage-table tbody td:last-child{text-align:right;font-weight:500;color:var(--ink);}
+.leakage-total{background:var(--black);padding:20px 18px;display:flex;justify-content:space-between;align-items:center;margin-top:2px;}
+.lt-label{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--bone);}
+.lt-val{font-size:26px;font-weight:500;color:var(--red);letter-spacing:-1px;}
+
+/* Page 5 — AI Opportunity Architecture */
+.opp-card{padding:28px 32px;margin-bottom:3px;border-left:3px solid transparent;}
+.opp-card.primary{background:#fff;border-left-color:var(--red);box-shadow:0 2px 20px rgba(10,10,10,.06);}
+.opp-card.secondary{background:var(--bone);}
+.opp-card-num{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:10px;}
+.opp-card-title{font-size:18px;font-weight:500;color:var(--ink);margin-bottom:24px;letter-spacing:-.2px;}
+.opp-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:16px;}
+.opp-field-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:6px;}
+.opp-field-val{font-size:13px;font-weight:300;color:var(--soft);line-height:1.6;}
+.opp-field-val strong{font-weight:500;color:var(--ink);}
+.opp-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.opp-badge{font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;}
+.badge-diff-low{background:rgba(0,120,40,.08);color:#1a5c2a;}
+.badge-diff-med{background:rgba(180,100,0,.08);color:#7a4400;}
+.badge-impact-high{background:rgba(204,34,0,.08);color:var(--red);}
+.badge-time{background:var(--bone);color:var(--gray);}
+
+/* Page 6 — Risk Map */
+.risk-item{display:grid;grid-template-columns:1fr auto;gap:24px;padding:22px 0;border-bottom:1px solid rgba(10,10,10,.05);}
+.risk-item:first-child{border-top:1px solid rgba(10,10,10,.05);}
+.risk-title{font-size:15px;font-weight:500;color:var(--ink);margin-bottom:8px;}
+.risk-body{font-size:13px;font-weight:300;color:var(--soft);line-height:1.65;}
+.risk-tags{display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex-shrink:0;}
+.risk-tag{font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;white-space:nowrap;}
+.rt-prob-high{background:rgba(204,34,0,.08);color:var(--red);}
+.rt-prob-med{background:rgba(180,100,0,.08);color:#7a4400);}
+.rt-sev-crit{background:var(--black);color:var(--bone);}
+.rt-sev-high{background:var(--bone);color:var(--soft);}
+
+/* Page 7 — Executive Decisions */
+.decision-card{padding:24px 28px;margin-bottom:3px;background:var(--bone);}
+.decision-num{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:10px;}
+.decision-q{font-size:17px;font-weight:500;color:var(--ink);line-height:1.4;margin-bottom:12px;letter-spacing:-.2px;}
+.decision-body{font-size:13px;font-weight:300;color:var(--soft);line-height:1.65;margin-bottom:16px;}
+.decision-options{display:flex;gap:10px;}
+.decision-opt{border:1px solid var(--rule);padding:8px 18px;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);}
+.decision-opt.yes{border-color:var(--red);color:var(--red);background:rgba(204,34,0,.04);}
+
+/* Page 8 — Working Example */
+.example-doc{background:var(--black);padding:32px;margin-top:28px;}
+.example-doc-header{border-bottom:1px solid rgba(245,244,240,.08);padding-bottom:16px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:flex-start;}
+.example-doc-title{font-size:12px;font-weight:500;letter-spacing:.06em;color:var(--bone);}
+.example-doc-badge{font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--red);color:#fff;padding:3px 10px;}
+.example-table{width:100%;border-collapse:collapse;margin:16px 0;}
+.example-table th{font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:1px solid rgba(245,244,240,.1);color:var(--gray);}
+.example-table td{padding:10px 12px;font-size:12px;color:var(--bone);border-bottom:1px solid rgba(245,244,240,.05);}
+.example-table td.conf-high{color:#5DCAA5;}
+.example-table td.conf-med{color:#E8A838;}
+.example-actions{margin-top:16px;padding-top:16px;border-top:1px solid rgba(245,244,240,.08);}
+.example-actions-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:10px;}
+.example-action-item{display:flex;gap:10px;font-size:12px;color:var(--gray);margin-bottom:8px;align-items:flex-start;}
+.example-checkbox{width:12px;height:12px;border:1px solid rgba(245,244,240,.2);flex-shrink:0;margin-top:1px;}
+
+/* Page 9 — 30/60/90 */
+.path-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:32px;}
+.path-col{padding:28px 24px;}
+.path-col-30{background:var(--bone);}
+.path-col-60{background:var(--black);}
+.path-col-90{background:var(--deep);}
+.path-days{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px;}
+.path-title{font-size:14px;font-weight:500;margin-bottom:20px;}
+.path-col-30 .path-title{color:var(--ink);}
+.path-col-60 .path-title,.path-col-90 .path-title{color:#fff;}
+.path-actions{display:flex;flex-direction:column;gap:12px;}
+.path-action{display:flex;gap:10px;font-size:12px;font-weight:300;line-height:1.55;}
+.path-col-30 .path-action{color:var(--soft);}
+.path-col-60 .path-action,.path-col-90 .path-action{color:var(--gray);}
+.path-marker{color:var(--red);flex-shrink:0;}
+
+/* Pages 10/11 — If/Then */
+.ifthen-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:32px;}
+.ifthen-nothing{background:var(--black);padding:40px;}
+.ifthen-executed{background:var(--red);padding:40px;}
+.ifthen-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px;}
+.ifthen-nothing .ifthen-label{color:var(--gray);}
+.ifthen-executed .ifthen-label{color:rgba(255,255,255,.7);}
+.ifthen-title{font-size:20px;font-weight:500;line-height:1.3;margin-bottom:16px;}
+.ifthen-nothing .ifthen-title{color:var(--bone);}
+.ifthen-executed .ifthen-title{color:#fff;}
+.ifthen-body{font-size:14px;font-weight:300;line-height:1.7;}
+.ifthen-nothing .ifthen-body{color:var(--gray);}
+.ifthen-executed .ifthen-body{color:rgba(255,255,255,.85);}
+
+/* Final page */
+.final-page{background:var(--black);min-height:50vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px;}
+.final-logo-word{font-size:14px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);}
+.final-logo-ai{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:48px;}
+.final-promise-1{font-size:clamp(28px,4vw,44px);font-weight:400;color:#fff;letter-spacing:-.5px;margin-bottom:8px;}
+.final-promise-2{font-size:clamp(28px,4vw,44px);font-weight:400;color:var(--red);letter-spacing:-.5px;}
+.final-footer{margin-top:48px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);line-height:1.7;}
+
+@media(max-width:900px){
+  .cover-inner{grid-template-columns:1fr;padding:48px 32px;}
+  .cover-right{display:none;}
+  .page{padding:48px 32px;}
+  .page-num{right:32px;top:48px;}
+  .constraint-categories{grid-template-columns:1fr 1fr;}
+  .opp-grid{grid-template-columns:1fr;}
+  .path-grid{grid-template-columns:1fr;}
+  .ifthen-grid{grid-template-columns:1fr;}
+  .journey-bar{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── COVER ── -->
+<div class="cover-top-rule"></div>
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-left">
+      <p class="cover-eyebrow">The Sightline Audit™ — Constraint Intelligence Report</p>
+      <h1 class="cover-h1 serif">We found <em>the line.</em><br/>Now you make<br/>the move.</h1>
+      <div class="cover-divider"></div>
+      <div class="cover-meta">
+        <div class="cover-meta-item"><p class="label">Prepared for</p><p class="val">Meridian Architectural Signage</p></div>
+        <div class="cover-meta-item"><p class="label">Engagement</p><p class="val">Tier 2 — Executive Review</p></div>
+        <div class="cover-meta-item"><p class="label">Prepared by</p><p class="val">Janae Gilliam, Sightline AI</p></div>
+        <div class="cover-meta-item"><p class="label">Date delivered</p><p class="val">[Date]</p></div>
+      </div>
+    </div>
+    <div class="cover-right">
+      <div class="line-reveal-wrap">
+        <svg id="line-reveal-svg" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path id="the-line-path" d="M 20 260 C 60 250, 90 230, 120 210 C 150 190, 160 170, 180 150 C 200 130, 210 115, 230 100 C 255 82, 280 65, 320 45 C 350 30, 375 20, 395 14"
+            stroke="#CC2200" stroke-width="2" fill="none" stroke-linecap="round"
+            stroke-dasharray="800" stroke-dashoffset="800"/>
+          <!-- Milestone dots -->
+          <circle id="dot-current" cx="20" cy="260" r="5" fill="#CC2200" opacity="0"/>
+          <circle id="dot-constraint" cx="180" cy="150" r="7" fill="#CC2200" opacity="0"/>
+          <circle id="dot-clarity" cx="395" cy="14" r="5" fill="#CC2200" opacity="0">
+            <animate attributeName="r" values="5;9;5" dur="2s" repeatCount="indefinite" begin="indefinite" id="dot-clarity-anim"/>
+          </circle>
+          <!-- Scanning lines -->
+          <line x1="0" y1="280" x2="400" y2="280" stroke="rgba(136,135,128,.1)" stroke-width="0.5"/>
+          <line x1="0" y1="200" x2="400" y2="200" stroke="rgba(136,135,128,.07)" stroke-width="0.5"/>
+          <line x1="0" y1="120" x2="400" y2="120" stroke="rgba(136,135,128,.07)" stroke-width="0.5"/>
+          <line x1="0" y1="40" x2="400" y2="40" stroke="rgba(136,135,128,.07)" stroke-width="0.5"/>
+        </svg>
+        <div class="reveal-label current" id="label-current">Current State</div>
+        <div class="reveal-label constraint" id="label-constraint">The Constraint</div>
+        <div class="reveal-label clarity" id="label-clarity">The Line™</div>
+        <div class="line-status"><p class="line-status-text" id="line-status-text">Analyzing constraint data...</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <p class="cover-promise">We find the line. You make the move.</p>
+    <p class="cover-client-meta">Meridian Architectural Signage · Confidential · Sightline AI</p>
+  </div>
+</div>
+<div class="cover-bottom-rule"></div>
+
+<!-- ── JOURNEY BAR ── -->
+<div class="journey-bar" id="journey-bar">
+  <div class="journey-step"><div class="journey-dot active" id="jd-1"></div><span class="journey-step-label active" id="jl-1">The Line™</span><div class="journey-line-seg" id="js-1"></div></div>
+  <div class="journey-step"><div class="journey-dot" id="jd-2"></div><span class="journey-step-label" id="jl-2">Reality</span><div class="journey-line-seg" id="js-2"></div></div>
+  <div class="journey-step"><div class="journey-dot" id="jd-3"></div><span class="journey-step-label" id="jl-3">Constraint Map</span><div class="journey-line-seg" id="js-3"></div></div>
+  <div class="journey-step"><div class="journey-dot" id="jd-4"></div><span class="journey-step-label" id="jl-4">Financial</span><div class="journey-line-seg" id="js-4"></div></div>
+  <div class="journey-step"><div class="journey-dot" id="jd-5"></div><span class="journey-step-label" id="jl-5">AI Architecture</span><div class="journey-line-seg" id="js-5"></div></div>
+  <div class="journey-step"><div class="journey-dot" id="jd-6"></div><span class="journey-step-label" id="jl-6">Risk</span><div class="journey-line-seg" id="js-6"></div></div>
+  <div class="journey-step"><div class="journey-dot" id="jd-7"></div><span class="journey-step-label" id="jl-7">Decisions</span><div class="journey-line-seg" id="js-7"></div></div>
+  <div class="journey-step"><div class="journey-dot" id="jd-8"></div><span class="journey-step-label" id="jl-8">Examples</span><div class="journey-line-seg" id="js-8"></div></div>
+  <div class="journey-step"><div class="journey-dot" id="jd-9"></div><span class="journey-step-label" id="jl-9">30/60/90</span><div class="journey-line-seg" id="js-9"></div></div>
+  <div class="journey-step"><div class="journey-dot" id="jd-10"></div><span class="journey-step-label" id="jl-10">Two Futures</span><div class="journey-line-seg"></div></div>
+</div>
+
+<!-- ── PAGE 1: THE LINE ── -->
+<div class="page" id="page-1" data-page="1">
+  <span class="page-num">Page 01</span>
+  <p class="pg-eyebrow">The Line™</p>
+  <h2 class="pg-h serif">Here is what's actually happening.</h2>
+
+  <div class="the-line-box">
+    <p class="tl-label">The Constraint</p>
+    <p class="tl-text">Meridian is not constrained by sales capacity, market demand, or design quality. Meridian is constrained by an estimation process that was never engineered — it was inherited — and is now the single bottleneck converting $4.15M into $5.5M. Every downstream symptom the business experiences — founder firefighting, lost bids, margin erosion, sales-engineering friction — is this one bottleneck expressing itself in a different room.</p>
+    <div class="tl-pulse"></div>
+  </div>
+
+  <h3 style="font-size:13px;font-weight:500;color:var(--ink);margin:28px 0 14px;letter-spacing:.02em;">The evidence behind this finding</h3>
+  <div class="evidence-list">
+    <div class="ev-item"><span class="ev-num">01</span><p class="ev-text"><strong>$600K–$800K in lost bids annually — confirmed by the client.</strong> This is not an estimate or a projection. The founder independently calculated this number. 15–20 high-value bids lost per year because competitors quote in 48 hours while Meridian takes 5–7 business days. This is revenue walking out the door with a receipt.</p></div>
+    <div class="ev-item"><span class="ev-num">02</span><p class="ev-text"><strong>Revenue has plateaued and is declining — despite no change in inbound demand.</strong> $4.2M to $4.15M year-over-year. This is not a cyclical dip or a market problem. Inbound RFPs are arriving. The pipeline fills. The bottleneck is between deal discovery and the proposal — not before it.</p></div>
+    <div class="ev-item"><span class="ev-num">03</span><p class="ev-text"><strong>The founder is functioning as an estimation bypass valve.</strong> Sales reps escalate high-value bids directly to the founder to skip the engineering queue when an RFP deadline hits. The founder logs in, manually calculates material costs, approves arbitrary discounts. This is not a leadership problem. It's a sign that the estimation process cannot function at business velocity without human intervention at the top.</p></div>
+    <div class="ev-item"><span class="ev-num">04</span><p class="ev-text"><strong>The previous fix failed for the right reason.</strong> Meridian bought an ERP configuration add-on to solve exactly this problem. It failed because it couldn't parse raw architectural blueprints. This is not a team that resists change. It's a business that bought the wrong tool for the right problem. The problem was correctly identified. The solution was wrong.</p></div>
+    <div class="ev-item"><span class="ev-num">05</span><p class="ev-text"><strong>Customers are explicitly naming this constraint.</strong> "Your build quality and design work are exceptional, but it takes far too long to get a final contract price." Customers aren't leaving because of product quality — they're leaving because a faster competitor hits send first. The business is losing on process speed, not on craft.</p></div>
+  </div>
+
+  <div class="impact-box">
+    <p class="impact-label">Why This Matters Now</p>
+    <p class="impact-text">National sign manufacturers are actively entering the Pacific Northwest market and winning Meridian's legacy accounts through speed-to-quote alone. Meridian's product quality advantage means nothing if the proposal never lands in time. The competitive window to solve this is not years away — it's measured in the next bid cycle.</p>
+  </div>
+</div>
+
+<!-- ── PAGE 2: REALITY CHECK ── -->
+<div class="page" id="page-2" data-page="2" style="background:var(--paper);">
+  <span class="page-num">Page 02</span>
+  <p class="pg-eyebrow">Reality Check</p>
+  <h2 class="pg-h serif">What you think is happening — vs. what's actually happening.</h2>
+  <p class="pg-body">Most operators are closer to the truth than they realize. The gap isn't about being wrong — it's about seeing symptoms and mistaking them for causes.</p>
+
+  <table class="avr-table">
+    <thead><tr><th class="col-a">What you said / assumed</th><th class="col-b">What the evidence shows</th></tr></thead>
+    <tbody>
+      <tr><td class="col-a">"We need to hire a third senior layout engineer to clear the backlog."</td><td class="col-b">Adding a third engineer treats the symptom, not the cause. The problem isn't headcount — it's that the estimation process requires manual blueprint interpretation for every single job. A third engineer becomes part of the bottleneck, not a solution to it.</td></tr>
+      <tr><td class="col-a">"The estimation backlog is a capacity problem."</td><td class="col-b">It's an automation problem. Extracting specifications from blueprints, calculating material yields, building cost estimates — this is exactly the category of repetitive, structured, high-volume work that AI was purpose-built to handle. This is not a hiring gap. It's an implementation gap.</td></tr>
+      <tr><td class="col-a">"Our ERP software failed us, so software solutions are unreliable."</td><td class="col-b">The ERP add-on failed because it couldn't parse raw architectural blueprints. That's a product failure, not a category failure. AI-native document parsing tools have fundamentally different capabilities than rigid ERP modules. The problem was correctly identified last year. The wrong tool was purchased.</td></tr>
+      <tr><td class="col-a">"The real issue is the friction between sales and engineering."</td><td class="col-b">The handoff friction is real, but it's downstream. If estimation took 4 hours instead of 5–7 days, the handoff chaos dissolves. Fix the estimation speed first — the friction largely resolves itself.</td></tr>
+      <tr style="background:rgba(204,34,0,.03);"><td class="col-a" style="border-left:2px solid var(--red);">"We industrialized production but left pricing as a manual art form trapped in our senior staff's heads." <em style="font-size:11px;color:var(--gray);display:block;margin-top:4px;">(Your own gut read, Q48)</em></td><td class="col-b"><strong>This is exactly right.</strong> The Line confirms what you already suspected. The business scaled its output capacity but not its intake capacity. The fix is to build the same operational infrastructure around estimation that was built around fabrication and installation.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ── PAGE 3: CONSTRAINT MAP ── -->
+<div class="page" id="page-3" data-page="3">
+  <span class="page-num">Page 03</span>
+  <p class="pg-eyebrow">Constraint Map™</p>
+  <h2 class="pg-h serif">Where the constraint shows up across the operation.</h2>
+  <p class="pg-body">Every constraint expresses itself in multiple places. The largest marker shows where it lives. The Line™ passes directly through the primary constraint.</p>
+
+  <div class="constraint-map-visual">
+    <div class="constraint-categories">
+      <div class="c-cat minor">
+        <p class="c-cat-label">People</p>
+        <div class="c-dot-wrap"><div class="c-dot" style="width:20px;height:20px;"></div></div>
+        <p class="c-text">Technicians are skilled and experienced. No constraint here — the issue is what the process asks of them, not who they are.</p>
+      </div>
+      <div class="c-cat primary">
+        <div class="primary-badge">Primary Constraint</div>
+        <p class="c-cat-label">Process</p>
+        <div class="c-dot-wrap"><div class="c-dot" style="width:48px;height:48px;"></div></div>
+        <p class="c-text">Estimation has no standardized handoff, no automated data extraction, no structured rules engine. Every job is rebuilt from scratch manually.</p>
+      </div>
+      <div class="c-cat secondary">
+        <p class="c-cat-label">Technology</p>
+        <div class="c-dot-wrap"><div class="c-dot" style="width:30px;height:30px;"></div></div>
+        <p class="c-text">HubSpot, AutoCAD, and E2 ERP share no integration. Data is re-keyed at every handoff. The prior ERP add-on failed because it couldn't read blueprints.</p>
+      </div>
+      <div class="c-cat secondary">
+        <p class="c-cat-label">Data</p>
+        <div class="c-dot-wrap"><div class="c-dot" style="width:26px;height:26px;"></div></div>
+        <p class="c-text">All pricing formulas and material yield optimizations exist exclusively in two engineers' heads — no documented rules, no transferable database.</p>
+      </div>
+      <div class="c-cat minor">
+        <p class="c-cat-label">Decisions</p>
+        <div class="c-dot-wrap"><div class="c-dot" style="width:20px;height:20px;"></div></div>
+        <p class="c-text">Three recurring decisions — hire, discount, or reject — are made under deadline pressure by gut feel because real-time queue visibility doesn't exist.</p>
+      </div>
+    </div>
+    <!-- Line passing through -->
+    <svg class="constraint-line-path" viewBox="0 0 1000 40" fill="none">
+      <path d="M 100 35 C 150 35, 180 20, 200 20 C 220 20, 230 5, 300 5 C 370 5, 380 20, 400 20 C 480 20, 520 30, 600 30 C 680 30, 720 25, 800 25" stroke="#CC2200" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".6"/>
+      <circle cx="300" cy="5" r="4" fill="#CC2200"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ── PAGE 4: FINANCIAL IMPACT ── -->
+<div class="page" id="page-4" data-page="4" style="background:var(--paper);">
+  <span class="page-num">Page 04</span>
+  <p class="pg-eyebrow">Revenue Leakage Analysis™</p>
+  <h2 class="pg-h serif">What this constraint is costing Meridian.</h2>
+  <p class="pg-body">Directional estimates based on Meridian's stated figures and a 26–50 person custom manufacturing operation. These are working orders of magnitude, not audited figures. The methodology is conservative. The $600K–$800K lost bid figure was client-confirmed.</p>
+
+  <table class="leakage-table">
+    <thead><tr><th>Source of Leakage</th><th>Notes</th><th>Est. Annual Impact</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Lost Bid Revenue</strong></td><td>15–20 high-value bids lost annually to faster competitors. Client-confirmed figure. 48-hour competitors vs. Meridian's 5–7 day turnaround.</td><td>$600K–$800K</td></tr>
+      <tr><td><strong>Margin Erosion on Won Jobs</strong></td><td>Rushed last-minute spreadsheet calculations produce 5–10% margin compression on completed jobs. Estimated 30% of jobs affected.</td><td>$60K–$125K</td></tr>
+      <tr><td><strong>Founder Time Cost</strong></td><td>Estimated 8–10 hrs/week of founder time diverted from $5.5M growth strategy to manual pricing approvals and escalation firefighting.</td><td>$80K–$150K</td></tr>
+      <tr><td><strong>Capacity Ceiling</strong></td><td>Current estimation velocity caps total biddable projects. The larger commercial real estate opportunities in Q39 cannot be pursued because the queue is already at capacity.</td><td>$200K–$400K</td></tr>
+    </tbody>
+  </table>
+  <div class="leakage-total">
+    <p class="lt-label">Potential Recoverable Value</p>
+    <p class="lt-val">$940K–$1.475M / year</p>
+  </div>
+</div>
+
+<!-- ── PAGE 5: AI OPPORTUNITY ARCHITECTURE ── -->
+<div class="page" id="page-5" data-page="5">
+  <span class="page-num">Page 05</span>
+  <p class="pg-eyebrow">AI Opportunity Architecture™</p>
+  <h2 class="pg-h serif">Where AI creates leverage at Meridian.</h2>
+  <p class="pg-body" style="margin-bottom:28px;">Three specific AI implementations — sequenced by impact and implementation readiness. Opportunity 01 directly addresses The Line.</p>
+
+  <div class="opp-card primary">
+    <p class="opp-card-num">Opportunity 01 — Highest Priority</p>
+    <p class="opp-card-title">AI Blueprint Parsing and Estimation Draft Engine</p>
+    <div class="opp-grid">
+      <div><p class="opp-field-label">Constraint</p><p class="opp-field-val">Manual blueprint review and specification extraction requiring a senior engineer's full attention for every single inbound RFP — creating the 5–7 day bottleneck.</p></div>
+      <div><p class="opp-field-label">AI Opportunity</p><p class="opp-field-val">AI document intelligence parses incoming blueprint PDFs, extracts dimensions and material specs automatically, and generates a draft bill of materials and cost estimate within hours.</p></div>
+      <div><p class="opp-field-label">Current State</p><p class="opp-field-val">Sales emails a blueprint PDF to engineering. Engineer manually reads it, extracts specifications by hand, builds a cost estimate in a spreadsheet. 5–7 business days per project.</p></div>
+      <div><p class="opp-field-label">Future State</p><p class="opp-field-val">AI generates a draft estimation brief within hours. Engineer reviews, validates, and approves — 60–90 minutes vs. 6–8 hours. Proposal delivered to contractor within 48 hours.</p></div>
+      <div><p class="opp-field-label">Estimated Outcome</p><p class="opp-field-val"><strong>Turnaround drops from 5–7 days to under 48 hours.</strong> Bidding capacity increases 40–60% without new headcount. Positions Meridian to recover $600K–$800K in currently-lost bids.</p></div>
+      <div><p class="opp-field-label">Recommended Approach</p><p class="opp-field-val">AI-native document intelligence (Azure Document Intelligence, AWS Textract with custom models, or purpose-built manufacturing estimation AI) layered on blueprint intake workflow. Pricing rules database must be built first from engineers' institutional knowledge.</p></div>
+    </div>
+    <div class="opp-badges">
+      <span class="opp-badge badge-impact-high">Impact: High</span>
+      <span class="opp-badge badge-diff-med">Difficulty: Medium</span>
+      <span class="opp-badge badge-time">Time to Value: 60–90 days</span>
+    </div>
+  </div>
+
+  <div class="opp-card secondary" style="margin-top:3px;">
+    <p class="opp-card-num">Opportunity 02</p>
+    <p class="opp-card-title">HubSpot-to-ERP Automated Data Bridge</p>
+    <div class="opp-grid">
+      <div><p class="opp-field-label">Constraint</p><p class="opp-field-val">Zero integration between HubSpot CRM and E2 Shop System ERP forces manual data re-keying at every handoff, introducing errors that erode project margins 5–10%.</p></div>
+      <div><p class="opp-field-label">AI Opportunity</p><p class="opp-field-val">Automated middleware integration pushes HubSpot deal data directly into E2 ERP when a deal advances to estimation. Approved figures push back automatically for proposal generation.</p></div>
+      <div><p class="opp-field-label">Estimated Outcome</p><p class="opp-field-val"><strong>Eliminates $60K–$125K annual margin compression</strong> from data-entry errors. Reduces per-project administrative time by 2–3 hours across sales and engineering teams.</p></div>
+      <div><p class="opp-field-label">Recommended Approach</p><p class="opp-field-val">Middleware integration via Make.com or Zapier. HubSpot has a robust API; E2 ERP has integration capabilities. Standardize field mapping first — this forces handoff documentation as a byproduct.</p></div>
+    </div>
+    <div class="opp-badges">
+      <span class="opp-badge badge-impact-high">Impact: High</span>
+      <span class="opp-badge badge-diff-low">Difficulty: Low-Medium</span>
+      <span class="opp-badge badge-time">Time to Value: 30–45 days</span>
+    </div>
+  </div>
+
+  <div class="opp-card secondary" style="margin-top:3px;">
+    <p class="opp-card-num">Opportunity 03</p>
+    <p class="opp-card-title">AI Estimation Queue Dashboard and RFP Triage</p>
+    <div class="opp-grid">
+      <div><p class="opp-field-label">Constraint</p><p class="opp-field-val">No real-time visibility into active estimation queue. RFP prioritization decisions made under deadline pressure by gut feel — consistently requiring founder intervention.</p></div>
+      <div><p class="opp-field-label">AI Opportunity</p><p class="opp-field-val">Live operations dashboard showing active blueprint count, time-in-queue, and trailing turnaround speed. AI-generated RFP scoring ranks opportunities by projected margin, complexity, and strategic fit.</p></div>
+      <div><p class="opp-field-label">Estimated Outcome</p><p class="opp-field-val"><strong>Eliminates founder intervention on routine RFP prioritization.</strong> Returns estimated 4–6 hours/week of founder time to strategic growth activities. Reduces arbitrary discount approvals under pressure.</p></div>
+      <div><p class="opp-field-label">Recommended Approach</p><p class="opp-field-val">Built within HubSpot's existing reporting layer or a lightweight tool (Airtable, Notion). Start with a manual RFP scoring rubric at Day 30; automate it into a dashboard at Day 60. Lowest technical complexity of the three opportunities.</p></div>
+    </div>
+    <div class="opp-badges">
+      <span class="opp-badge badge-impact-high">Impact: Medium-High</span>
+      <span class="opp-badge badge-diff-low">Difficulty: Low</span>
+      <span class="opp-badge badge-time">Time to Value: 30 days</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── PAGE 6: RISK MAP ── -->
+<div class="page" id="page-6" data-page="6" style="background:var(--paper);">
+  <span class="page-num">Page 06</span>
+  <p class="pg-eyebrow">Risk Map™</p>
+  <h2 class="pg-h serif">What to watch, protect, and address before scaling.</h2>
+
+  <div class="risk-item">
+    <div>
+      <p class="risk-title">Senior Engineer Departure</p>
+      <p class="risk-body">If either of Meridian's two senior layout engineers leaves, bidding capacity drops an estimated 50% overnight. All pricing formulas, material yield optimizations, and structural tolerance calculations exist exclusively in their heads — not in any documented system. This is not a talent risk. It is a business continuity risk. A single resignation letter could halt the pipeline for 60–90 days. The pricing rules database capture in Opportunity 01 is the direct mitigation — and it's the prerequisite for every AI implementation on this roadmap.</p>
+    </div>
+    <div class="risk-tags">
+      <span class="risk-tag rt-prob-med" style="background:rgba(180,100,0,.08);color:#7a4400;">Probability: Medium</span>
+      <span class="risk-tag rt-sev-crit">Severity: Critical</span>
+    </div>
+  </div>
+
+  <div class="risk-item">
+    <div>
+      <p class="risk-title">National Competitor Account Capture</p>
+      <p class="risk-body">This is already happening. National sign manufacturers are actively entering the Pacific Northwest market and winning Meridian's legacy accounts through speed-to-quote alone. Each lost legacy account represents not just immediate revenue, but years of relationship capital. Legacy account churn accelerates as national competitors demonstrate consistent 24–48 hour quoting on the same project types. This risk cannot be mitigated by effort — only by infrastructure.</p>
+    </div>
+    <div class="risk-tags">
+      <span class="risk-tag rt-prob-high">Probability: High</span>
+      <span class="risk-tag rt-sev-crit">Severity: High</span>
+    </div>
+  </div>
+
+  <div class="risk-item">
+    <div>
+      <p class="risk-title">Engineering Team Rejection of New Tools</p>
+      <p class="risk-body">The engineering team is cautious (4/10 on AI enthusiasm), deeply skeptical from the prior ERP failure, and will reject any solution that feels like a "bloated IT project." Their skepticism is earned — they watched an expensive tool get abandoned after two months. A second failed implementation would create lasting resistance that could set the automation roadmap back 2–3 years. The 30/60/90 plan is sequenced specifically to address this risk: produce visible relief before introducing any new tool.</p>
+    </div>
+    <div class="risk-tags">
+      <span class="risk-tag rt-prob-med" style="background:rgba(180,100,0,.08);color:#7a4400;">Probability: Medium</span>
+      <span class="risk-tag rt-sev-high">Severity: High</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── PAGE 7: EXECUTIVE DECISIONS ── -->
+<div class="page" id="page-7" data-page="7">
+  <span class="page-num">Page 07</span>
+  <p class="pg-eyebrow">Executive Decisions Required™</p>
+  <h2 class="pg-h serif">Three decisions only leadership can make.</h2>
+  <p class="pg-body" style="margin-bottom:28px;">These are not recommendations. They are decisions that are currently unmade — and whose absence is part of what is creating the constraint.</p>
+
+  <div class="decision-card">
+    <p class="decision-num">Decision 01</p>
+    <p class="decision-q">Will you invest the next 30 days in structured knowledge capture with your senior engineers before purchasing any new tool?</p>
+    <p class="decision-body">The pricing rules database — extracting your engineers' formulas, yield optimizations, and structural tolerance calculations into a documented format — is the prerequisite for every AI implementation on this roadmap. Without it, any blueprint parsing tool will produce outputs engineers will correctly identify as wrong and reject. This is the step the prior ERP tool skipped. That's exactly why it failed.</p>
+    <div class="decision-options">
+      <div class="decision-opt yes">Yes — Build the foundation first</div>
+      <div class="decision-opt">No — History of ERP failure repeats</div>
+    </div>
+  </div>
+
+  <div class="decision-card" style="margin-top:3px;">
+    <p class="decision-num">Decision 02</p>
+    <p class="decision-q">Will you permanently remove yourself from the routine pricing approval workflow?</p>
+    <p class="decision-body">You are currently functioning as the circuit breaker between sales and engineering on every high-value rushed bid. This keeps deals moving. It also keeps you from the work only you can do: positioning Meridian to capture the larger commercial real estate developments in your stated priorities. Every hour you spend approving a $40K rushed bid is an hour not spent pursuing a $400K new development relationship. The 30/60/90 plan eliminates the need for this — but you have to decide to stop being the fix.</p>
+    <div class="decision-options">
+      <div class="decision-opt yes">Yes — Calendar clears for $5.5M strategy</div>
+      <div class="decision-opt">No — Remain the bottleneck regardless of tools</div>
+    </div>
+  </div>
+
+  <div class="decision-card" style="margin-top:3px;">
+    <p class="decision-num">Decision 03</p>
+    <p class="decision-q">Will you position 48-hour quoting as a public competitive differentiator once the capability exists?</p>
+    <p class="decision-body">National competitors are winning on speed. Once Opportunity 01 is implemented, Meridian can win on speed AND quality — a combination no national manufacturer can easily replicate. But this requires committing to the 48-hour standard operationally before announcing it commercially, and then actively using it in sales outreach, RFP responses, and contractor relationship conversations.</p>
+    <div class="decision-options">
+      <div class="decision-opt yes">Yes — Speed becomes a differentiator</div>
+      <div class="decision-opt">No — Operational improvement stays internal</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PAGE 8: WORKING EXAMPLES ── -->
+<div class="page" id="page-8" data-page="8" style="background:var(--paper);">
+  <span class="page-num">Page 08</span>
+  <p class="pg-eyebrow">Working Examples™</p>
+  <h2 class="pg-h serif">This is what it looks like. Not described. Shown.</h2>
+  <p class="pg-body" style="margin-bottom:28px;">Below is a sample AI-generated estimation brief for a hypothetical inbound Meridian RFP — the actual artifact an engineer would receive instead of a raw PDF email. Engineers validate and approve rather than build from scratch.</p>
+
+  <div class="example-doc">
+    <div class="example-doc-header">
+      <div>
+        <p class="example-doc-title">MERIDIAN ARCHITECTURAL SIGNAGE</p>
+        <p style="font-size:10px;color:var(--gray);margin-top:4px;letter-spacing:.06em;">AI-Assisted Estimation Brief — Auto-Generated from Blueprint Intake</p>
+      </div>
+      <span class="example-doc-badge">For Engineering Review</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:20px;">
+      <div>
+        <p style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:6px;">Project</p>
+        <p style="font-size:13px;color:var(--bone);">Cascadia Tower — Lobby & Wayfinding Package</p>
+      </div>
+      <div>
+        <p style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:6px;">Client</p>
+        <p style="font-size:13px;color:var(--bone);">Pacific Northwest Development Group</p>
+      </div>
+      <div>
+        <p style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:6px;">Quote Deadline</p>
+        <p style="font-size:13px;color:var(--red);font-weight:500;">[Date + 48hrs]</p>
+      </div>
+      <div>
+        <p style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:6px;">HubSpot Deal ID</p>
+        <p style="font-size:13px;color:var(--bone);">#4471</p>
+      </div>
+    </div>
+
+    <p style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:10px;">Extracted Specifications (AI-parsed from blueprints)</p>
+    <table class="example-table">
+      <thead><tr><th>Element</th><th>Specification</th><th>Confidence</th></tr></thead>
+      <tbody>
+        <tr><td>Primary lobby ID sign</td><td>48" × 12" — brushed aluminum face, LED backlit</td><td class="conf-high">High</td></tr>
+        <tr><td>Directional wayfinding signs (qty: 14)</td><td>18" × 6" — powder-coated aluminum, no illumination</td><td class="conf-high">High</td></tr>
+        <tr><td>Floor ID plaques (qty: 8)</td><td>4" × 8" — stainless steel face, ADA-compliant tactile</td><td class="conf-high">High</td></tr>
+        <tr><td>Exterior building ID</td><td>72" × 18" — weathered steel face, exterior-rated</td><td class="conf-med">Medium — verify wind-load zone</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin:16px 0 10px;">Baseline Quote Range (Pre-Markup)</p>
+    <div style="display:flex;gap:24px;align-items:center;margin-bottom:16px;">
+      <div><p style="font-size:9px;color:var(--gray);margin-bottom:4px;">ESTIMATED RANGE</p><p style="font-size:22px;font-weight:500;color:var(--bone);">$XX,XXX – $XX,XXX</p></div>
+      <div><p style="font-size:9px;color:var(--gray);margin-bottom:4px;">RECOMMENDED MARKUP</p><p style="font-size:22px;font-weight:500;color:var(--bone);">42%</p></div>
+      <div><p style="font-size:9px;color:var(--gray);margin-bottom:4px;">PROPOSED CLIENT PRICE</p><p style="font-size:22px;font-weight:500;color:var(--red);">$XX,XXX – $XX,XXX</p></div>
+    </div>
+
+    <div class="example-actions">
+      <p class="example-actions-label">Engineer Action Required — Est. 60–90 min</p>
+      <div class="example-action-item"><div class="example-checkbox"></div><span style="color:var(--bone);">Validate material specifications against blueprint dimensions</span></div>
+      <div class="example-action-item"><div class="example-checkbox"></div><span style="color:var(--bone);">Confirm wind-load tolerance for exterior sign (Zone 3 Pacific Northwest)</span></div>
+      <div class="example-action-item"><div class="example-checkbox"></div><span style="color:var(--bone);">Approve or adjust material yield calculations</span></div>
+      <div class="example-action-item"><div class="example-checkbox"></div><span style="color:var(--bone);">Sign off on final bill of materials before proposal release</span></div>
+    </div>
+
+    <p style="font-size:10px;color:var(--gray);margin-top:16px;padding-top:12px;border-top:1px solid rgba(245,244,240,.08);">AI-generated from architectural blueprints using Meridian pricing rules database v1.0. Engineer review and sign-off required before release. Not a final quote.</p>
+  </div>
+</div>
+
+<!-- ── PAGE 9: 30/60/90 ── -->
+<div class="page" id="page-9" data-page="9">
+  <span class="page-num">Page 09</span>
+  <p class="pg-eyebrow">The 30/60/90 Day Path™</p>
+  <h2 class="pg-h serif">Sequenced. Prioritized. No ambiguity about what comes first.</h2>
+  <p class="pg-body" style="margin-bottom:8px;"><strong>Note:</strong> Given the engineering team's prior experience with a failed tool implementation, the first 30 days produce something tangible and useful before any new technology is introduced. Trust is built before adoption is requested.</p>
+
+  <div class="path-grid">
+    <div class="path-col path-col-30">
+      <p class="path-days">30 Days</p>
+      <p class="path-title">Foundation — no new tools</p>
+      <div class="path-actions">
+        <div class="path-action"><span class="path-marker">→</span><span>Structured knowledge-capture sessions with both senior engineers. Document pricing formulas, material yield calculations, and structural tolerance rules into a living Estimation Rules Document. Frame as "building Meridian's IP."</span></div>
+        <div class="path-action"><span class="path-marker">→</span><span>Standardize the sales-to-engineering handoff with a one-page RFP Intake Form. Required fields force clarity before any blueprint enters the queue. Immediate 30–40% reduction in back-and-forth.</span></div>
+        <div class="path-action"><span class="path-marker">→</span><span>Build the RFP scoring rubric (paper version). Sales triages inbound opportunities before escalation. Eliminates low-margin rush jobs consuming founder and engineering time.</span></div>
+      </div>
+    </div>
+    <div class="path-col path-col-60">
+      <p class="path-days">60 Days</p>
+      <p class="path-title">Constraint reduction</p>
+      <div class="path-actions">
+        <div class="path-action"><span class="path-marker">→</span><span>Select and configure AI blueprint parsing tool using the Estimation Rules Document as the foundation. Pilot on 5–10 archived blueprint packages. Validate AI estimates against engineers' manual calculations.</span></div>
+        <div class="path-action"><span class="path-marker">→</span><span>Build HubSpot-to-E2 ERP integration via Make.com middleware. Standardize field mapping. Eliminate manual data re-keying at every handoff.</span></div>
+        <div class="path-action"><span class="path-marker">→</span><span>Deliver the first 48-hour quote on a real inbound RFP using the new workflow. Document it. Show the team.</span></div>
+      </div>
+    </div>
+    <div class="path-col path-col-90">
+      <p class="path-days">90 Days</p>
+      <p class="path-title">Scale preparation</p>
+      <div class="path-actions">
+        <div class="path-action"><span class="path-marker">→</span><span>Full deployment of AI estimation brief workflow on all standard inbound RFPs. Engineers reviewing and approving drafts rather than building from scratch.</span></div>
+        <div class="path-action"><span class="path-marker">→</span><span>Launch the estimation queue dashboard. Real-time visibility into active blueprint count, time-in-queue, and trailing turnaround speed. RFP scoring model automated into HubSpot.</span></div>
+        <div class="path-action"><span class="path-marker">→</span><span>Remove founder from standard pricing approval loop. Define escalation threshold (e.g., custom bids above $150K or non-standard structural requirements). Everything below flows without intervention.</span></div>
+        <div class="path-action"><span class="path-marker">→</span><span>Re-audit speed-to-quote metrics. Baseline: 5–7 days. 90-day target: consistent sub-48-hour turnaround on standard RFPs.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PAGES 10/11: TWO FUTURES ── -->
+<div class="page" id="page-10" data-page="10" style="padding:0;max-width:100%;">
+  <div class="ifthen-grid">
+    <div class="ifthen-nothing">
+      <p class="ifthen-label">If nothing changes</p>
+      <p class="ifthen-title serif">The constraint keeps running the company.</p>
+      <p class="ifthen-body">Meridian's revenue has already plateaued and declined — $4.2M to $4.15M — despite no reduction in inbound demand. This is the early signature of a capacity ceiling, not a cyclical dip. National competitors are not slowing their Pacific Northwest expansion. Legacy client relationships that have absorbed the 5–7 day turnaround out of loyalty are not infinitely patient. At current trajectory, Meridian will continue to lose 15–20 high-value bids annually, erode realized margins on won jobs through rushed calculations, and remain dependent on two senior engineers whose departure would halt the business. The $5.5M revenue target does not become reachable through sales effort alone when the bottleneck is in estimation.</p>
+    </div>
+    <div class="ifthen-executed">
+      <p class="ifthen-label">If this is executed</p>
+      <p class="ifthen-title serif">This is the same business — with the line removed.</p>
+      <p class="ifthen-body">A sales rep uploads a new architectural blueprint at 9am and the AI-generated estimation brief is ready by noon. The senior engineer spends 60 minutes reviewing and approving — not six hours building from scratch. The proposal reaches the contractor by end of day, while the deal is still hot. The founder's calendar has no pricing escalations. The estimation queue dashboard shows three active projects, all on track. The engineering team — the skeptics who watched the last tool fail — are the ones defending the new workflow because it actually made their jobs better. That's what $5.5M looks like.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── FINAL PAGE ── -->
+<div class="final-page">
+  <p class="final-logo-word">Sightline</p>
+  <p class="final-logo-ai">AI</p>
+
+  <svg width="200" height="60" viewBox="0 0 200 60" fill="none" aria-hidden="true" style="margin-bottom:40px;">
+    <path d="M 10 52 C 40 44, 70 32, 100 22 C 130 12, 160 6, 195 2" stroke="#CC2200" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <circle cx="195" cy="2" r="4" fill="#CC2200"/>
+  </svg>
+
+  <p class="final-promise-1 serif">We find the line.</p>
+  <p class="final-promise-2 serif">You make the move.</p>
+
+  <p class="final-footer">
+    Sightline AI · Constraint Intelligence™<br/>
+    Prepared by Janae Gilliam · [Date]<br/>
+    This report is confidential and prepared exclusively for Meridian Architectural Signage.
+  </p>
+</div>
+
+<script>
+// ── LINE REVEAL ANIMATION ──
+const path = document.getElementById('the-line-path');
+const statusText = document.getElementById('line-status-text');
+const dotCurrent = document.getElementById('dot-current');
+const dotConstraint = document.getElementById('dot-constraint');
+const dotClarity = document.getElementById('dot-clarity');
+const labelCurrent = document.getElementById('label-current');
+const labelConstraint = document.getElementById('label-constraint');
+const labelClarity = document.getElementById('label-clarity');
+
+const checkLabels = [
+  'Analyzing revenue signals...',
+  'Mapping customer friction...',
+  'Scoring constraint candidates...',
+  'Identifying dependency patterns...',
+  'Calculating financial impact...',
+  'The Line has been identified.'
+];
+
+let phase = 0;
+const totalLength = 800;
+
+function animateLine() {
+  // Phase 1: draw line
+  let start = null;
+  const duration = 3000;
+
+  function step(timestamp) {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const offset = totalLength * (1 - progress);
+    path.style.strokeDashoffset = offset;
+
+    // Show dots at milestones
+    if (progress > 0.05) { dotCurrent.style.opacity = 1; labelCurrent.classList.add('show'); }
+    if (progress > 0.48) { dotConstraint.style.opacity = 1; labelConstraint.classList.add('show'); }
+    if (progress > 0.95) { dotClarity.style.opacity = 1; labelClarity.classList.add('show'); document.getElementById('dot-clarity-anim').beginElement(); }
+
+    // Update status text
+    const textIndex = Math.floor(progress * (checkLabels.length - 1));
+    if (textIndex < checkLabels.length - 1) {
+      statusText.textContent = checkLabels[textIndex];
+    }
+
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      statusText.textContent = checkLabels[checkLabels.length - 1];
+      statusText.classList.add('identified');
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+// Start animation after brief delay
+setTimeout(animateLine, 800);
+
+// ── JOURNEY BAR SCROLL TRACKING ──
+const pages = document.querySelectorAll('.page[data-page]');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const p = entry.target.getAttribute('data-page');
+      for (let i = 1; i <= 10; i++) {
+        const dot = document.getElementById('jd-' + i);
+        const label = document.getElementById('jl-' + i);
+        const seg = document.getElementById('js-' + i);
+        if (!dot) continue;
+        if (i < parseInt(p)) {
+          dot.classList.add('active'); dot.style.background = '#CC2200';
+          if (label) { label.classList.remove('active'); label.style.color = '#CC2200'; }
+          if (seg) seg.classList.add('done');
+        } else if (i === parseInt(p)) {
+          dot.classList.add('active');
+          if (label) label.classList.add('active');
+        } else {
+          dot.classList.remove('active'); dot.style.background = '';
+          if (label) { label.classList.remove('active'); label.style.color = ''; }
+          if (seg) seg.classList.remove('done');
+        }
+      }
+    }
+  });
+}, { threshold: 0.3 });
+
+pages.forEach(p => observer.observe(p));
+</script>
+</body>
+</html>
