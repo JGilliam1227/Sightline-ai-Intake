@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sightline Friction Scan™ — Find Where Your Business Is Losing Ground</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --black:#0A0A0A;--red:#CC2200;--bone:#F5F4F0;--paper:#FAFAF8;
+  --ink:#1A1A18;--soft:#5A5955;--gray:#888780;--rule:rgba(10,10,10,.1);
+  --people:#E8F0FB;--peopleT:#1A3A6C;
+  --process:#FAE8E5;--processT:#A32000;
+  --tech:#FDF3E7;--techT:#7A4400;
+  --data:#EAF4EE;--dataT:#1A5C2A;
+  --decisions:#F3EEF8;--decisionsT:#4A1A6C;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh;}
+.serif{font-family:'Source Serif 4',Georgia,serif;}
+
+/* SCREENS */
+.screen{display:none;min-height:100vh;}
+.screen.active{display:flex;flex-direction:column;}
+
+/* ── LANDING SCREEN ── */
+#screen-landing{background:var(--black);align-items:center;justify-content:center;text-align:center;padding:60px 24px;position:relative;overflow:hidden;}
+.landing-top-rule{position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);}
+.landing-bottom-rule{position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--red);}
+.landing-logo{margin-bottom:48px;}
+.landing-logo-word{font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);}
+.landing-logo-ai{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--red);}
+.landing-eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:20px;}
+.landing-h1{font-size:clamp(32px,5vw,56px);font-weight:400;letter-spacing:-1.5px;line-height:1.08;color:#fff;margin-bottom:16px;}
+.landing-h1 em{color:var(--red);font-style:normal;}
+.landing-sub{font-size:16px;font-weight:300;color:var(--gray);line-height:1.7;max-width:520px;margin:0 auto 40px;}
+.landing-meta{display:flex;gap:28px;justify-content:center;margin-bottom:48px;}
+.landing-meta-item{text-align:center;}
+.landing-meta-num{font-size:22px;font-weight:600;color:var(--red);letter-spacing:-1px;}
+.landing-meta-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-top:2px;}
+.btn-start{background:var(--red);color:#fff;border:none;padding:16px 40px;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:opacity .2s;}
+.btn-start:hover{opacity:.85;}
+.landing-promise{margin-top:28px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(136,135,128,.4);}
+
+/* ── PROGRESS BAR ── */
+.progress-bar-wrap{background:var(--black);padding:12px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;}
+.progress-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);white-space:nowrap;}
+.progress-track{flex:1;height:3px;background:rgba(255,255,255,.1);}
+.progress-fill{height:3px;background:var(--red);transition:width .4s ease;}
+.progress-pct{font-size:11px;font-weight:600;color:var(--red);min-width:32px;text-align:right;}
+
+/* ── QUESTION SCREEN ── */
+#screen-questions{background:var(--paper);}
+.q-section-header{padding:32px 24px 0;max-width:680px;margin:0 auto;width:100%;}
+.q-section-eyebrow{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:6px;}
+.q-section-title{font-size:22px;font-weight:400;letter-spacing:-.3px;color:var(--ink);}
+.q-section-desc{font-size:13px;font-weight:300;color:var(--soft);line-height:1.65;margin-top:8px;}
+.question-wrap{padding:24px;max-width:680px;margin:0 auto;width:100%;}
+.question-card{background:#fff;border:1px solid var(--rule);padding:28px;margin-bottom:3px;position:relative;}
+.question-card.answered{border-left:3px solid var(--red);}
+.q-num{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:8px;}
+.q-text{font-size:15px;font-weight:400;color:var(--ink);line-height:1.5;margin-bottom:20px;}
+.q-options{display:flex;flex-direction:column;gap:8px;}
+.q-option{display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid var(--rule);cursor:pointer;transition:all .15s;background:var(--paper);}
+.q-option:hover{border-color:var(--red);background:rgba(204,34,0,.03);}
+.q-option.selected{border-color:var(--red);background:rgba(204,34,0,.06);}
+.q-option-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--gray);flex-shrink:0;transition:all .15s;position:relative;}
+.q-option.selected .q-option-dot{border-color:var(--red);background:var(--red);}
+.q-option.selected .q-option-dot::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:6px;height:6px;border-radius:50%;background:#fff;}
+.q-option-text{font-size:13px;font-weight:300;color:var(--soft);}
+.q-option.selected .q-option-text{color:var(--ink);font-weight:400;}
+
+/* Scale options */
+.q-scale{display:flex;gap:6px;align-items:center;}
+.scale-label-left{font-size:10px;color:var(--gray);white-space:nowrap;flex-shrink:0;}
+.scale-label-right{font-size:10px;color:var(--gray);white-space:nowrap;flex-shrink:0;}
+.scale-options{display:flex;gap:6px;flex:1;justify-content:center;}
+.scale-btn{width:44px;height:44px;border:1px solid var(--rule);background:var(--paper);cursor:pointer;font-size:13px;font-weight:500;color:var(--soft);transition:all .15s;display:flex;align-items:center;justify-content:center;}
+.scale-btn:hover{border-color:var(--red);color:var(--red);}
+.scale-btn.selected{background:var(--red);border-color:var(--red);color:#fff;}
+
+.q-nav{display:flex;gap:12px;padding:16px 24px 32px;max-width:680px;margin:0 auto;width:100%;}
+.btn-prev{background:none;border:1px solid var(--rule);padding:12px 24px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);cursor:pointer;transition:all .2s;}
+.btn-prev:hover{border-color:var(--ink);color:var(--ink);}
+.btn-next{background:var(--black);border:none;padding:12px 32px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#fff;cursor:pointer;transition:opacity .2s;flex:1;}
+.btn-next:hover{opacity:.8;}
+.btn-next:disabled{opacity:.3;cursor:not-allowed;}
+
+/* ── EMAIL GATE SCREEN ── */
+#screen-gate{background:var(--black);align-items:center;justify-content:center;padding:60px 24px;text-align:center;}
+.gate-eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:16px;}
+.gate-h{font-size:clamp(24px,4vw,40px);font-weight:400;color:#fff;letter-spacing:-.5px;line-height:1.15;margin-bottom:12px;}
+.gate-h em{color:var(--red);font-style:normal;}
+.gate-sub{font-size:14px;font-weight:300;color:var(--gray);line-height:1.7;max-width:480px;margin:0 auto 36px;}
+.gate-preview{display:flex;gap:3px;justify-content:center;margin-bottom:36px;flex-wrap:wrap;}
+.gate-preview-item{padding:8px 16px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;}
+.gate-form{display:flex;flex-direction:column;gap:12px;max-width:380px;margin:0 auto;}
+.gate-input{padding:14px 16px;font-size:14px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:#fff;outline:none;font-family:inherit;transition:border-color .2s;}
+.gate-input::placeholder{color:rgba(136,135,128,.5);}
+.gate-input:focus{border-color:var(--red);}
+.btn-gate{background:var(--red);color:#fff;border:none;padding:16px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:opacity .2s;}
+.btn-gate:hover{opacity:.85;}
+.gate-note{font-size:10px;color:rgba(136,135,128,.4);margin-top:8px;}
+
+/* ── RESULTS SCREEN ── */
+#screen-results{background:var(--paper);}
+.results-header{background:var(--black);padding:48px 24px;text-align:center;}
+.results-eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:16px;}
+.results-h{font-size:clamp(24px,4vw,40px);font-weight:400;color:#fff;letter-spacing:-.5px;line-height:1.15;margin-bottom:8px;}
+.results-sub{font-size:14px;font-weight:300;color:var(--gray);margin-top:8px;}
+
+/* Overall friction score */
+.overall-score-wrap{max-width:680px;margin:0 auto;padding:32px 24px 0;}
+.overall-card{background:#fff;border:1px solid var(--rule);padding:28px;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;}
+.overall-score-circle{width:88px;height:88px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;}
+.overall-score-num{font-size:28px;font-weight:700;line-height:1;}
+.overall-score-label{font-size:8px;letter-spacing:.1em;text-transform:uppercase;margin-top:2px;text-align:center;}
+.overall-right{}
+.overall-title{font-size:16px;font-weight:500;color:var(--ink);margin-bottom:6px;}
+.overall-desc{font-size:13px;font-weight:300;color:var(--soft);line-height:1.65;}
+
+/* Category scores */
+.categories-wrap{max-width:680px;margin:0 auto;padding:16px 24px;}
+.categories-title{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;}
+.category-card{padding:20px;margin-bottom:3px;display:grid;grid-template-columns:120px 1fr auto;gap:16px;align-items:center;}
+.cat-name{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
+.cat-bar-wrap{height:6px;background:rgba(10,10,10,.08);border-radius:0;}
+.cat-bar{height:6px;border-radius:0;transition:width 1.2s ease;}
+.cat-score{font-size:16px;font-weight:700;min-width:40px;text-align:right;}
+
+/* Insights */
+.insights-wrap{max-width:680px;margin:0 auto;padding:0 24px 24px;}
+.insights-title{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;}
+.insight-card{padding:18px 20px;margin-bottom:3px;border-left:3px solid var(--red);}
+.insight-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:6px;}
+.insight-text{font-size:13px;font-weight:300;color:var(--soft);line-height:1.65;}
+.insight-text strong{font-weight:500;color:var(--ink);}
+
+/* CTA */
+.results-cta{background:var(--black);padding:48px 24px;text-align:center;margin-top:16px;}
+.cta-eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:16px;}
+.cta-h{font-size:clamp(22px,3.5vw,36px);font-weight:400;color:#fff;letter-spacing:-.4px;line-height:1.2;margin-bottom:12px;}
+.cta-sub{font-size:14px;font-weight:300;color:var(--gray);line-height:1.7;max-width:480px;margin:0 auto 32px;}
+.cta-options{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-cta-primary{background:var(--red);color:#fff;border:none;padding:16px 36px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-cta-secondary{background:none;color:var(--bone);border:1px solid rgba(255,255,255,.2);padding:16px 36px;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;transition:border-color .2s;}
+.btn-cta-secondary:hover{border-color:rgba(255,255,255,.5);}
+.results-footer{padding:20px 24px;text-align:center;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(136,135,128,.4);}
+
+@media(max-width:600px){
+  .landing-meta{flex-direction:column;gap:16px;}
+  .overall-card{grid-template-columns:1fr;text-align:center;}
+  .overall-score-circle{margin:0 auto;}
+  .category-card{grid-template-columns:1fr auto;gap:8px;}
+  .cat-bar-wrap{display:none;}
+  .cta-options{flex-direction:column;align-items:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ SCREEN 1: LANDING ══ -->
+<div class="screen active" id="screen-landing">
+  <div class="landing-top-rule"></div>
+  <div class="landing-logo">
+    <p class="landing-logo-word">Sightline</p>
+    <p class="landing-logo-ai">AI</p>
+  </div>
+  <p class="landing-eyebrow">Friction Scan™</p>
+  <h1 class="landing-h1 serif">Your business is losing ground<br/>somewhere. Let's find <em>where.</em></h1>
+  <p class="landing-sub">12 questions. 3 minutes. Instant results across 5 operational dimensions. No fluff, no sales pitch — just a clear picture of where friction is costing you.</p>
+  <div class="landing-meta">
+    <div class="landing-meta-item"><p class="landing-meta-num">12</p><p class="landing-meta-label">Questions</p></div>
+    <div class="landing-meta-item"><p class="landing-meta-num">3</p><p class="landing-meta-label">Minutes</p></div>
+    <div class="landing-meta-item"><p class="landing-meta-num">5</p><p class="landing-meta-label">Dimensions</p></div>
+    <div class="landing-meta-item"><p class="landing-meta-num">$0</p><p class="landing-meta-label">Cost</p></div>
+  </div>
+  <button class="btn-start" onclick="startScan()">Start My Friction Scan →</button>
+  <p class="landing-promise">We find the line. You make the move. — Sightline AI</p>
+  <div class="landing-bottom-rule"></div>
+</div>
+
+<!-- ══ SCREEN 2: QUESTIONS ══ -->
+<div class="screen" id="screen-questions">
+  <div class="progress-bar-wrap">
+    <span class="progress-label">Friction Scan™</span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <span class="progress-pct" id="progress-pct">0%</span>
+  </div>
+  <div id="question-container"></div>
+  <div class="q-nav">
+    <button class="btn-prev" id="btn-prev" onclick="prevQuestion()" style="display:none;">← Back</button>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()" disabled>Continue →</button>
+  </div>
+</div>
+
+<!-- ══ SCREEN 3: EMAIL GATE ══ -->
+<div class="screen" id="screen-gate">
+  <p class="gate-eyebrow">Friction Identified</p>
+  <h2 class="gate-h serif">Your scores are ready.<br/>See <em>what they mean.</em></h2>
+  <p class="gate-sub">Your Friction Scan is complete. Enter your email to unlock your full results — including which friction category is costing you the most and what to do about it.</p>
+  <div class="gate-preview" id="gate-preview"></div>
+  <div class="gate-form">
+    <input class="gate-input" type="text" id="gate-name" placeholder="First name"/>
+    <input class="gate-input" type="email" id="gate-email" placeholder="Work email address"/>
+    <input class="gate-input" type="text" id="gate-company" placeholder="Company name"/>
+    <button class="btn-gate" onclick="submitGate()">Show My Results →</button>
+    <p class="gate-note">No spam. No sales calls. Just your results.</p>
+  </div>
+</div>
+
+<!-- ══ SCREEN 4: RESULTS ══ -->
+<div class="screen" id="screen-results">
+  <div class="results-header">
+    <p class="results-eyebrow">Friction Scan™ — Results</p>
+    <h2 class="results-h serif" id="results-headline">Your Friction Report</h2>
+    <p class="results-sub" id="results-sub"></p>
+  </div>
+
+  <div class="overall-score-wrap">
+    <div class="overall-card">
+      <div class="overall-score-circle" id="overall-circle">
+        <div>
+          <p class="overall-score-num" id="overall-num">0</p>
+          <p class="overall-score-label">Friction</p>
+        </div>
+      </div>
+      <div class="overall-right">
+        <p class="overall-title" id="overall-title"></p>
+        <p class="overall-desc" id="overall-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="categories-wrap">
+    <p class="categories-title">Friction by Dimension</p>
+    <div id="category-cards"></div>
+  </div>
+
+  <div class="insights-wrap">
+    <p class="insights-title">What This Means for Your Business</p>
+    <div id="insight-cards"></div>
+  </div>
+
+  <div class="results-cta">
+    <p class="cta-eyebrow">The Next Step</p>
+    <h3 class="cta-h serif">Friction shows you <em>where.</em><br/>The Sightline Audit tells you <em>why.</em></h3>
+    <p class="cta-sub">The Friction Scan surfaces where your business experiences drag. The Sightline Audit identifies the single root cause behind it — and what it's costing you in real dollars. Delivered in 24–72 hours.</p>
+    <div class="cta-options">
+      <a href="sightline-ai-audit-sales-page.html" class="btn-cta-primary">Get the Full Audit →</a>
+      <a href="sightline-ai-homepage.html" class="btn-cta-secondary">Learn More</a>
+    </div>
+  </div>
+  <div class="results-footer">Sightline AI · Constraint Intelligence™ · We find the line. You make the move.</div>
+</div>
+
+<script>
+// ══ QUESTION DATA ══
+const questions = [
+  // PEOPLE (2 questions)
+  {
+    id: 'p1', category: 'people', section: 'People',
+    sectionDesc: 'How your team structure and knowledge distribution affect growth.',
+    text: 'If your top 1–2 people were unavailable for 30 days, how would the business perform?',
+    type: 'scale',
+    scaleLeft: 'Would stop completely',
+    scaleRight: 'Would run fine',
+    scores: [5,4,3,2,1] // 1=high friction, 5=low friction (inverted for display)
+  },
+  {
+    id: 'p2', category: 'people', section: 'People',
+    sectionDesc: 'How your team structure and knowledge distribution affect growth.',
+    text: 'How much of your critical operational knowledge is documented vs. living in people\'s heads?',
+    type: 'options',
+    options: [
+      {text: 'Almost all of it is in people\'s heads — nothing is documented', score: 5},
+      {text: 'Most of it is in people\'s heads with minimal documentation', score: 4},
+      {text: 'Some is documented, some isn\'t — inconsistent', score: 3},
+      {text: 'Most is documented, some gaps remain', score: 2},
+      {text: 'Well documented and accessible to the whole team', score: 1},
+    ]
+  },
+  // PROCESS (3 questions)
+  {
+    id: 'pr1', category: 'process', section: 'Process',
+    sectionDesc: 'How your core operational workflows affect speed and quality.',
+    text: 'How often do the same operational problems come up repeatedly — issues you\'ve "solved" before?',
+    type: 'scale',
+    scaleLeft: 'Constantly — same issues weekly',
+    scaleRight: 'Rarely — problems stay solved',
+    scores: [5,4,3,2,1]
+  },
+  {
+    id: 'pr2', category: 'process', section: 'Process',
+    sectionDesc: 'How your core operational workflows affect speed and quality.',
+    text: 'When a new employee joins, how long before they\'re fully productive without hand-holding?',
+    type: 'options',
+    options: [
+      {text: '6+ months — it takes a very long time to get up to speed', score: 5},
+      {text: '3–6 months — lots of informal knowledge transfer needed', score: 4},
+      {text: '1–3 months — some structure but still a lot of shadowing', score: 3},
+      {text: '2–4 weeks — decent process documentation exists', score: 2},
+      {text: 'Under 2 weeks — clear processes and documentation', score: 1},
+    ]
+  },
+  {
+    id: 'pr3', category: 'process', section: 'Process',
+    sectionDesc: 'How your core operational workflows affect speed and quality.',
+    text: 'How would you describe the handoffs between your teams (e.g. sales → operations → delivery)?',
+    type: 'options',
+    options: [
+      {text: 'Chaotic — things fall through the cracks regularly', score: 5},
+      {text: 'Inconsistent — sometimes smooth, sometimes a mess', score: 4},
+      {text: 'Functional but slow — lots of back-and-forth', score: 3},
+      {text: 'Generally smooth with occasional friction', score: 2},
+      {text: 'Clean and standardized — rarely causes delays', score: 1},
+    ]
+  },
+  // TECHNOLOGY (2 questions)
+  {
+    id: 't1', category: 'technology', section: 'Technology',
+    sectionDesc: 'How your tools and systems support or slow your operations.',
+    text: 'How much manual data re-entry happens across your tools (e.g. copying info from one system to another)?',
+    type: 'scale',
+    scaleLeft: 'Constantly — multiple times daily',
+    scaleRight: 'Almost never — systems talk to each other',
+    scores: [5,4,3,2,1]
+  },
+  {
+    id: 't2', category: 'technology', section: 'Technology',
+    sectionDesc: 'How your tools and systems support or slow your operations.',
+    text: 'How would you describe your business\'s relationship with its current tech stack?',
+    type: 'options',
+    options: [
+      {text: 'Painful — tools don\'t work well together and create more work', score: 5},
+      {text: 'Frustrating — we have tools but don\'t use them effectively', score: 4},
+      {text: 'Neutral — tools do the job but we\'re not getting full value', score: 3},
+      {text: 'Mostly good — a few integration gaps but manageable', score: 2},
+      {text: 'Strong — systems are connected and working well', score: 1},
+    ]
+  },
+  // DATA (2 questions)
+  {
+    id: 'd1', category: 'data', section: 'Data',
+    sectionDesc: 'How visibility into your metrics affects decision speed and quality.',
+    text: 'On Monday morning, how quickly can you answer: "What is our current pipeline, capacity, and margin?"',
+    type: 'options',
+    options: [
+      {text: 'I can\'t — I don\'t have easy access to those numbers', score: 5},
+      {text: 'It would take hours of manual work to compile', score: 4},
+      {text: 'I could get it together by end of day with some digging', score: 3},
+      {text: 'I could answer within an hour with some effort', score: 2},
+      {text: 'Instantly — it\'s on a dashboard I check regularly', score: 1},
+    ]
+  },
+  {
+    id: 'd2', category: 'data', section: 'Data',
+    sectionDesc: 'How visibility into your metrics affects decision speed and quality.',
+    text: 'How often do you discover problems in your business after they\'ve already caused damage?',
+    type: 'scale',
+    scaleLeft: 'Often — we\'re always playing catch-up',
+    scaleRight: 'Rarely — we spot issues early',
+    scores: [5,4,3,2,1]
+  },
+  // DECISIONS (3 questions)
+  {
+    id: 'de1', category: 'decisions', section: 'Decisions',
+    sectionDesc: 'How decision-making patterns affect your speed and competitive position.',
+    text: 'How often do you revisit decisions that were already made?',
+    type: 'scale',
+    scaleLeft: 'Constantly — decisions rarely stick',
+    scaleRight: 'Rarely — decisions are made and followed',
+    scores: [5,4,3,2,1]
+  },
+  {
+    id: 'de2', category: 'decisions', section: 'Decisions',
+    sectionDesc: 'How decision-making patterns affect your speed and competitive position.',
+    text: 'How many significant decisions require the founder or CEO to weigh in directly?',
+    type: 'options',
+    options: [
+      {text: 'Almost all of them — I\'m in every significant decision', score: 5},
+      {text: 'Most of them — my team can\'t move without me on anything important', score: 4},
+      {text: 'About half — some things run without me, others don\'t', score: 3},
+      {text: 'A minority — my team handles most things independently', score: 2},
+      {text: 'Very few — my team is fully empowered to decide', score: 1},
+    ]
+  },
+  {
+    id: 'de3', category: 'decisions', section: 'Decisions',
+    sectionDesc: 'How decision-making patterns affect your speed and competitive position.',
+    text: 'When a time-sensitive opportunity appears, how quickly can your business respond?',
+    type: 'scale',
+    scaleLeft: 'Slowly — we often miss the window',
+    scaleRight: 'Quickly — we move faster than competitors',
+    scores: [5,4,3,2,1]
+  },
+];
+
+const categoryConfig = {
+  people:    {label:'People',    color:'var(--people)',    textColor:'var(--peopleT)',    bg:'#E8F0FB'},
+  process:   {label:'Process',   color:'var(--process)',   textColor:'var(--processT)',   bg:'#FAE8E5'},
+  technology:{label:'Technology',color:'var(--tech)',      textColor:'var(--techT)',      bg:'#FDF3E7'},
+  data:      {label:'Data',      color:'var(--data)',      textColor:'var(--dataT)',      bg:'#EAF4EE'},
+  decisions: {label:'Decisions', color:'var(--decisions)', textColor:'var(--decisionsT)',bg:'#F3EEF8'},
+};
+
+let currentQ = 0;
+let answers = {};
+let userName = '';
+
+function startScan() {
+  showScreen('screen-questions');
+  renderQuestion(0);
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function renderQuestion(idx) {
+  const q = questions[idx];
+  const prevQ = idx > 0 ? questions[idx-1] : null;
+  const showSection = !prevQ || prevQ.section !== q.section;
+
+  // Progress
+  const pct = Math.round((idx / questions.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('btn-prev').style.display = idx > 0 ? 'block' : 'none';
+  document.getElementById('btn-next').disabled = !answers[q.id];
+
+  let html = '';
+  if (showSection) {
+    html += `<div class="q-section-header">
+      <p class="q-section-eyebrow">${q.section} Friction</p>
+      <h2 class="q-section-title">${q.section}</h2>
+      <p class="q-section-desc">${q.sectionDesc}</p>
+    </div>`;
+  }
+
+  html += `<div class="question-wrap"><div class="question-card ${answers[q.id] ? 'answered' : ''}" id="qcard-${q.id}">
+    <p class="q-num">Question ${idx + 1} of ${questions.length}</p>
+    <p class="q-text">${q.text}</p>`;
+
+  if (q.type === 'options') {
+    html += `<div class="q-options">`;
+    q.options.forEach((opt, i) => {
+      const sel = answers[q.id] === opt.score ? 'selected' : '';
+      html += `<div class="q-option ${sel}" onclick="selectOption('${q.id}', ${opt.score}, this)">
+        <div class="q-option-dot"></div>
+        <span class="q-option-text">${opt.text}</span>
+      </div>`;
+    });
+    html += `</div>`;
+  } else if (q.type === 'scale') {
+    html += `<div class="q-scale">
+      <span class="scale-label-left">${q.scaleLeft}</span>
+      <div class="scale-options">`;
+    for (let i = 0; i < 5; i++) {
+      const val = q.scores[i];
+      const sel = answers[q.id] === val ? 'selected' : '';
+      html += `<button class="scale-btn ${sel}" onclick="selectScale('${q.id}', ${val}, this)">${i+1}</button>`;
+    }
+    html += `</div><span class="scale-label-right">${q.scaleRight}</span></div>`;
+  }
+
+  html += `</div></div>`;
+  document.getElementById('question-container').innerHTML = html;
+}
+
+function selectOption(qid, score, el) {
+  answers[qid] = score;
+  document.querySelectorAll('.q-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById(`qcard-${qid}`).classList.add('answered');
+  document.getElementById('btn-next').disabled = false;
+  setTimeout(() => nextQuestion(), 400);
+}
+
+function selectScale(qid, score, el) {
+  answers[qid] = score;
+  document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById(`qcard-${qid}`).classList.add('answered');
+  document.getElementById('btn-next').disabled = false;
+}
+
+function nextQuestion() {
+  if (!answers[questions[currentQ].id]) return;
+  if (currentQ < questions.length - 1) {
+    currentQ++;
+    renderQuestion(currentQ);
+    window.scrollTo(0,0);
+  } else {
+    showGate();
+  }
+}
+
+function prevQuestion() {
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion(currentQ);
+    window.scrollTo(0,0);
+  }
+}
+
+function showGate() {
+  // Calculate category scores for preview (blurred)
+  const cats = Object.keys(categoryConfig);
+  let previewHTML = '';
+  cats.forEach(cat => {
+    const cfg = categoryConfig[cat];
+    const catQs = questions.filter(q => q.category === cat);
+    const total = catQs.reduce((sum, q) => sum + (answers[q.id] || 3), 0);
+    const max = catQs.length * 5;
+    const pct = Math.round((total / max) * 100);
+    const level = pct > 65 ? 'High' : pct > 35 ? 'Moderate' : 'Low';
+    previewHTML += `<div class="gate-preview-item" style="background:${cfg.bg};color:${cfg.textColor};">${cfg.label}: ${level} Friction</div>`;
+  });
+  document.getElementById('gate-preview').innerHTML = previewHTML;
+  showScreen('screen-gate');
+}
+
+function submitGate() {
+  const name = document.getElementById('gate-name').value.trim();
+  const email = document.getElementById('gate-email').value.trim();
+  const company = document.getElementById('gate-company').value.trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById('gate-email').style.borderColor = 'var(--red)';
+    document.getElementById('gate-email').placeholder = 'Please enter a valid email';
+    return;
+  }
+  userName = name || 'there';
+
+  // Send to Formspree
+  fetch('https://formspree.io/f/xojzryyy', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    body: JSON.stringify({
+      _subject: 'New Friction Scan Lead — ' + (company || 'Unknown Company'),
+      name, email, company,
+      answers: JSON.stringify(answers),
+      source: 'Friction Scan™'
+    })
+  }).catch(() => {});
+
+  showResults();
+}
+
+function showResults() {
+  // Calculate scores
+  const catScores = {};
+  const cats = Object.keys(categoryConfig);
+  cats.forEach(cat => {
+    const catQs = questions.filter(q => q.category === cat);
+    const total = catQs.reduce((sum, q) => sum + (answers[q.id] || 3), 0);
+    const max = catQs.length * 5;
+    catScores[cat] = Math.round((total / max) * 100);
+  });
+
+  const allScores = Object.values(catScores);
+  const overallScore = Math.round(allScores.reduce((a,b) => a+b, 0) / allScores.length);
+  const highestCat = cats.reduce((a, b) => catScores[a] > catScores[b] ? a : b);
+  const lowestCat = cats.reduce((a, b) => catScores[a] < catScores[b] ? a : b);
+
+  // Overall assessment
+  let overallTitle, overallDesc, circleColor, circleText;
+  if (overallScore >= 70) {
+    overallTitle = 'High Friction — Significant drag identified';
+    overallDesc = `${userName ? userName + ', your' : 'Your'} business is experiencing significant friction across multiple operational dimensions. This level of friction is actively limiting revenue, burning leadership time, and slowing competitive response. The good news: friction this visible is fixable.`;
+    circleColor = '#FAE8E5'; circleText = '#A32000';
+  } else if (overallScore >= 45) {
+    overallTitle = 'Moderate Friction — Targeted friction in key areas';
+    overallDesc = `${userName ? userName + ', your' : 'Your'} business has identifiable friction in specific operational areas. You're functioning but leaving performance on the table. The friction points identified here are likely connected — one root cause is often behind multiple symptoms.`;
+    circleColor = '#FDF3E7'; circleText = '#7A4400';
+  } else {
+    overallTitle = 'Lower Friction — Operational foundation is solid';
+    overallDesc = `${userName ? userName + ', your' : 'Your'} business shows lower overall friction. Either your systems are genuinely working well, or the friction is concentrated in one area worth examining closely. Check your lowest-scoring dimension.`;
+    circleColor = '#EAF4EE'; circleText = '#1A5C2A';
+  }
+
+  // Render headline
+  document.getElementById('results-headline').textContent = `${userName ? userName + '\'s' : 'Your'} Friction Scan Results`;
+  document.getElementById('results-sub').textContent = 'Here is where your business is experiencing operational drag.';
+
+  // Overall score circle
+  const circle = document.getElementById('overall-circle');
+  circle.style.background = circleColor;
+  document.getElementById('overall-num').style.color = circleText;
+  document.getElementById('overall-num').textContent = overallScore + '%';
+  document.getElementById('overall-title').textContent = overallTitle;
+  document.getElementById('overall-desc').textContent = overallDesc;
+
+  // Category cards
+  let catHTML = '';
+  const sortedCats = [...cats].sort((a,b) => catScores[b] - catScores[a]);
+  sortedCats.forEach(cat => {
+    const cfg = categoryConfig[cat];
+    const score = catScores[cat];
+    const level = score >= 70 ? 'High' : score >= 45 ? 'Moderate' : 'Low';
+    catHTML += `<div class="category-card" style="background:${cfg.bg};">
+      <p class="cat-name" style="color:${cfg.textColor};">${cfg.label}</p>
+      <div class="cat-bar-wrap"><div class="cat-bar" data-width="${score}" style="width:0%;background:${cfg.textColor};"></div></div>
+      <p class="cat-score" style="color:${cfg.textColor};">${level}</p>
+    </div>`;
+  });
+  document.getElementById('category-cards').innerHTML = catHTML;
+
+  // Generate insights
+  const insights = generateInsights(catScores, highestCat, lowestCat, overallScore);
+  let insightHTML = '';
+  insights.forEach(ins => {
+    insightHTML += `<div class="insight-card" style="background:#fff;">
+      <p class="insight-label">${ins.label}</p>
+      <p class="insight-text">${ins.text}</p>
+    </div>`;
+  });
+  document.getElementById('insight-cards').innerHTML = insightHTML;
+
+  showScreen('screen-results');
+
+  // Animate bars
+  setTimeout(() => {
+    document.querySelectorAll('.cat-bar[data-width]').forEach(bar => {
+      bar.style.width = bar.getAttribute('data-width') + '%';
+    });
+  }, 200);
+}
+
+function generateInsights(catScores, highestCat, lowestCat, overallScore) {
+  const insights = [];
+  const cfg = categoryConfig[highestCat];
+
+  const highestInsights = {
+    people: {
+      label: 'People & Knowledge Risk',
+      text: '<strong>Your highest friction area is People.</strong> Critical knowledge and decision-making authority are concentrated in too few people. If a key person leaves or becomes unavailable, the business experiences significant disruption. This is one of the most common — and most dangerous — friction patterns in growing businesses.'
+    },
+    process: {
+      label: 'Process Breakdown',
+      text: '<strong>Your highest friction area is Process.</strong> Your core workflows are inconsistent, undocumented, or creating bottlenecks between teams. This is often the root cause behind slow delivery, recurring problems, and difficulty scaling — because processes that work at $1M often break at $3M.'
+    },
+    technology: {
+      label: 'Technology Friction',
+      text: '<strong>Your highest friction area is Technology.</strong> Your tools are creating work instead of eliminating it. Manual data re-entry, disconnected systems, and underutilized software are burning time across your team daily. This friction compounds — every manual workaround is time not spent on revenue-generating activity.'
+    },
+    data: {
+      label: 'Visibility Gap',
+      text: '<strong>Your highest friction area is Data.</strong> You are making decisions without the information you need — or discovering problems after they\'ve already caused damage. Lagging visibility is one of the most expensive operational patterns because it turns preventable problems into crises.'
+    },
+    decisions: {
+      label: 'Decision Bottleneck',
+      text: '<strong>Your highest friction area is Decisions.</strong> The business cannot move at the speed it needs to because decisions are concentrated, revisited, or delayed. Every hour spent on decisions that should flow automatically is an hour not spent on growth.'
+    },
+  };
+
+  insights.push(highestInsights[highestCat]);
+
+  // Second insight: connection between top two friction areas
+  insights.push({
+    label: 'What This Pattern Usually Means',
+    text: `Friction in ${categoryConfig[highestCat].label} and friction in ${categoryConfig[lowestCat].label} are rarely independent. In most 10–50 person businesses, high friction in one area creates drag in others — they are symptoms of a single underlying constraint. <strong>The Sightline Audit identifies that constraint precisely and quantifies what it's costing you in real dollars.</strong>`
+  });
+
+  // Third insight: what the friction scan cannot tell them
+  insights.push({
+    label: 'What the Friction Scan Can\'t Tell You',
+    text: `The Friction Scan shows <strong>where</strong> your business is experiencing drag. It cannot tell you <strong>why</strong> — which single root cause is behind the friction pattern you're seeing. That's what The Sightline Audit does. Most operators who complete the audit discover that 3–4 friction areas trace back to one constraint they hadn't named yet.`
+  });
+
+  return insights;
+}
+
+// Handle keyboard navigation
+document.addEventListener('keydown', e => {
+  if (document.getElementById('screen-questions').classList.contains('active')) {
+    if (e.key === 'Enter' && !document.getElementById('btn-next').disabled) nextQuestion();
+  }
+});
+</script>
+</body>
+</html>
