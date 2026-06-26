@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sightline Delivery Certification — Analyst Training Program</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&display=swap" rel="stylesheet"/>
+<style>
+:root{--black:#0A0A0A;--red:#CC2200;--bone:#F5F4F0;--paper:#FAFAF8;--ink:#1A1A18;--soft:#5A5955;--gray:#888780;--rule:rgba(10,10,10,.1);--green:#1A5C2A;--green-l:#EAF4EE;--amber:#7A4400;--amber-l:#FDF3E7;--red-l:#FAE8E5;--blue:#1A3A6C;--blue-l:#E8F0FB;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+.serif{font-family:'Source Serif 4',Georgia,serif;}
+.screen{display:none;}.screen.active{display:block;}
+#screen-dashboard{background:var(--black);min-height:100vh;}
+.dash-top{height:3px;background:var(--red);}
+.dash-header{padding:48px;}
+.dash-logo-word{font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);}
+.dash-logo-ai{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:32px;}
+.dash-eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:12px;}
+.dash-title{font-size:clamp(28px,4vw,48px);font-weight:400;color:#fff;letter-spacing:-.5px;line-height:1.1;margin-bottom:8px;}
+.dash-title em{color:var(--red);font-style:normal;}
+.dash-sub{font-size:14px;font-weight:300;color:var(--gray);line-height:1.7;max-width:520px;margin-bottom:28px;}
+.dash-progress{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:18px 22px;display:flex;gap:28px;align-items:center;max-width:480px;margin-bottom:0;}
+.dpo-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:4px;}
+.dpo-val{font-size:22px;font-weight:600;color:var(--red);letter-spacing:-1px;}
+.dpo-bar-wrap{flex:1;height:3px;background:rgba(255,255,255,.1);}
+.dpo-bar{height:3px;background:var(--red);transition:width .6s ease;}
+.dash-modules{padding:16px 48px 48px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:3px;}
+.mc{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:22px;cursor:pointer;transition:all .2s;position:relative;}
+.mc:hover{background:rgba(255,255,255,.06);border-color:rgba(204,34,0,.3);}
+.mc.completed{border-left:3px solid var(--green);}
+.mc-num{font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--red);margin-bottom:8px;}
+.mc-title{font-size:15px;font-weight:500;color:#fff;margin-bottom:6px;line-height:1.3;}
+.mc-desc{font-size:12px;font-weight:300;color:var(--gray);line-height:1.6;margin-bottom:14px;}
+.mc-tags{display:flex;gap:8px;flex-wrap:wrap;}
+.mc-tag{font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;}
+.tag-l{background:rgba(26,60,108,.3);color:#7BA4E8;}
+.tag-q{background:rgba(204,34,0,.2);color:#FF8870;}
+.tag-s{background:rgba(26,92,42,.3);color:#6EC88A;}
+.mc-status{position:absolute;top:14px;right:14px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;}
+.s-done{color:var(--green);}.s-prog{color:var(--amber);}.s-new{color:var(--gray);}
+#screen-module{background:var(--paper);min-height:100vh;}
+.topbar{background:var(--black);padding:10px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100;}
+.btn-back{background:none;border:1px solid rgba(255,255,255,.15);color:var(--gray);padding:5px 12px;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:all .2s;}
+.btn-back:hover{border-color:rgba(255,255,255,.4);color:#fff;}
+.topbar-title{flex:1;font-size:12px;font-weight:500;color:var(--bone);}
+.topbar-prog{font-size:10px;color:var(--gray);}
+.mod-body{max-width:740px;margin:0 auto;padding:44px 22px;}
+.eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:10px;}
+.lesson-h{font-size:clamp(22px,3.2vw,34px);font-weight:400;color:var(--ink);letter-spacing:-.4px;line-height:1.15;margin-bottom:18px;}
+.lb{font-size:15px;font-weight:300;color:var(--soft);line-height:1.8;margin-bottom:14px;}
+.lb strong{font-weight:500;color:var(--ink);}
+.lb em{font-style:italic;color:var(--ink);}
+.callout{padding:18px 22px;margin:20px 0;border-left:3px solid;}
+.callout.red{background:var(--red-l);border-color:var(--red);}
+.callout.green{background:var(--green-l);border-color:var(--green);}
+.callout.amber{background:var(--amber-l);border-color:var(--amber);}
+.callout.blue{background:var(--blue-l);border-color:var(--blue);}
+.cl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px;}
+.callout.red .cl{color:var(--red);}.callout.green .cl{color:var(--green);}
+.callout.amber .cl{color:var(--amber);}.callout.blue .cl{color:var(--blue);}
+.ct{font-size:14px;font-weight:300;line-height:1.7;}
+.callout.red .ct{color:var(--ink);}.callout.green .ct{color:var(--green);}
+.callout.amber .ct{color:var(--amber);}.callout.blue .ct{color:var(--blue);}
+.ex-box{background:var(--black);padding:22px;margin:20px 0;}
+.ex-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.ex-text{font-size:13px;font-weight:300;color:var(--bone);line-height:1.7;}
+.ex-text strong{font-weight:500;color:#fff;}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:20px 0;}
+.cmp-wrong{padding:18px;background:var(--red-l);}
+.cmp-right{padding:18px;background:var(--green-l);}
+.cmp-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;}
+.cmp-wrong .cmp-label{color:var(--red);}.cmp-right .cmp-label{color:var(--green);}
+.cmp-text{font-size:13px;font-weight:300;line-height:1.6;}
+.cmp-wrong .cmp-text{color:var(--ink);}.cmp-right .cmp-text{color:var(--green);}
+.quiz-wrap{margin:24px 0;}
+.q-num{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px;}
+.q-text{font-size:15px;font-weight:500;color:var(--ink);line-height:1.5;margin-bottom:16px;}
+.q-opts{display:flex;flex-direction:column;gap:7px;margin-bottom:12px;}
+.q-opt{padding:12px 16px;border:1px solid var(--rule);cursor:pointer;font-size:13px;font-weight:300;color:var(--soft);line-height:1.5;display:flex;gap:10px;background:#fff;transition:all .15s;}
+.q-opt:hover{border-color:var(--red);background:rgba(204,34,0,.03);}
+.q-opt.sel{border-color:var(--red);background:rgba(204,34,0,.06);color:var(--ink);}
+.q-opt.cor{border-color:var(--green);background:var(--green-l);color:var(--green);}
+.q-opt.inc{border-color:var(--red);background:var(--red-l);color:var(--red);}
+.q-opt.rev{border-color:var(--green);background:var(--green-l);color:var(--green);}
+.q-let{font-weight:700;flex-shrink:0;width:18px;}
+.q-fb{padding:14px 18px;margin-top:6px;display:none;}
+.q-fb.show{display:block;}
+.q-fb.cor{background:var(--green-l);border-left:3px solid var(--green);}
+.q-fb.inc{background:var(--red-l);border-left:3px solid var(--red);}
+.q-fb-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px;}
+.q-fb.cor .q-fb-label{color:var(--green);}.q-fb.inc .q-fb-label{color:var(--red);}
+.q-fb-text{font-size:13px;font-weight:300;color:var(--soft);line-height:1.6;}
+.q-fb-text strong{font-weight:500;color:var(--ink);}
+.score-card{background:var(--black);padding:28px;text-align:center;margin:20px 0;}
+.sc-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:6px;}
+.sc-score{font-size:44px;font-weight:700;color:var(--red);letter-spacing:-2px;margin-bottom:6px;}
+.sc-verdict{font-size:15px;font-weight:400;color:var(--bone);margin-bottom:4px;}
+.sc-sub{font-size:12px;font-weight:300;color:var(--gray);}
+.sc-card{background:#fff;border:1px solid var(--rule);padding:24px;margin:20px 0;}
+.sc-ey{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px;}
+.sc-company{font-size:17px;font-weight:500;color:var(--ink);margin-bottom:14px;}
+.sc-data{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.sc-field{padding:10px;background:var(--bone);}
+.sc-fl{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:3px;}
+.sc-fv{font-size:13px;color:var(--ink);line-height:1.4;}
+.sc-sigs-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:7px;}
+.sc-sig{display:flex;gap:8px;font-size:13px;font-weight:300;color:var(--soft);margin-bottom:5px;line-height:1.5;}
+.sc-dot{color:var(--red);flex-shrink:0;}
+.sc-ta{width:100%;padding:14px;border:1px solid var(--rule);font-family:inherit;font-size:13px;color:var(--ink);line-height:1.6;resize:vertical;min-height:100px;background:var(--paper);outline:none;margin-top:12px;}
+.sc-ta:focus{border-color:var(--red);}
+.btn-reveal{background:var(--red);color:#fff;border:none;padding:10px 24px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-family:inherit;margin-top:8px;}
+.sc-ans{display:none;margin-top:14px;}
+.sc-ans.show{display:block;}
+.sa-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:6px;}
+.sa-box{background:var(--black);padding:18px 22px;border-left:3px solid var(--red);margin-bottom:10px;}
+.sa-box-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:7px;}
+.sa-box-text{font-size:14px;font-weight:300;color:#fff;line-height:1.6;}
+.sa-exp{font-size:13px;font-weight:300;color:var(--soft);line-height:1.6;}
+.sa-exp strong{font-weight:500;color:var(--ink);}
+.mod-nav{display:flex;gap:10px;margin-top:44px;padding-top:22px;border-top:1px solid var(--rule);}
+.btn-prev-m{background:none;border:1px solid var(--rule);padding:11px 22px;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);cursor:pointer;font-family:inherit;}
+.btn-next-m{background:var(--black);border:none;padding:11px 28px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#fff;cursor:pointer;flex:1;font-family:inherit;}
+@media(max-width:680px){.dash-header{padding:32px 22px;}.dash-modules{padding:12px 22px 32px;}.cmp{grid-template-columns:1fr;}.sc-data{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="screen active" id="screen-dashboard">
+  <div class="dash-top"></div>
+  <div class="dash-header">
+    <div class="dash-logo-word">Sightline</div>
+    <div class="dash-logo-ai">AI</div>
+    <p class="dash-eyebrow">Delivery Certification™</p>
+    <h1 class="dash-title serif">Become the analyst.<br/>Learn to find <em>The Line.</em></h1>
+    <p class="dash-sub">Five modules. Real scenarios. Scored quizzes. Complete all five to deliver any Sightline tier with confidence.</p>
+    <div class="dash-progress">
+      <div><p class="dpo-label">Overall Progress</p><p class="dpo-val" id="overall-pct">0%</p></div>
+      <div style="flex:1;"><div class="dpo-bar-wrap"><div class="dpo-bar" id="overall-bar" style="width:0%"></div></div></div>
+    </div>
+  </div>
+  <div class="dash-modules" id="dash-modules"></div>
+</div>
+
+<div class="screen" id="screen-module">
+  <div class="topbar">
+    <button class="btn-back" onclick="backToDash()">← Dashboard</button>
+    <span class="topbar-title" id="topbar-title"></span>
+    <span class="topbar-prog" id="topbar-prog"></span>
+  </div>
+  <div class="mod-body" id="mod-body"></div>
+</div>
+
+<script>
+let progress = {};
+try { progress = JSON.parse(localStorage.getItem('sdc-v2') || '{}'); } catch(e) { progress = {}; }
+let curMod=0, curStep=0, qAnswers={}, qSubmitted={};
+
+const modules = [
+  {title:"The Diagnostic Framework",tags:["4 Lessons","8 Quiz Qs"],steps:[
+    {type:'lesson',ey:'Module 01 — Lesson 1',h:'Why one constraint beats a list of recommendations',body:`
+      <p class="lb">Most advisors give clients a list. 12 things to fix. 8 opportunities. 5 priorities. The client reads it, nods, and goes back to running their business the same way. Lists don't create action. <strong>Clarity creates action.</strong></p>
+      <p class="lb">Sightline is built on one insight: every plateaued business has one primary constraint causing most of its problems. Not eight. One. The other issues are symptoms of that constraint or secondary problems that can't be solved until the primary one is addressed.</p>
+      <div class="callout red"><p class="cl">The Core Principle</p><p class="ct">A business in constraint doesn't need more recommendations. It needs someone to name the exact thing limiting it — clearly, specifically, without hedging. That's The Line™.</p></div>
+      <div class="ex-box"><p class="ex-label">Example — The Line™ in Practice</p>
+      <p class="ex-text"><strong>Not this:</strong> "There are several bottlenecks in your sales and operations process that are limiting revenue growth."</p><br/>
+      <p class="ex-text"><strong>This:</strong> "Meridian is not constrained by sales capacity, market demand, or design quality. Meridian is constrained by an estimation process that was never engineered — it was inherited — and is now the single bottleneck between $4.15M and $5.5M."</p></div>
+      <p class="lb">The Line™ always does two things: rules out what the constraint is NOT, then names precisely what it IS. The ruling-out matters — it removes deflections the client is already considering and forces focus on the real issue.</p>`},
+    {type:'lesson',ey:'Module 01 — Lesson 2',h:'The Sightline Diagnostic Sequence',body:`
+      <p class="lb">Every Sightline Audit follows the same sequence. This is not optional — it's the logic that makes the methodology defensible. Skipping steps produces audits that feel like opinions instead of findings.</p>
+      <div class="callout blue"><p class="cl">The 10-Step Diagnostic Protocol</p><p class="ct">
+      <strong>1. Intake Parse</strong> — Read all 49 responses before forming any conclusions.<br/><br/>
+      <strong>2. Evidence Extraction</strong> — Identify every response signaling friction, constraint, or dependency.<br/><br/>
+      <strong>3. Constraint Candidates</strong> — Generate 3–5 possible primary constraints from evidence.<br/><br/>
+      <strong>4. SOI Scoring</strong> — Score all 7 dimensions using the SOI Methodology rubric.<br/><br/>
+      <strong>5. Primary Constraint Selection</strong> — Which candidate scores highest across revenue impact, frequency, and dependency?<br/><br/>
+      <strong>6. The Line™ Draft</strong> — Write the single-sentence constraint statement.<br/><br/>
+      <strong>7. Revenue Leakage Estimate</strong> — Calculate directional financial impact with confidence classifications.<br/><br/>
+      <strong>8. AI Opportunity Matching</strong> — Map constraint to 3 specific AI implementations.<br/><br/>
+      <strong>9. Implementation Blueprint</strong> — Build the tool stack, costs, owners, timeline.<br/><br/>
+      <strong>10. The Next Move™</strong> — Write the 6-step sequenced action plan.</p></div>
+      <p class="lb">The critical rule: <strong>do not write The Line™ until you complete Steps 1–5.</strong> Analysts who jump to The Line before scoring SOI consistently miss the real constraint and name a symptom instead.</p>
+      <div class="cmp"><div class="cmp-wrong"><p class="cmp-label">❌ Wrong Sequence</p><p class="cmp-text">Read intake → Form impression → Write The Line → Find evidence to support it. This is confirmation bias.</p></div>
+      <div class="cmp-right"><p class="cmp-label">✓ Right Sequence</p><p class="cmp-text">Read intake → Extract signals → Score SOI → Compare candidates → Let the scoring tell you The Line.</p></div></div>`},
+    {type:'lesson',ey:'Module 01 — Lesson 3',h:'What Sightline is NOT',body:`
+      <div class="callout red"><p class="cl">NOT a list of recommendations</p><p class="ct">If your audit has 12 "areas for improvement," you've written a consulting report. The output should be one constraint, three AI opportunities, and a sequenced 30-day plan.</p></div>
+      <div class="callout red"><p class="cl">NOT an AI assessment</p><p class="ct">The question is never "where can you use AI?" The question is "what's the constraint, and does AI create leverage against it?" If AI isn't the fix, say so. Honesty is the product.</p></div>
+      <div class="callout red"><p class="cl">NOT therapy</p><p class="ct">Founders want to process frustrations. Acknowledge briefly, then redirect to evidence. Your job is diagnosis, not counseling.</p></div>
+      <div class="callout green"><p class="cl">Sightline IS constraint identification + economic quantification + execution roadmap</p><p class="ct">Three things. In that order. The constraint must be named before economics can be calculated. Economics must be calculated before the roadmap is meaningful.</p></div>`},
+    {type:'lesson',ey:'Module 01 — Lesson 4',h:'The difference between a constraint and a symptom',body:`
+      <p class="lb">Symptoms are visible. Constraints are hidden. Operators describe symptoms — that's what they experience. Your job is tracing the symptom back to its source.</p>
+      <p class="lb">The test: <strong>if you fixed this problem, would it create a new problem, or solve multiple problems simultaneously?</strong> Symptoms create new problems when fixed. Constraints, when removed, resolve multiple downstream symptoms at once.</p>
+      <div class="ex-box"><p class="ex-label">Symptom vs. Constraint — Meridian Example</p>
+      <p class="ex-text"><strong>Symptom:</strong> "Sales reps escalate bids to the founder daily."<br/><br/>
+      <strong>Another symptom:</strong> "We lose 15–20 bids a year to faster competitors."<br/><br/>
+      <strong>The constraint:</strong> "The estimation process was never engineered — it exists as tribal knowledge in two engineers' heads and cannot function at business velocity without manual intervention."<br/><br/>
+      Fix the estimation process → founder escalations stop → bids go out in 48 hours → sales/engineering friction dissolves. One constraint. Multiple symptoms resolved.</p></div>
+      <div class="callout amber"><p class="cl">The Symptom Test</p><p class="ct">Ask: "If this were fixed, what else would improve?" Multiple things → might be the constraint. Just this one thing → probably a symptom.</p></div>`},
+    {type:'quiz',id:'q1',h:'Module 01 Quiz — The Diagnostic Framework',intro:'Test your understanding before moving on.',qs:[
+      {q:'A client says "we have 8 problems to fix." What is the correct Sightline response?',opts:['Help them prioritize 8 problems by urgency','Identify which single constraint is creating most of the 8 problems','Address all 8 equally in the audit','Tell them to pick the 3 most important'],cor:1,exp:'<strong>B is correct.</strong> Sightline\'s core principle is that most problems trace back to one primary constraint. Helping prioritize 8 problems is consulting, not constraint intelligence.'},
+      {q:'When should you write The Line™?',opts:['As soon as you finish reading the intake','After completing SOI scoring and comparing constraint candidates','After writing Revenue Leakage Analysis','At the same time as AI opportunities'],cor:1,exp:'<strong>B is correct.</strong> The Line™ is written after Steps 1–5: Intake Parse → Evidence Extraction → Constraint Candidates → SOI Scoring → Primary Constraint Selection. Earlier = confirmation bias.'},
+      {q:'Revenue has been flat 18 months. The operator says "our sales team isn\'t closing." What do you do first?',opts:['Accept it and build the audit around sales training','Ask about their quota attainment history','Read all 49 intake responses before forming any conclusion','Score AI Readiness first'],cor:2,exp:'<strong>C is correct.</strong> The intake must be read completely before conclusions. "Sales team isn\'t closing" may be right, or it may be covering a broken quoting process or founder-dependent approval loop.'},
+      {q:'You fix a "problem" and it creates two new downstream problems. This signals you fixed:',opts:['The primary constraint — all removal causes turbulence','A symptom — symptoms create new problems when "fixed"','The wrong dimension','The secondary constraint'],cor:1,exp:'<strong>B is correct.</strong> The symptom test: if fixing something creates new problems, you fixed a symptom. If it resolves multiple downstream issues, you found the constraint.'},
+      {q:'Which is closest to a correctly written Line™?',opts:['"There are several bottlenecks in the revenue process."','"The sales team needs better tools and training."','"The business is not constrained by demand or team capability — it is constrained by an approval process routing every non-standard deal through the CEO, slowing pipeline velocity by 3–4 weeks per deal."','"Revenue is flat because of a combination of market conditions and internal issues."'],cor:2,exp:'<strong>C is correct.</strong> A correct Line™ rules out what the constraint is NOT, names what it IS, and is specific enough that a stranger understands exactly where the problem lives.'},
+      {q:'When AI is NOT the right solution for a client\'s constraint, Sightline\'s position is:',opts:['Find an AI solution anyway','Say so honestly, refer out, do not recommend tools that won\'t help','Downgrade to Tier 1 and refund','Focus on areas where AI does help'],cor:1,exp:'<strong>B is correct.</strong> Honesty is the product. If the constraint isn\'t an AI problem, Sightline says so. This is the core differentiator from every other AI consultancy.'},
+      {q:'Revenue Leakage Analysis comes at which point in the diagnostic sequence?',opts:['Before The Line — so client sees financial impact first','Simultaneously with AI opportunity identification','After The Line is written and primary constraint confirmed','At the end as a supporting appendix'],cor:2,exp:'<strong>C is correct.</strong> The economics must be calculated after the constraint is named — because the leakage estimate is the financial consequence of that specific constraint.'},
+      {q:'A client pushes back on The Line: "I don\'t think that\'s the real problem." What do you do?',opts:['Immediately revise The Line','Defend it without engaging','Acknowledge their perspective, then walk through the specific intake evidence that drove the finding and ask them to engage with it','Offer a follow-up audit focused on their concern'],cor:2,exp:'<strong>C is correct.</strong> The response is never capitulation or dismissal. Walk them through the evidence. Sometimes they\'re right. Sometimes they\'re deflecting. The evidence resolves it.'}
+    ]},
+    {type:'complete'}
+  ]},
+  {title:"Reading the Intake",tags:["4 Lessons","8 Quiz Qs"],steps:[
+    {type:'lesson',ey:'Module 02 — Lesson 1',h:'How to read 49 questions without getting lost',body:`
+      <p class="lb">Analysts who read linearly and form conclusions as they go anchor on the first strong signal and miss the real constraint. The right approach is structured and deliberate.</p>
+      <div class="callout blue"><p class="cl">The Three-Pass Reading Method</p><p class="ct">
+      <strong>Pass 1 — Context Pass.</strong> Read Q1–Q8 (company profile, revenue, goals). Build the picture. Form no constraint hypotheses yet.<br/><br/>
+      <strong>Pass 2 — Signal Pass.</strong> Read Q9–Q48 looking only for friction signals — bottlenecks, dependencies, repeated problems, places where velocity is slow. Highlight without interpreting.<br/><br/>
+      <strong>Pass 3 — Pattern Pass.</strong> Review highlighted signals. Which cluster? Which constraint candidate explains the most of them simultaneously? Now you're ready to score SOI.</p></div>
+      <p class="lb">The three-pass method takes longer. It is worth it every time. The most important constraint signals are rarely in the most obvious answers.</p>`},
+    {type:'lesson',ey:'Module 02 — Lesson 2',h:'The questions that reveal the most',body:`
+      <div class="callout blue"><p class="cl">Highest Signal Questions</p><p class="ct">
+      <strong>Q9 — "If you could fix one thing..."</strong> Operator's stated priority. Often a symptom, but reveals what's most painful.<br/><br/>
+      <strong>Q11 — "What's slowing growth?"</strong> Usually the most honest answer. Operators get specific here.<br/><br/>
+      <strong>Q18 — "The problem around 12+ months."</strong> Persistent problems are constraint signals. Short-term problems are usually symptoms.<br/><br/>
+      <strong>Q20 — "What does a crisis week look like?"</strong> Reveals founder dependency patterns more clearly than any direct question about the founder's role.<br/><br/>
+      <strong>Q25 — "Who is hardest to replace?"</strong> Directly identifies the human concentration risk.<br/><br/>
+      <strong>Q47 — "Rank your top three problems."</strong> The operator's own prioritization — cross-reference against your constraint candidate scoring.<br/><br/>
+      <strong>Q48 — "Your gut read on root cause."</strong> The most important question in the intake. When Q48 aligns with your finding — validate. When it conflicts — investigate before finalizing.</p></div>
+      <div class="callout amber"><p class="cl">The Q48 Rule</p><p class="ct">If Q48 matches your finding: "You already knew. Here's the evidence and the cost." If Q48 conflicts: understand why before presenting. Either you missed something, or they're rationalizing.</p></div>`},
+    {type:'lesson',ey:'Module 02 — Lesson 3',h:'How to identify constraint candidates',body:`
+      <p class="lb">After the signal pass, you have 10–20 highlighted responses. Group them. Constraint candidates emerge from clusters pointing to the same underlying cause.</p>
+      <div class="callout blue"><p class="cl">5 Constraint Categories</p><p class="ct">
+      <strong>People</strong> — Founder in every decision, one person holds all critical knowledge, team can\'t function without a specific individual.<br/><br/>
+      <strong>Process</strong> — Recurring problems that were "solved" before, slow handoffs, inconsistent output, tribal knowledge required for basic work.<br/><br/>
+      <strong>Technology</strong> — Manual data re-entry everywhere, tools that don\'t talk to each other, a failed software implementation.<br/><br/>
+      <strong>Data</strong> — "We don\'t know our numbers," decisions made by gut feel under pressure, problems discovered after damage.<br/><br/>
+      <strong>Decision</strong> — Decisions revisited repeatedly, everything routes through one person, no defined decision authority below leadership.</p></div>
+      <p class="lb">Score each candidate: <strong>Revenue Impact</strong> (what\'s it costing?), <strong>Frequency</strong> (how often does it create friction?), <strong>Dependency</strong> (how many other problems does it cause?). Highest combined score = primary constraint = The Line.</p>`},
+    {type:'lesson',ey:'Module 02 — Lesson 4',h:'Common reading mistakes and how to avoid them',body:`
+      <div class="callout red"><p class="cl">Mistake 1 — Naming the first strong signal as The Line</p><p class="ct">The most painful problem in Q9 is almost never the primary constraint. It's the symptom most visible to the operator. Read everything before concluding anything.</p></div>
+      <div class="callout red"><p class="cl">Mistake 2 — Letting revenue size determine constraint severity</p><p class="ct">A $1M business with founder dependency and a $10M business with the same pattern have the same constraint. Don't weight by company size — weight by impact relative to their situation.</p></div>
+      <div class="callout red"><p class="cl">Mistake 3 — Ignoring contradictions</p><p class="ct">When Q11 says "we lose deals on price" and Q15 says "we lose deals because we're too slow to quote," investigate the contradiction. It often points directly to the constraint.</p></div>
+      <div class="callout red"><p class="cl">Mistake 4 — Treating Q48 as the answer</p><p class="ct">Q48 is a signal, not a conclusion. When it aligns with your finding, use it as confirmation. When it conflicts, investigate. It's valuable data — not the diagnostic result.</p></div>`},
+    {type:'quiz',id:'q2',h:'Module 02 Quiz — Reading the Intake',intro:'Test your intake reading skills.',qs:[
+      {q:'An operator answers Q9 with "we need better salespeople." What do you do?',opts:['Accept it as the constraint','Note it as a stated priority and cross-reference against all other signals before concluding anything','Immediately look for evidence that validates the sales hiring diagnosis','Discard it — operators rarely know their constraint'],cor:1,exp:'<strong>B is correct.</strong> Q9 reveals stated priority — usually a symptom. "We need better salespeople" could be true, or it could mask a broken quoting process or pricing problem. Note it, cross-reference, don\'t anchor on it.'},
+      {q:'Which question most reliably reveals founder dependency patterns?',opts:['Q22 — "What does leadership spend time on?"','Q20 — "What does a crisis week look like for leadership?"','Q24 — "What happens if the CEO disappears for 30 days?"','Q25 — "Who is hardest to replace?"'],cor:1,exp:'<strong>B is correct.</strong> Q20 reveals dependency patterns more honestly than direct questions because operators describe real behaviors rather than aspirational ones.'},
+      {q:'The operator\'s Q48 says "we scaled production but never built operational infrastructure to match." Your analysis points to a process bottleneck in estimation. What does this tell you?',opts:['The operator is wrong — trust your analysis','Revise The Line to match their Q48','The Q48 aligns with your finding — strong validation signal. Lead with it in the debrief.','There is a conflict requiring further investigation'],cor:2,exp:'<strong>C is correct.</strong> "We scaled production but never built operational infrastructure" describes a process constraint — it aligns with an estimation bottleneck. Lead with: "You already knew. Here\'s the evidence and the cost."'},
+      {q:'Q11 says "we lose deals on price" but Q15 says "we lose $600K in bids because we\'re too slow to quote." What do you do?',opts:['Average them — there\'s a combined price-and-speed problem','Trust Q15 — specificity signals reliability','Investigate the contradiction — it likely points at the constraint','Ask the client to clarify before completing the audit'],cor:2,exp:'<strong>C is correct.</strong> Contradictions in intake data are signal, not noise. "We lose on price" and "we lose because we\'re too slow" could both be true, or one is rationalization. The $600K figure and specific mechanism in Q15 likely indicates the real constraint.'},
+      {q:'In the three-pass reading method, when do you form your first constraint hypothesis?',opts:['During Pass 1, as you read the company profile','During Pass 2, as you identify signals','During Pass 3, after reviewing all highlighted signals as a pattern','After you complete SOI scoring, which follows all three passes'],cor:3,exp:'<strong>D is correct.</strong> The three-pass method separates information gathering from interpretation. Real constraint hypotheses form after SOI scoring. Earlier hypotheses create confirmation bias.'},
+      {q:'Which intake signal is MOST likely to indicate a primary constraint vs. a symptom?',opts:['The sales team is frustrated with lead quality','The founder approves all pricing over $5K and is pulled into every escalation daily','Customer satisfaction dropped last quarter','The marketing team lacks budget'],cor:1,exp:'<strong>B is correct.</strong> Founder pricing approval with daily escalations is structural. Apply the symptom test: fix this and pipeline velocity improves, escalations stop, founder calendar clears. Multiple downstream problems resolved by one structural change.'},
+      {q:'A business has plateaued at $4.2M for two years. What type of problem most likely produces a multi-year plateau?',opts:['A short-term market condition','A structural constraint the business has adapted around rather than solved','A sales performance problem not prioritized','A leadership communication issue'],cor:1,exp:'<strong>B is correct.</strong> Short-term problems resolve. Multi-year plateaus indicate a structural constraint the business has worked around. The team has adapted to the limitation rather than removing it.'},
+      {q:'An operator is enthusiastic about AI and describes multiple tools they want. What do you do?',opts:['Take enthusiasm as a signal AI Readiness is high','Focus the audit on their AI plans','Note enthusiasm but score AI Readiness based on actual infrastructure, data quality, and team alignment — not enthusiasm alone','Recommend the tools they mentioned'],cor:2,exp:'<strong>C is correct.</strong> AI enthusiasm is not AI readiness. The SOI AI Readiness dimension scores data infrastructure quality, team alignment across the whole organization, and clearly identified use cases with defined ROI.'}
+    ]},
+    {type:'complete'}
+  ]},
+  {title:"SOI Scoring Mastery",tags:["3 Lessons","10 Quiz Qs"],steps:[
+    {type:'lesson',ey:'Module 03 — Lesson 1',h:'The scoring principles that make SOI defensible',body:`
+      <div class="callout blue"><p class="cl">The 6 Scoring Principles</p><p class="ct">
+      <strong>1. Higher always means healthier.</strong> Score of 9 = crisis. Score of 88 = competitive strength. Never invert this.<br/><br/>
+      <strong>2. Score from the bottom up.</strong> Start at the lowest anchor that does NOT describe the business. Score is just above that. Prevents optimism bias.<br/><br/>
+      <strong>3. Document your evidence.</strong> For every score, note 2–3 specific intake responses. If you can\'t cite them, reconsider the score.<br/><br/>
+      <strong>4. Use anchor points, not gut feel.</strong> The SOI Methodology has 9 anchors (0,10,20,30,40,50,65,80,100) per dimension with specific observable criteria. Match the business to the closest anchor.<br/><br/>
+      <strong>5. Check internal consistency.</strong> FI=9 alongside Process Maturity=75 is inconsistent. Extremely high with extremely low in related dimensions → investigate.<br/><br/>
+      <strong>6. Never round for convenience.</strong> A score of 25 is valid only if the business genuinely falls at that anchor.</p></div>
+      <div class="callout amber"><p class="cl">The Evidence Requirement</p><p class="ct">Before finalizing any score, write: "This score is driven by Q___, Q___, and Q___, which show [specific behavior]." If you can't write that sentence, the score isn't ready.</p></div>`},
+    {type:'lesson',ey:'Module 03 — Lesson 2',h:'Common scoring mistakes by dimension',body:`
+      <div class="callout red"><p class="cl">Constraint Health — Common Mistake</p><p class="ct">Scoring based on whether the business performs well rather than whether the constraint is identified and managed. A high-revenue business with an unnamed constraint scores LOW on Constraint Health.</p></div>
+      <div class="callout red"><p class="cl">Founder Independence — Common Mistake</p><p class="ct">Scoring based on what the founder says their role is rather than what intake reveals it actually is. Trust behavioral signals in Q20, Q22, Q24 over stated role descriptions.</p></div>
+      <div class="callout red"><p class="cl">AI Readiness — Common Mistake</p><p class="ct">Scoring based on enthusiasm rather than infrastructure. AI Readiness requires clean data, integrated systems, team alignment across the whole organization (not just leadership), and clear use cases with defined ROI.</p></div>
+      <div class="callout red"><p class="cl">Execution Velocity — Common Mistake</p><p class="ct">Scoring based on how fast the leadership team makes decisions rather than how fast the commercial process moves. A founder who decides instantly but has a 5–7 day quoting process does NOT have high Execution Velocity.</p></div>
+      <div class="callout green"><p class="cl">The Consistency Check</p><p class="ct">After scoring all 7 dimensions, look at them together. "Does this picture make sense as one business?" FI=9 next to Process Maturity=85 is inconsistent. Investigate before finalizing.</p></div>`},
+    {type:'lesson',ey:'Module 03 — Lesson 3',h:'How to defend a score in a live review',body:`
+      <p class="lb">When a client disputes a SOI score, you need to be ready. Here\'s the exact response structure:</p>
+      <div class="callout blue"><p class="cl">The Score Defense Protocol</p><p class="ct">
+      <strong>Step 1 — Don\'t capitulate immediately.</strong> "Let me show you the specific responses that drove this score."<br/><br/>
+      <strong>Step 2 — Cite the intake evidence.</strong> "Q20 shows you handling pricing escalations daily. Q22 shows you pulled from strategic work for operational decisions. Q24 shows 'things would slow significantly' if you left for a month."<br/><br/>
+      <strong>Step 3 — Ask them to engage with the evidence.</strong> "Can you help me understand which of these responses is inaccurate?"<br/><br/>
+      <strong>Step 4 — Adjust if warranted.</strong> If they can genuinely correct a specific response, the score may need adjustment. If they dispute the characterization but not the facts, the score holds.</p></div>
+      <div class="callout amber"><p class="cl">The Key Distinction</p><p class="ct">Clients often dispute scores on the basis of "I don't think of myself that way" rather than "that response is factually inaccurate." The SOI score reflects what the intake reveals, not how the founder sees themselves. That distinction is important to name clearly and kindly.</p></div>`},
+    {type:'quiz',id:'q3',h:'Module 03 Quiz — SOI Scoring Mastery',intro:'These questions test your ability to apply the SOI scoring methodology accurately.',qs:[
+      {q:'A business scores 88 on Constraint Health. What does this mean?',opts:['Severe critical constraints need immediate attention','Strong constraint-identification practices — constraints found early and managed proactively','The business has 88 operational constraints identified','The constraint causes 88% of problems'],cor:1,exp:'<strong>B is correct.</strong> Higher always means healthier. Constraint Health = 88 means the business proactively identifies constraints, assigns owners, and resolves them. Score of 12 would indicate a severe, active, unaddressed constraint.'},
+      {q:'A founder says "I\'m very hands-off." But Q20 shows daily pricing approvals, Q22 shows daily escalations, Q24 shows "things would slow significantly" if absent. How do you score Founder Independence?',opts:['High — trust the self-assessment','Moderate — balance stated role with behavioral signals','Low — behavioral signals in Q20/Q22/Q24 override stated self-assessment','Can\'t score without a follow-up question'],cor:2,exp:'<strong>C is correct.</strong> Founders consistently underestimate their own dependency. Trust behavioral signals over stated role descriptions. Daily pricing approvals + daily escalations + business slowdown on absence = 10–20 anchor range.'},
+      {q:'You score a business: Founder Independence = 8, Process Maturity = 72. Is this internally consistent?',opts:['Yes — dimensions are independent','No — a business where the founder handles everything has not built mature transferable processes','Yes — a founder can be central while still having documented processes','Depends on the industry'],cor:1,exp:'<strong>B is correct.</strong> Consistency check: if the founder is required for all significant decisions (FI=8), the business has NOT built mature, standardized, transferable processes — because mature processes reduce founder dependency by definition.'},
+      {q:'The correct bottom-up scoring method is:',opts:['Start at 50 and adjust','Find the highest anchor describing the business','Find the lowest anchor that does NOT describe the business — the score is just above that point','Average the three most relevant intake responses'],cor:2,exp:'<strong>C is correct.</strong> Scoring from the bottom up prevents optimism bias. Find the lowest anchor that does NOT fit, and the score is just above that. Forces you to prove each step up.'},
+      {q:'No dashboard, no real-time metrics, leaders answer key questions by "compiling data from the team." What SOI dimension does this most directly impact?',opts:['Decision Quality','Data Visibility','Process Maturity','Both A and B equally'],cor:1,exp:'<strong>B is correct.</strong> Data Visibility measures real-time access to key metrics. "Compiling data from the team" maps directly to the 20–30 anchor range. Decision Quality is secondarily affected, but the root is the visibility gap.'},
+      {q:'A business\'s SOI composite is 38. What does this tell you?',opts:['Performing at 38% of revenue potential','Has 38 identified operational problems','Critical range — multiple dimensions actively limiting growth, immediate action required on 2-3 dimensions','Needs exactly 38 more audits to be acquisition-ready'],cor:2,exp:'<strong>C is correct.</strong> SOI composite below 40 = Critical range. Multiple dimensions in active drag. The composite represents overall operational health, not a performance percentage.'},
+      {q:'You are about to assign Process Maturity = 50. What must you do before finalizing?',opts:['Nothing — 50 is the neutral midpoint','Write the specific intake responses (by Q number) that map to the 50 anchor criteria','Check if the founder agrees','Compare against industry average'],cor:1,exp:'<strong>B is correct.</strong> Every score requires documented evidence. The 50 anchor maps to specific observable criteria. You must cite which responses confirm this description before finalizing.'},
+      {q:'Enthusiastic founder, three skeptical department heads on AI, clean CRM but disconnected ERP. How should AI Readiness be scored?',opts:['High — founder drives adoption','Moderate-low — mixed team alignment and partial data infrastructure place this in the 30–45 range','High — clean CRM is most important','Low — any team skepticism disqualifies'],cor:1,exp:'<strong>B is correct.</strong> AI Readiness requires three things simultaneously: clean data, team alignment across the whole org, and clear use cases. Founder enthusiasm + skeptical team + partial data integration = 30–45 anchor range.'},
+      {q:'The founder makes decisions instantly, but the sales-to-proposal process takes 8 business days. How do you score Execution Velocity?',opts:['High — founder\'s decision speed sets velocity','Average the two','Low-to-moderate — Execution Velocity measures commercial throughput, not leadership style','Depends on industry standard'],cor:2,exp:'<strong>C is correct.</strong> Execution Velocity measures how fast the business converts opportunities into outcomes. An 8-day proposal turnaround in a competitive market is a velocity problem regardless of founder decision speed.'},
+      {q:'After scoring all 7 dimensions: Constraint Health = 15, Decision Quality = 68. Is this a problem?',opts:['No — these dimensions are unrelated','Yes — a business with a severe unidentified constraint cannot be making high-quality decisions, since good decisions require knowing what the real problem is','No — a business can have good decision-making even with an active constraint','Only if the constraint is in the decisions category'],cor:1,exp:'<strong>B is correct.</strong> Constraint Health = 15 means the constraint is severe and unaddressed. Decision Quality = 68 means decisions are well-informed. These are inconsistent — a business that doesn\'t know its primary constraint is deciding based on incomplete information about its own situation.'}
+    ]},
+    {type:'complete'}
+  ]},
+  {title:"The Constraint Library",tags:["5 Scenarios","6 Quiz Qs"],steps:[
+    {type:'lesson',ey:'Module 04 — Lesson 1',h:'The 8 most common constraint patterns',body:`
+      <div class="callout blue"><p class="cl">Pattern 1 — The Estimation Bottleneck</p><p class="ct">Custom pricing requires manual expert review for every job. Speed-to-quote slower than competitive standard. Revenue lost to faster competitors. <em>Industries: manufacturing, construction, professional services, custom production.</em><br/><strong>AI leverage:</strong> document intelligence + estimation draft generation.</p></div>
+      <div class="callout blue"><p class="cl">Pattern 2 — The Founder Approval Loop</p><p class="ct">All significant decisions route through the founder. Pricing, contracts, escalations, hiring — all require founder sign-off. <em>Industries: every industry, especially $1M–$8M businesses.</em><br/><strong>AI leverage:</strong> automated decision routing, approval threshold documentation, dashboard visibility.</p></div>
+      <div class="callout blue"><p class="cl">Pattern 3 — The Knowledge Silo</p><p class="ct">One or two people hold all critical operational knowledge. No documentation. Onboarding takes 6+ months. <em>Industries: professional services, technical industries, agencies.</em><br/><strong>AI leverage:</strong> knowledge base creation, documentation generation, training material automation.</p></div>
+      <div class="callout blue"><p class="cl">Pattern 4 — The Handoff Breakdown</p><p class="ct">Transfer between teams is chaotic, manual, and produces errors. Teams blame each other. Customers experience the friction. <em>Industries: any business with distinct sales and delivery functions.</em><br/><strong>AI leverage:</strong> automated handoff triggers, CRM-to-ERP integration, status tracking dashboards.</p></div>
+      <div class="callout blue"><p class="cl">Pattern 5 — The Visibility Gap</p><p class="ct">Leaders make decisions without real-time data. Problems discovered after damage. "We don\'t know our numbers" appears multiple times. <em>Industries: businesses that scaled quickly without building reporting infrastructure.</em><br/><strong>AI leverage:</strong> automated reporting, anomaly detection, predictive dashboards.</p></div>
+      <div class="callout blue"><p class="cl">Pattern 6 — The Pipeline Velocity Problem</p><p class="ct">Deals move slowly for reasons unrelated to product or market. Long proposal turnaround, slow follow-up, manual tracking. <em>Industries: B2B sales organizations, professional services.</em><br/><strong>AI leverage:</strong> proposal automation, CRM workflow automation, AI-assisted follow-up.</p></div>
+      <div class="callout blue"><p class="cl">Pattern 7 — The Capacity Ceiling</p><p class="ct">Revenue flat not because demand is low but because the business can't process more volume. Adding sales creates delivery problems. <em>Industries: service businesses, agencies, professional services.</em><br/><strong>AI leverage:</strong> workflow automation, AI-assisted delivery tasks, capacity planning tools.</p></div>
+      <div class="callout blue"><p class="cl">Pattern 8 — The Scattered AI Problem</p><p class="ct">Multiple AI tools, no measurable ROI, sporadic adoption. AI spend is high, outcomes are low. <em>Industries: businesses that responded to AI pressure without a diagnostic framework.</em><br/><strong>AI leverage:</strong> audit existing stack, eliminate waste, identify one high-ROI use case, implement systematically.</p></div>`},
+    {type:'scenario',h:'Identify The Line™ — 5 Practice Scenarios',intro:'Read each business profile. Write your version of The Line™ before revealing the answer. Focus on ruling out what the constraint is NOT, then naming what it IS precisely.',scenarios:[
+      {company:'Cascade Marketing Group',industry:'B2B Digital Marketing Agency',revenue:'$2.8M (flat 18 months)',team:'18 people',goal:'$4M',signals:['Q9: "We can\'t take on more clients — the team is already stretched thin."','Q11: "Every new client requires the same amount of setup regardless of size. No templated onboarding."','Q18: "We\'ve been meaning to build a client onboarding playbook for two years. Never happens."','Q20: "Every new client kickoff requires the founder to run the first three calls personally."','Q48: "We scaled revenue by selling more. We never built the delivery infrastructure to match."'],theLine:'Cascade Marketing Group is not constrained by market demand, sales capacity, or talent quality. Cascade is constrained by a client delivery process that has never been productized — every engagement is built from scratch, requires founder involvement to launch, and produces inconsistent results that make scaling headcount the only path to growing revenue.',explanation:'<strong>Why this is The Line:</strong> All symptoms (can\'t take more clients, stretched team, founder in every kickoff) trace back to one structural issue: delivery is bespoke every time. Fix this — build standardized onboarding, templatize the first 90 days, remove founder from kickoffs — and capacity increases without headcount.'},
+      {company:'Pinnacle Financial Advisors',industry:'Independent Financial Advisory',revenue:'$1.6M (growing slowly)',team:'12 people',goal:'$3M',signals:['Q11: "Our advisors spend 60% of time on administrative work — compliance paperwork, portfolio updates, client reporting."','Q20: "I spend most of my week reviewing client reports that advisors prepare manually in Excel."','Q26: "Our client reporting methodology. Only I know how to structure quarterly reviews the way clients expect."','Q35: "All client portfolio reports built manually. Each one takes 3–4 hours."'],theLine:'Pinnacle Financial Advisors is not constrained by its market, reputation, or advisory talent. Pinnacle is constrained by a manual reporting and administration workflow that consumes more than half of every advisor\'s productive capacity — limiting the number of clients each advisor can serve and creating a hard ceiling on revenue growth that more hiring will not solve.',explanation:'<strong>Why this is The Line:</strong> Advisors spend 60% of time on admin because reports are built manually. Fix reporting automation → advisor capacity increases → relationship time increases → referrals increase. The constraint is administrative burden, not client acquisition.'},
+      {company:'Summit Residential Builders',industry:'Custom Home Building',revenue:'$5.1M',team:'31 people',goal:'$7M',signals:['Q9: "We can\'t start new projects fast enough. Pipeline backed up 6 months."','Q12: "Right after contract signing — materials procurement takes forever."','Q19: "Nobody owns procurement. Sales thinks ops does it. Ops waits for the project manager. Nothing moves."','Q48: "We grew fast and never built a real procurement process. Everything is improvised."'],theLine:'Summit Residential Builders is not constrained by sales demand, construction capacity, or project management talent. Summit is constrained by the absence of an owned, systematized procurement process — leaving material sourcing as an improvised, untracked function that delays every project start and consistently pulls the founder into supplier escalations that should never reach leadership.',explanation:'<strong>Why this is The Line:</strong> The 6-month pipeline backup isn\'t a demand or construction speed problem — it\'s a procurement problem. Fix procurement ownership and tracking → project starts accelerate → founder stops calling suppliers. Multiple symptoms, one structural gap.'},
+      {company:'Nexus HR Solutions',industry:'HR Consulting & Fractional HR',revenue:'$890K (Year 1)',team:'8 people',goal:'$2M by Year 3',signals:['Q11: "We spend a lot of time writing proposals. Each one is completely custom."','Q15: "We lose 30–40% of prospects who don\'t hear back within a week."','Q22: "I write every proposal personally. It takes 4–6 hours each."','Q48: "I\'m the bottleneck. I know it. Everything client-facing goes through me."'],theLine:'Nexus HR Solutions is not constrained by market demand, pricing, or service quality. Nexus is constrained by a founder-dependent proposal process in which every client-facing document requires 4–6 hours of the founder\'s personal time — creating a commercial velocity ceiling that is directly costing 30–40% of qualified prospects who choose faster-responding competitors.',explanation:'<strong>Why this is The Line:</strong> "We need more clients" is the symptom. The cause is the business physically cannot respond at the speed required to close prospects — because every response requires the founder\'s writing time. Fix with templated proposals and AI-assisted generation → response drops from a week to 24 hours → close rate improves.'},
+      {company:'Vantage Distribution Co.',industry:'B2B Product Distribution',revenue:'$3.4M',team:'22 people',goal:'$5M',signals:['Q9: "Our margins are getting squeezed. We\'re not sure where the leakage is."','Q11: "We can\'t tell which orders are profitable until after they\'re fulfilled."','Q27: "I\'d want to know our per-order margin in real time. We don\'t have that."','Q48: "We grew by adding volume but never built the visibility to know which volume was actually good for us."'],theLine:'Vantage Distribution Co. is not constrained by sales volume, customer relationships, or market access. Vantage is constrained by the absence of real-time per-order profitability visibility — forcing pricing decisions based on estimated markups that consistently produce lower realized margins than projected, while leaving the business unable to identify which customers, routes, and SKUs are driving growth vs. eroding it.',explanation:'<strong>Why this is The Line:</strong> "Margins are squeezed" is the symptom. The cause is no real-time data on where margin comes from and where it leaks. Fix the visibility — per-order, per-SKU, per-route tracking — and they can make pricing and customer decisions that actually improve margin.'}
+    ]},
+    {type:'quiz',id:'q4',h:'Module 04 Quiz — The Constraint Library',intro:'Test your ability to identify constraint patterns.',qs:[
+      {q:'A business loses 20% of deals to competitors who "respond faster." The operator says they need better salespeople. Which constraint pattern is this?',opts:['The Knowledge Silo — sales team lacks product knowledge','The Pipeline Velocity Problem or Estimation Bottleneck — commercial process is too slow','The Founder Approval Loop — deals need founder sign-off before responding','The Scattered AI Problem'],cor:1,exp:'<strong>B is correct.</strong> Losing deals to faster competitors is a velocity signal, not a talent signal. The constraint is in the commercial process speed, not the salespeople\'s ability.'},
+      {q:'A business has 6 AI tools in 18 months. None produce measurable ROI. Teams use them sporadically. Which pattern is this?',opts:['The Visibility Gap','The Scattered AI Problem — AI investment without diagnostic framework','The Knowledge Silo — teams don\'t know how to use AI','The Founder Approval Loop'],cor:1,exp:'<strong>B is correct.</strong> Multiple AI tools, no outcomes, sporadic adoption — this is the Scattered AI pattern exactly. The fix: stop buying tools, audit what exists, identify one high-ROI use case, implement systematically.'},
+      {q:'For the Founder Approval Loop pattern, what is the correct AI leverage point?',opts:['Replace the founder with an AI decision-maker','AI-assisted decision routing, approval threshold documentation, and dashboard visibility that reduces the need for founder judgment on routine decisions','Train the team on AI so they can decide without the founder','Help the founder make decisions faster'],cor:1,exp:'<strong>B is correct.</strong> The goal isn\'t to remove the founder from all decisions — it\'s to remove them from ROUTINE decisions. AI creates leverage by routing decisions to the right level, documenting approval thresholds, and providing visibility so the founder can trust the team.'},
+      {q:'A service business is at max capacity. Revenue is flat. They want to hire. What should Sightline investigate first?',opts:['Whether the market supports higher prices','Whether automation can reduce per-unit delivery time before adding headcount — the Capacity Ceiling pattern','Whether they need better project management tools','How many people to hire to reach their goal'],cor:1,exp:'<strong>B is correct.</strong> The Capacity Ceiling pattern: revenue flat not because demand is low but because the business can\'t process more volume. Ask: "How much delivery time is automatable?" If 30% is administrative, the team can serve 30% more clients without hiring.'},
+      {q:'A client says their constraint is "we need more marketing." What is your response?',opts:['Include marketing recommendations in the AI Opportunity Architecture','Marketing is not a Sightline constraint — refer them to an agency','"More marketing" is almost always a symptom. Investigate what happens to leads that DO come in before recommending more of them.','Score Marketing as a dimension in the Constraint Map'],cor:2,exp:'<strong>C is correct.</strong> "We need more marketing" is one of the most common symptom-level diagnoses. Before recommending more marketing spend, investigate: what happens to leads that come in now? What\'s the close rate? If leads come in and don\'t convert — more leads won\'t fix it.'},
+      {q:'The Knowledge Silo constraint is identified. Which AI implementation creates the most direct leverage?',opts:['ChatGPT for team communication','AI-assisted knowledge base creation — extracting and documenting institutional knowledge from the people who hold it','An AI hiring tool to find replacements faster','AI project management to reduce the silo\'s workload'],cor:1,exp:'<strong>B is correct.</strong> The Knowledge Silo means critical knowledge is trapped in people\'s heads. The highest-leverage AI implementation is systematic knowledge extraction and documentation — making institutional expertise available to the whole team.'}
+    ]},
+    {type:'complete'}
+  ]},
+  {title:"Live Delivery Playbook",tags:["4 Lessons","8 Quiz Qs"],steps:[
+    {type:'lesson',ey:'Module 05 — Lesson 1',h:'When you are ready to deliver a live Tier 2 Review',body:`
+      <div class="callout green"><p class="cl">The Three Readiness Questions</p><p class="ct">
+      <strong>1. Can I name The Line with confidence?</strong> Not "I think it might be..." but "The constraint is X, and here is the specific intake evidence."<br/><br/>
+      <strong>2. Can I defend every SOI score?</strong> If the client asks "why is my Founder Independence a 9?" you can immediately cite Q20, Q22, and Q24 and explain exactly how those responses map to the 10 anchor.<br/><br/>
+      <strong>3. Is the constraint in a domain I understand?</strong> Sales, revenue operations, pipeline velocity, founder dependency, decision bottlenecks — yes. Deep manufacturing engineering, healthcare compliance, software architecture — not yet.</p></div>
+      <div class="callout amber"><p class="cl">The Safety Rule</p><p class="ct">If you can\'t answer yes to all three, deliver Tier 1 only. A $495 audit delivered with confidence is worth more than a $2,500 review delivered with uncertainty. Confidence comes from running more audits.</p></div>`},
+    {type:'lesson',ey:'Module 05 — Lesson 2',h:'The 60-minute Executive Review — minute by minute',body:`
+      <div class="callout blue"><p class="cl">Minutes 0–5 — Set the Frame</p><p class="ct">Say exactly: <em>"I'm going to walk you through what we found. I want you to push back on anything that doesn't feel right — this only works if it's accurate. The goal of this call is for you to leave with absolute clarity on what's actually limiting your growth and what to do first."</em></p></div>
+      <div class="callout blue"><p class="cl">Minutes 5–15 — The Line™</p><p class="ct">Read The Line slowly. Then stop talking. Count to five. Let it land. If they say yes: "Your Q48 told us the same thing — you already knew. Here's the evidence and the cost." If they push back: "Tell me more about why that doesn't feel right." Then walk through the specific intake responses.</p></div>
+      <div class="callout blue"><p class="cl">Minutes 15–25 — SOI Scores</p><p class="ct">Walk through each score. For every score below 40: "Your Founder Independence score is 9. That means the business effectively stops when you step away. Here's the specific evidence." For scores above 65: acknowledge the strength before discussing the gaps.</p></div>
+      <div class="callout blue"><p class="cl">Minutes 25–35 — Revenue Leakage</p><p class="ct">Walk through each line item. Distinguish confidence levels out loud: "The $600K in lost bids is your number — High Confidence. The founder time cost is directional — we've estimated based on your stated hours." Don't apologize for directional estimates.</p></div>
+      <div class="callout blue"><p class="cl">Minutes 35–50 — Blueprint + The Next Move</p><p class="ct">Focus on the first 30 days. "Let's look at The Next Move. Step 1 is knowledge capture sessions — this is the foundation everything else depends on. Do you have the right person to own that?" Confirm they have the people. This is where your sales and RevOps background shows — you know what actually gets implemented vs. what looks good on paper.</p></div>
+      <div class="callout blue"><p class="cl">Minutes 50–58 — Questions + Commitment</p><p class="ct">"What questions do you have?" Then: "What\'s your honest read on the first step — is there anything that would prevent you from starting this next week?" Get a verbal commitment before the call ends. That commitment is the actual deliverable.</p></div>
+      <div class="callout blue"><p class="cl">Minutes 58–60 — Navigator Pitch</p><p class="ct">"The audit tells you what to do. The Navigator retainer is how I stay alongside you while you do it. Most clients who implement without advisory support get 60% of the way there and stall. Would you like to talk about what 90 days of Navigator support looks like?"</p></div>`},
+    {type:'lesson',ey:'Module 05 — Lesson 3',h:'Handling the 5 most common objections',body:`
+      <div class="callout amber"><p class="cl">Objection 1 — "That's not our real problem."</p><p class="ct"><strong>Response:</strong> "Tell me more — what do you think the real problem is?" Listen. Then: "Let me show you the specific responses that drove this finding and you tell me if they're accurate." Walk through the evidence. If accurate, the finding holds.</p></div>
+      <div class="callout amber"><p class="cl">Objection 2 — "We already know we have this problem."</p><p class="ct"><strong>Response:</strong> "Good — that tells me the finding is right. The question isn't whether you know it exists. The question is what it's costing you and what you do about it Monday morning. That's what the next 45 minutes covers." Reframe from identification to action.</p></div>
+      <div class="callout amber"><p class="cl">Objection 3 — "I'm not sure AI is the right solution."</p><p class="ct"><strong>Response:</strong> "You might be right — let me walk you through the three opportunities we identified and you tell me which ones feel applicable." Never force AI. If the constraint isn't an AI problem, say so and refer out.</p></div>
+      <div class="callout amber"><p class="cl">Objection 4 — "We don\'t have the team to implement this."</p><p class="ct"><strong>Response:</strong> "That's exactly what the Implementation Path is for — every recommendation has three options: Internal Team, Contractor/Freelancer, or Managed Build Partner. You don't need an IT department." Show them the contractor path.</p></div>
+      <div class="callout amber"><p class="cl">Objection 5 — "We need to think about it."</p><p class="ct"><strong>Response:</strong> "Of course — what specifically do you need to think through? Is it the constraint finding, the implementation approach, or the investment?" Find the specific concern. "Think about it" is almost always a specific concern dressed as a general pause.</p></div>`},
+    {type:'lesson',ey:'Module 05 — Lesson 4',h:'Where your revenue expertise is the unfair advantage',body:`
+      <div class="callout green"><p class="cl">Pattern Recognition That No Methodology Can Document</p><p class="ct">You know what a broken sales-to-delivery handoff looks like from the inside. You know why founder pricing approval never goes away on its own. You know that the first tool failure creates 18 months of team skepticism. You know that a sales team at 9/10 AI enthusiasm and an ops team at 4/10 means the implementation will fail unless ops is brought along first.<br/><br/>None of this is in the audit. All of it comes out in the debrief. That's the $2,500.</p></div>
+      <div class="callout green"><p class="cl">Revenue Operations — Your Primary Domain</p><p class="ct">Sales pipeline velocity, quota design, CRM architecture, sales-to-delivery handoffs, RevOps process design, go-to-market motion — these are your domain. When the constraint lives here, you bring expertise that is genuinely rare. Stay in this lane for your first 10 live reviews.</p></div>
+      <div class="callout green"><p class="cl">The Confidence Signal</p><p class="ct">Clients buy confidence. Not certainty — confidence. "Here's what I found, here's the evidence, here's what I recommend, and here's what we don\'t know yet." That combination of clear finding + honest uncertainty is what makes a client trust you enough to implement.</p></div>`},
+    {type:'quiz',id:'q5',h:'Module 05 Quiz — Live Delivery Playbook',intro:'Test your readiness to deliver a live Tier 2 Executive Review.',qs:[
+      {q:'A client hears The Line and says "yes, that\'s exactly it." What do you do next?',opts:['Move immediately to SOI scores','Say "Your Q48 told us the same thing — you already knew. Here\'s the evidence and what it\'s costing you."','Ask them to confirm in writing','Pause and adjust the audit'],cor:1,exp:'<strong>B is correct.</strong> When Q48 aligns and the client confirms The Line, this is the most powerful moment: "You already knew." It validates their instinct and creates the emotional buy-in needed to act on recommendations.'},
+      {q:'At minute 50, a client has no questions. What do you do?',opts:['End the call early','Ask: "What\'s your honest read on the first step? Is there anything that would prevent you from starting this next week?"','Summarize everything you covered','Ask if they want to upgrade to Tier 3'],cor:1,exp:'<strong>B is correct.</strong> The commitment close is the most important moment. A client who leaves without committing to one specific action is unlikely to implement. The commitment is the actual deliverable of a Tier 2 review.'},
+      {q:'A client says "we don\'t have anyone to implement this — we have no IT team." What is the correct response?',opts:['Offer to implement it for them','Tell them to hire someone first','Show them the Implementation Path options — Internal Team, Contractor/Freelancer, Managed Build Partner — and walk through the contractor path','Revise the audit to exclude technical recommendations'],cor:2,exp:'<strong>C is correct.</strong> "We don\'t have IT" is where audits die. The Implementation Path exists specifically for this objection. Every recommendation has three paths. Show them the contractor options.'},
+      {q:'You are about to deliver a Tier 2 review. The constraint is in healthcare compliance workflow. Should you proceed?',opts:['Yes — the methodology works regardless of industry','Yes, but disclose upfront that healthcare compliance is outside your expertise','No — if the constraint is outside your domain (sales/RevOps), deliver Tier 1 only until you\'ve built domain knowledge','Yes, but bring in a healthcare expert'],cor:2,exp:'<strong>C is correct.</strong> The three readiness questions include "Is the constraint in a domain I understand?" Healthcare compliance is not sales/RevOps. Deliver Tier 1 with confidence rather than Tier 2 with uncertainty.'},
+      {q:'A client says "we need to think about it" after the commitment close. What do you do?',opts:['Respect their process and follow up in a week','Ask: "What specifically do you need to think through — is it the constraint finding, the implementation approach, or the investment?"','Offer a discount to close on the call','Send a follow-up email and wait'],cor:1,exp:'<strong>B is correct.</strong> "Think about it" is a specific concern dressed as a general pause. Your job is to find the concern. Each type has a specific response. General patience without identifying the objection rarely converts.'},
+      {q:'What does a $2,500 Tier 2 review add over a $495 Tier 1 audit?',opts:['A longer report with more recommendations','Interpretation, accountability, and live expertise pattern-matching — none of which exist in a PDF','A follow-up audit 30 days later','The same content presented in person'],cor:1,exp:'<strong>B is correct.</strong> The report is the same. The $2,500 buys three things a PDF can\'t provide: (1) Interpretation, (2) Accountability from the live commitment close, (3) 15 years of pattern recognition about what actually gets implemented.'},
+      {q:'A client disputes their Process Maturity score of 22. "We\'re much more organized than that." How do you respond?',opts:['Adjust the score to match their self-assessment','Defend it without engaging','Walk through the specific intake responses that drove the score and ask them to engage with the evidence','Offer to rescore after the call'],cor:2,exp:'<strong>C is correct.</strong> Score disputes are resolved with evidence, not capitulation or defensiveness. Cite the responses. Ask the client to engage with the specific evidence. If the responses are accurate, the score holds.'},
+      {q:'When should you pitch the Navigator retainer?',opts:['At the start of the call','In the first 10 minutes after The Line lands','At minutes 58–60, after the commitment close','In the follow-up email'],cor:2,exp:'<strong>C is correct.</strong> The Navigator pitch belongs last — after the client has heard The Line, understood the cost, seen the implementation complexity, and committed to a first action. At that point the case for ongoing advisory support makes itself.'}
+    ]},
+    {type:'complete'}
+  ]}
+];
+
+function renderDash(){
+  const container=document.getElementById('dash-modules');
+  container.innerHTML='';
+  modules.forEach((m,i)=>{
+    const p=progress[i]||{};
+    const tagHtml=m.tags.map(t=>{
+      const cls=t.includes('Lesson')?'tag-l':t.includes('Quiz')?'tag-q':'tag-s';
+      return `<span class="mc-tag ${cls}">${t}</span>`;
+    }).join('');
+    const statusClass=p.completed?'s-done':p.started?'s-prog':'s-new';
+    const statusText=p.completed?'✓ Complete':p.started?'In Progress':'Not Started';
+    const completedClass=p.completed?'completed':'';
+    container.innerHTML+=`<div class="mc ${completedClass}" onclick="openModule(${i})">
+      <p class="mc-num">Module 0${i+1}</p>
+      <p class="mc-title">${m.title}</p>
+      <p class="mc-desc">${['How Sightline thinks. The sequence from intake to The Line. Why one constraint beats a list every time.','How to extract signal from 49 questions. What responses reveal constraint candidates. The Q48 gut read.','Score all seven SOI dimensions accurately. Defend every number with intake evidence. Common scoring mistakes.','The 8 most common constraint patterns. What they look like in intake data. 5 practice scenarios.','The exact structure of a Tier 2 Executive Review. Objection handling. The Navigator pitch.'][i]}</p>
+      <div class="mc-tags">${tagHtml}</div>
+      <p class="mc-status ${statusClass}">${statusText}</p>
+    </div>`;
+  });
+}
+
+function updateOverall(){
+  const done=Object.keys(progress).filter(k=>progress[k]&&progress[k].completed).length;
+  const pct=Math.round((done/modules.length)*100);
+  document.getElementById('overall-pct').textContent=pct+'%';
+  document.getElementById('overall-bar').style.width=pct+'%';
+}
+
+function saveP(){try{localStorage.setItem('sdc-v2',JSON.stringify(progress));}catch(e){} updateOverall();renderDash();}
+
+function openModule(i){
+  curMod=i;curStep=0;qAnswers={};qSubmitted={};
+  if(!progress[i])progress[i]={started:true};
+  progress[i].started=true;saveP();
+  document.getElementById('screen-dashboard').classList.remove('active');
+  document.getElementById('screen-module').classList.add('active');
+  renderStep();window.scrollTo(0,0);
+}
+
+function backToDash(){
+  document.getElementById('screen-module').classList.remove('active');
+  document.getElementById('screen-dashboard').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function renderStep(){
+  const mod=modules[curMod];
+  const step=mod.steps[curStep];
+  document.getElementById('topbar-title').textContent=`Module 0${curMod+1} — ${mod.title}`;
+  document.getElementById('topbar-prog').textContent=`${curStep+1} of ${mod.steps.length}`;
+  let html='';
+  if(step.type==='lesson') html=renderLesson(step);
+  else if(step.type==='quiz') html=renderQuiz(step);
+  else if(step.type==='scenario') html=renderScenario(step);
+  else if(step.type==='complete') html=renderComplete();
+  document.getElementById('mod-body').innerHTML=html;
+  window.scrollTo(0,0);
+}
+
+function renderLesson(s){
+  return `<p class="eyebrow">${s.ey}</p><h2 class="lesson-h serif">${s.h}</h2>${s.body}
+  <div class="mod-nav">
+    ${curStep>0?'<button class="btn-prev-m" onclick="prevStep()">← Back</button>':''}
+    <button class="btn-next-m" onclick="nextStep()">Continue →</button>
+  </div>`;}
+
+function renderQuiz(s){
+  let h=`<p class="eyebrow">Knowledge Check</p><h2 class="lesson-h serif">${s.h}</h2><p class="lb">${s.intro}</p>`;
+  s.qs.forEach((q,qi)=>{
+    h+=`<div class="quiz-wrap" id="qw${qi}"><p class="q-num">Question ${qi+1} of ${s.qs.length}</p><p class="q-text">${q.q}</p><div class="q-opts">`;
+    ['A','B','C','D'].forEach((l,oi)=>{
+      if(!q.opts[oi])return;
+      h+=`<div class="q-opt" id="qo${qi}_${oi}" onclick="selectA(${qi},${oi},${q.cor},'${s.id}',${s.qs.length})"><span class="q-let">${l}.</span><span>${q.opts[oi]}</span></div>`;
+    });
+    h+=`</div><div class="q-fb" id="qf${qi}"><p class="q-fb-label" id="qfl${qi}"></p><p class="q-fb-text" id="qft${qi}"></p></div></div>`;
+  });
+  h+=`<div class="score-card" id="sc" style="display:none;"><p class="sc-label">Quiz Complete</p><p class="sc-score" id="sc-score"></p><p class="sc-verdict" id="sc-verdict"></p><p class="sc-sub" id="sc-sub"></p></div>
+  <div class="mod-nav" id="qnav" style="display:none;">
+    ${curStep>0?'<button class="btn-prev-m" onclick="prevStep()">← Back</button>':''}
+    <button class="btn-next-m" onclick="nextStep()">Continue →</button>
+  </div>`;
+  return h;}
+
+function selectA(qi,oi,cor,qid,total){
+  if(qSubmitted[qi])return;
+  qSubmitted[qi]=true;qAnswers[qi]=oi;
+  const isC=oi===cor;
+  ['A','B','C','D'].forEach((_,i)=>{
+    const el=document.getElementById(`qo${qi}_${i}`);
+    if(!el)return;
+    if(i===oi&&isC)el.className='q-opt cor';
+    else if(i===oi&&!isC)el.className='q-opt inc';
+    else if(i===cor&&!isC)el.className='q-opt rev';
+    else el.style.opacity='.35';
+  });
+  const fb=document.getElementById(`qf${qi}`);
+  fb.classList.add('show',isC?'cor':'inc');
+  document.getElementById(`qfl${qi}`).textContent=isC?'✓ Correct':'✗ Incorrect';
+  const mod=modules[curMod];
+  const step=mod.steps.find(s=>s.id===qid);
+  document.getElementById(`qft${qi}`).innerHTML=step.qs[qi].exp;
+  if(Object.keys(qSubmitted).length===total){
+    const score=Object.keys(qAnswers).filter(k=>{
+      const q=modules[curMod].steps.find(s=>s.id===qid).qs[parseInt(k)];
+      return qAnswers[k]===q.cor;
+    }).length;
+    const pct=Math.round((score/total)*100);
+    document.getElementById('sc').style.display='block';
+    document.getElementById('sc-score').textContent=`${score}/${total}`;
+    document.getElementById('sc-verdict').textContent=pct>=80?'Certified on this module':pct>=60?'Passing — review missed questions':'Needs review — retake recommended';
+    document.getElementById('sc-sub').textContent=pct>=80?'Solid understanding. Proceed to next module.':'Go back through lessons and retake to build confidence before delivery.';
+    document.getElementById('qnav').style.display='flex';
+  }
+}
+
+function renderScenario(s){
+  let h=`<p class="eyebrow">Practice Scenarios</p><h2 class="lesson-h serif">${s.h}</h2><p class="lb">${s.intro}</p>`;
+  s.scenarios.forEach((sc,si)=>{
+    h+=`<div class="sc-card"><p class="sc-ey">Scenario ${si+1} of ${s.scenarios.length}</p><p class="sc-company">${sc.company}</p>
+    <div class="sc-data">
+      <div class="sc-field"><p class="sc-fl">Industry</p><p class="sc-fv">${sc.industry}</p></div>
+      <div class="sc-field"><p class="sc-fl">Revenue</p><p class="sc-fv">${sc.revenue}</p></div>
+      <div class="sc-field"><p class="sc-fl">Team</p><p class="sc-fv">${sc.team}</p></div>
+      <div class="sc-field"><p class="sc-fl">Goal</p><p class="sc-fv">${sc.goal}</p></div>
+    </div>
+    <p class="sc-sigs-label">Key Intake Signals</p>
+    ${sc.signals.map(sg=>`<div class="sc-sig"><span class="sc-dot">→</span><span>${sg}</span></div>`).join('')}
+    <p style="font-size:12px;font-weight:500;color:var(--ink);margin:14px 0 6px;">Write your version of The Line™:</p>
+    <textarea class="sc-ta" placeholder="[Company] is not constrained by... [Company] is constrained by..." id="sct${si}"></textarea><br/>
+    <button class="btn-reveal" onclick="document.getElementById('sca${si}').classList.add('show')">Reveal The Line™ →</button>
+    <div class="sc-ans" id="sca${si}">
+      <p class="sa-label">✓ Sightline's Answer</p>
+      <div class="sa-box"><p class="sa-box-label">The Line™</p><p class="sa-box-text">${sc.theLine}</p></div>
+      <p class="sa-exp">${sc.explanation}</p>
+    </div></div>`;
+  });
+  h+=`<div class="mod-nav">${curStep>0?'<button class="btn-prev-m" onclick="prevStep()">← Back</button>':''}<button class="btn-next-m" onclick="nextStep()">Continue →</button></div>`;
+  return h;}
+
+function renderComplete(){
+  progress[curMod].completed=true;saveP();
+  const allDone=modules.every((_,i)=>progress[i]&&progress[i].completed);
+  return `<div style="text-align:center;padding:48px 0;">
+    <p style="font-size:48px;margin-bottom:20px;">${allDone?'🎓':'✓'}</p>
+    <p class="eyebrow" style="text-align:center;">${allDone?'Certification Complete':'Module Complete'}</p>
+    <h2 class="lesson-h serif" style="text-align:center;">${allDone?'You are certified to deliver the Sightline Audit™.':'Module 0'+(curMod+1)+' complete.'}</h2>
+    <p class="lb" style="text-align:center;max-width:480px;margin:0 auto 28px;">${allDone?'Five modules complete. You understand the methodology, can read intake data, score SOI, identify constraints, and run a live Executive Review. Go deliver.':'Your progress is saved. Return to the dashboard for the next module.'}</p>
+    <button class="btn-next-m" style="max-width:260px;margin:0 auto;display:block;" onclick="backToDash()">← Back to Dashboard</button>
+  </div>`;}
+
+function nextStep(){
+  if(curStep<modules[curMod].steps.length-1){curStep++;renderStep();}
+  window.scrollTo(0,0);}
+
+function prevStep(){
+  if(curStep>0){curStep--;renderStep();window.scrollTo(0,0);}}
+
+renderDash();updateOverall();
+</script>
+</body>
+</html>
