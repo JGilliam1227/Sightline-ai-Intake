@@ -14,428 +14,157 @@
   --red:          #CC2200;
   --bone:         #F5F4F0;
   --gray:         #888780;
-  --line-gray:    rgba(245,244,240,.12);
   --rule:         rgba(245,244,240,.08);
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
-
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--blackout);
-  color: var(--bone);
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-/* ─── NAV ─── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: 60px;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 48px;
-  background: rgba(10,10,10,.95);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--rule);
-}
-.nav-logo {
-  display: flex; flex-direction: column; gap: 1px;
-  text-decoration: none; line-height: 1;
-}
-.nav-logo-word {
-  font-size: 13px; font-weight: 500; letter-spacing: .18em;
-  text-transform: uppercase; color: var(--bone);
-}
-.nav-logo-ai {
-  font-size: 9px; letter-spacing: .26em; text-transform: uppercase; color: var(--red);
-}
-.nav-links {
-  display: flex; align-items: center; gap: 36px;
-  position: absolute; left: 50%; transform: translateX(-50%);
-}
-.nav-links a {
-  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--gray); text-decoration: none; transition: color .2s;
-}
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--blackout); color: var(--bone); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(10,10,10,.95); backdrop-filter: blur(16px); border-bottom: 1px solid var(--rule); }
+.nav-logo { display: flex; flex-direction: column; gap: 1px; text-decoration: none; line-height: 1; }
+.nav-logo-word { font-size: 13px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--bone); }
+.nav-logo-ai { font-size: 9px; letter-spacing: .26em; text-transform: uppercase; color: var(--red); }
+.nav-links { display: flex; align-items: center; gap: 36px; position: absolute; left: 50%; transform: translateX(-50%); }
+.nav-links a { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray); text-decoration: none; transition: color .2s; }
 .nav-links a:hover { color: var(--bone); }
-.nav-cta {
-  font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--bone); border: 1px solid var(--red);
-  padding: 9px 20px; text-decoration: none; transition: background .2s, color .2s;
-}
+.nav-cta { font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--bone); border: 1px solid var(--red); padding: 9px 20px; text-decoration: none; transition: background .2s, color .2s; }
 .nav-cta:hover { background: var(--red); }
-
-/* ─── SHARED ─── */
-.sec-label {
-  font-size: 10px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--red); margin-bottom: 24px;
-  display: flex; align-items: center; gap: 12px;
-}
+.sec-label { font-size: 10px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--red); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
 .sec-label::before { content: ''; width: 24px; height: 1px; background: var(--red); }
-
-h2 {
-  font-size: clamp(26px, 3.5vw, 44px); font-weight: 500;
-  letter-spacing: -.8px; line-height: 1.12; color: var(--bone);
-}
-.body-copy {
-  font-size: 15px; font-weight: 300; color: var(--gray); line-height: 1.75;
-}
+h2 { font-size: clamp(26px, 3.5vw, 44px); font-weight: 500; letter-spacing: -.8px; line-height: 1.12; color: var(--bone); }
+.body-copy { font-size: 15px; font-weight: 300; color: var(--gray); line-height: 1.75; }
 .rule-h { width: 100%; height: 1px; background: var(--rule); }
-
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: var(--red); color: #fff;
-  font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
-  padding: 14px 28px; border: none; cursor: pointer; text-decoration: none;
-  transition: background .2s;
-}
+.btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--red); color: #fff; font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: 14px 28px; border: none; cursor: pointer; text-decoration: none; transition: background .2s; }
 .btn-primary:hover { background: #aa1800; }
 .btn-primary svg { transition: transform .2s; }
 .btn-primary:hover svg { transform: translateX(4px); }
-
-.btn-ghost {
-  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--gray); text-decoration: none;
-  border-bottom: 1px solid rgba(136,135,128,.3); padding-bottom: 2px;
-  transition: color .2s, border-color .2s;
-}
+.btn-ghost { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray); text-decoration: none; border-bottom: 1px solid rgba(136,135,128,.3); padding-bottom: 2px; transition: color .2s, border-color .2s; }
 .btn-ghost:hover { color: var(--bone); border-color: var(--gray); }
-
-/* ─── HERO ─── */
-.hero {
-  min-height: 100vh;
-  display: grid; grid-template-columns: 1fr 1fr;
-  padding-top: 60px;
-  position: relative;
-}
+.hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 60px; position: relative; }
 .hero-top-rule { position: absolute; top: 60px; left: 0; right: 0; height: 1px; background: var(--rule); }
-
-.hero-left {
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 80px 56px 80px 48px;
-  border-right: 1px solid var(--rule);
-}
-.hero-eyebrow {
-  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--gray); margin-bottom: 32px;
-}
-.hero-h1 {
-  font-size: clamp(34px, 4.5vw, 64px); font-weight: 500;
-  letter-spacing: -1.5px; line-height: 1.06; color: #fff;
-  margin-bottom: 28px;
-}
-.hero-h1 .word-line {
-  color: var(--red);
-  border-bottom: 2px solid var(--red);
-  padding-bottom: 1px;
-  font-style: normal;
-}
-.hero-sub {
-  font-size: 15px; font-weight: 300; color: var(--gray);
-  line-height: 1.72; max-width: 420px; margin-bottom: 44px;
-}
+.hero-left { display: flex; flex-direction: column; justify-content: center; padding: 80px 56px 80px 48px; border-right: 1px solid var(--rule); }
+.hero-eyebrow { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--gray); margin-bottom: 32px; }
+.hero-h1 { font-size: clamp(34px, 4.5vw, 64px); font-weight: 500; letter-spacing: -1.5px; line-height: 1.06; color: #fff; margin-bottom: 28px; }
+.hero-h1 .word-line { color: var(--red); border-bottom: 2px solid var(--red); padding-bottom: 1px; font-style: normal; }
+.hero-sub { font-size: 15px; font-weight: 300; color: var(--gray); line-height: 1.72; max-width: 420px; margin-bottom: 44px; }
 .hero-ctas { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
-
-.hero-right {
-  position: relative; overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-}
+.hero-right { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .hero-right-inner { position: relative; width: 100%; height: 100%; min-height: 500px; }
 .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-
-/* Line draw animation */
-.hero-curve {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: drawCurve 2.2s cubic-bezier(.4,0,.2,1) .5s forwards;
-}
+.hero-curve { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: drawCurve 2.2s cubic-bezier(.4,0,.2,1) .5s forwards; }
 @keyframes drawCurve { to { stroke-dashoffset: 0; } }
-
-.hero-dot {
-  opacity: 0;
-  animation: dotFade .4s ease 2.6s forwards;
-}
+.hero-dot { opacity: 0; animation: dotFade .4s ease 2.6s forwards; }
 @keyframes dotFade { to { opacity: 1; } }
-
-.hero-corner {
-  position: absolute; bottom: 40px; right: 40px;
-  text-align: right;
-}
-.hero-corner p {
-  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(136,135,128,.5); line-height: 1.9;
-}
-
-/* ─── PROBLEM ─── */
+.hero-corner { position: absolute; bottom: 40px; right: 40px; text-align: right; }
+.hero-corner p { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: rgba(136,135,128,.5); line-height: 1.9; }
 .problem { background: var(--blackout); padding: 120px 48px; }
 .problem-top { max-width: 640px; margin-bottom: 72px; }
 .problem-top h2 { margin-bottom: 20px; }
 .problem-top h2 em { color: var(--red); font-style: normal; }
-
-.pain-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
-  background: var(--rule); margin-bottom: 1px;
-}
-.pain-card {
-  background: var(--blackout); padding: 36px 32px;
-  display: flex; gap: 20px; align-items: flex-start;
-}
-.pain-num {
-  font-size: 10px; color: var(--red); font-weight: 500;
-  letter-spacing: .12em; min-width: 24px; margin-top: 3px;
-}
+.pain-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--rule); margin-bottom: 1px; }
+.pain-card { background: var(--blackout); padding: 36px 32px; display: flex; gap: 20px; align-items: flex-start; }
+.pain-num { font-size: 10px; color: var(--red); font-weight: 500; letter-spacing: .12em; min-width: 24px; margin-top: 3px; }
 .pain-text { font-size: 14px; font-weight: 300; color: var(--bone); line-height: 1.68; }
 .pain-text strong { font-weight: 500; }
-
-.pull-quote {
-  background: var(--deep-surface); padding: 40px 40px 40px 44px;
-  border-left: 2px solid var(--red);
-  margin-top: 1px;
-}
-.pull-quote blockquote {
-  font-size: 18px; font-weight: 300; color: var(--bone);
-  line-height: 1.6; font-style: italic; margin-bottom: 16px;
-}
-.pull-quote cite {
-  font-size: 11px; color: var(--gray); font-style: normal; letter-spacing: .08em;
-}
-
-/* ─── OFFER ─── */
+.pull-quote { background: var(--deep-surface); padding: 40px 40px 40px 44px; border-left: 2px solid var(--red); margin-top: 1px; }
+.pull-quote blockquote { font-size: 18px; font-weight: 300; color: var(--bone); line-height: 1.6; font-style: italic; margin-bottom: 16px; }
+.pull-quote cite { font-size: 11px; color: var(--gray); font-style: normal; letter-spacing: .08em; }
 .offer { background: var(--bone); padding: 120px 48px; }
 .offer .sec-label { color: var(--red); }
 .offer .sec-label::before { background: var(--red); }
 .offer h2 { color: var(--blackout); margin-bottom: 12px; }
-.offer-header {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  margin-bottom: 64px; gap: 40px; flex-wrap: wrap;
-}
-.offer-price { text-align: right; }
-.offer-price-label { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
-.offer-price-num { font-size: 36px; font-weight: 500; color: var(--blackout); letter-spacing: -1px; }
-.offer-price-range { font-size: 12px; color: var(--gray); margin-top: 4px; }
-
+.offer-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 64px; gap: 40px; flex-wrap: wrap; }
 .offer-wrap { position: relative; }
-.offer-line-svg {
-  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  width: 100%; height: 100%; pointer-events: none; z-index: 0;
-}
-.offer-cards {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
-  position: relative; z-index: 1;
-}
+.offer-line-svg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.offer-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; position: relative; z-index: 1; }
 .offer-card { background: #fff; padding: 40px 32px; }
-.offer-card-tag {
-  font-size: 10px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
-  color: var(--red); margin-bottom: 20px;
-}
-.offer-card-title {
-  font-size: 17px; font-weight: 500; color: var(--blackout); margin-bottom: 14px; line-height: 1.35;
-}
+.offer-card-tag { font-size: 10px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--red); margin-bottom: 20px; }
+.offer-card-title { font-size: 17px; font-weight: 500; color: var(--blackout); margin-bottom: 14px; line-height: 1.35; }
 .offer-card-body { font-size: 13px; font-weight: 300; color: #5a5955; line-height: 1.68; }
-
-/* ─── PROCESS ─── */
 .process { background: var(--blackout); padding: 120px 48px; }
 .process h2 { margin-bottom: 16px; }
 .process-sub { max-width: 480px; margin-bottom: 72px; }
-
 .timeline-wrap { position: relative; margin-bottom: 48px; }
-.timeline-line {
-  position: absolute; top: 20px; left: 0; right: 0; height: 1px;
-  background: var(--rule);
-}
-.timeline-redline {
-  position: absolute; top: 19px; left: 0; height: 2px;
-  background: var(--red);
-  animation: growLine 1.8s ease .3s both;
-  width: 0;
-}
+.timeline-line { position: absolute; top: 20px; left: 0; right: 0; height: 1px; background: var(--rule); }
+.timeline-redline { position: absolute; top: 19px; left: 0; height: 2px; background: var(--red); animation: growLine 1.8s ease .3s both; width: 0; }
 @keyframes growLine { to { width: 100%; } }
-
-.timeline {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  position: relative; gap: 0;
-}
+.timeline { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; gap: 0; }
 .timeline-step { padding: 48px 28px 0 0; }
-.ts-dot {
-  width: 8px; height: 8px; background: var(--red); border-radius: 50%;
-  margin-bottom: 20px;
-}
+.ts-dot { width: 8px; height: 8px; background: var(--red); border-radius: 50%; margin-bottom: 20px; }
 .ts-day { font-size: 10px; color: var(--red); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; font-weight: 500; }
 .ts-title { font-size: 16px; font-weight: 500; color: var(--bone); margin-bottom: 10px; }
 .ts-body { font-size: 13px; font-weight: 300; color: var(--gray); line-height: 1.65; }
-
-.promise-card {
-  background: var(--deep-surface); padding: 40px;
-  border-left: 2px solid var(--red);
-  display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap;
-}
+.promise-card { background: var(--deep-surface); padding: 40px; border-left: 2px solid var(--red); display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
 .promise-card-quote { font-size: 20px; font-weight: 500; color: var(--bone); letter-spacing: -.3px; }
 .promise-card-detail { font-size: 13px; font-weight: 300; color: var(--gray); line-height: 1.65; max-width: 320px; }
-
-/* ─── DELIVERABLES ─── */
 .deliverables { background: var(--bone); padding: 120px 48px; }
 .deliverables .sec-label { color: var(--red); }
 .deliverables .sec-label::before { background: var(--red); }
 .deliverables h2 { color: var(--blackout); margin-bottom: 64px; }
-
 .del-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-
 .del-list { display: flex; flex-direction: column; }
-.del-item {
-  display: flex; gap: 20px; align-items: flex-start;
-  padding: 24px 0; border-bottom: 1px solid rgba(10,10,10,.1);
-}
+.del-item { display: flex; gap: 20px; align-items: flex-start; padding: 24px 0; border-bottom: 1px solid rgba(10,10,10,.1); }
 .del-item:first-child { border-top: 1px solid rgba(10,10,10,.1); }
-.del-counter {
-  font-size: 10px; color: var(--red); font-weight: 500;
-  letter-spacing: .1em; min-width: 20px; margin-top: 2px;
-}
-.del-content {}
+.del-counter { font-size: 10px; color: var(--red); font-weight: 500; letter-spacing: .1em; min-width: 20px; margin-top: 2px; }
 .del-title { font-size: 15px; font-weight: 500; color: var(--blackout); margin-bottom: 6px; }
 .del-desc { font-size: 13px; font-weight: 300; color: #5a5955; line-height: 1.65; }
-
-/* Document mockup */
 .doc-mockup { position: relative; }
-.doc-outer {
-  background: var(--blackout); padding: 32px;
-  box-shadow: 16px 16px 0 rgba(10,10,10,.2);
-  border-top: 2px solid var(--red);
-}
-.doc-inner-page {
-  background: #fff; margin-top: 24px; padding: 28px;
-}
+.doc-outer { background: var(--blackout); padding: 32px; box-shadow: 16px 16px 0 rgba(10,10,10,.2); border-top: 2px solid var(--red); }
+.doc-inner-page { background: #fff; margin-top: 24px; padding: 28px; }
 .doc-logo { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
 .doc-h { font-size: 18px; font-weight: 500; color: var(--blackout); margin-bottom: 6px; }
 .doc-sub { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--red); margin-bottom: 20px; }
-.doc-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 20px; }
-.doc-stat-cell { background: var(--bone); padding: 12px; }
-.doc-stat-n { font-size: 22px; font-weight: 500; color: var(--blackout); letter-spacing: -.5px; }
-.doc-stat-l { font-size: 9px; color: var(--gray); letter-spacing: .08em; text-transform: uppercase; margin-top: 3px; }
 .doc-rule { height: 1px; background: rgba(10,10,10,.1); margin-bottom: 16px; }
 .doc-section-h { font-size: 9px; color: var(--red); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; }
 .doc-lines { display: flex; flex-direction: column; gap: 7px; }
 .doc-line-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #5a5955; }
 .doc-line-item::before { content: ''; width: 4px; height: 4px; background: var(--red); border-radius: 50%; flex-shrink: 0; }
-.doc-footer-line {
-  font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--red); margin-top: 20px;
-}
-
-/* ─── RESULTS ─── */
+.doc-footer-line { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--red); margin-top: 20px; }
 .results { background: var(--blackout); padding: 120px 48px; }
 .results h2 { margin-bottom: 64px; }
-
-.stats-row {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
-  margin-bottom: 2px;
-}
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 2px; }
 .stat-block { background: var(--deep-surface); padding: 40px 32px; }
 .stat-num { font-size: 48px; font-weight: 500; color: #fff; letter-spacing: -2px; line-height: 1; }
 .stat-num span { color: var(--red); font-size: 28px; }
 .stat-label { font-size: 13px; font-weight: 300; color: var(--gray); line-height: 1.6; margin-top: 12px; }
-
-.testimonials {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
-}
+.testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
 .testimonial-card { background: var(--deep-surface); padding: 36px 32px; }
-.t-quote {
-  font-size: 14px; font-weight: 300; color: var(--bone); line-height: 1.72;
-  font-style: italic; margin-bottom: 24px;
-}
+.t-quote { font-size: 14px; font-weight: 300; color: var(--bone); line-height: 1.72; font-style: italic; margin-bottom: 24px; }
 .t-name { font-size: 12px; font-weight: 500; color: var(--bone); }
 .t-role { font-size: 11px; color: var(--gray); margin-top: 3px; }
-
-/* ─── NEWSLETTER ─── */
 .newsletter { background: var(--bone); padding: 120px 48px; }
 .newsletter .sec-label { color: var(--red); }
 .newsletter .sec-label::before { background: var(--red); }
 .nl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-
-.nl-name {
-  font-size: clamp(36px, 4vw, 56px); font-weight: 500;
-  letter-spacing: -1.5px; color: var(--blackout); margin-bottom: 6px;
-}
-.nl-sub-label {
-  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--gray); margin-bottom: 24px;
-}
+.nl-name { font-size: clamp(36px, 4vw, 56px); font-weight: 500; letter-spacing: -1.5px; color: var(--blackout); margin-bottom: 6px; }
+.nl-sub-label { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--gray); margin-bottom: 24px; }
 .nl-desc { font-size: 15px; font-weight: 300; color: #5a5955; line-height: 1.72; margin-bottom: 32px; }
-
 .nl-meta { display: flex; gap: 32px; margin-bottom: 36px; flex-wrap: wrap; }
-.nl-meta-item {}
 .nl-meta-label { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
 .nl-meta-val { font-size: 13px; font-weight: 500; color: var(--blackout); }
-
 .nl-form { display: flex; max-width: 420px; gap: 2px; }
-.nl-input {
-  flex: 1; background: #fff; border: 1px solid rgba(10,10,10,.15);
-  color: var(--blackout); font-family: 'Inter', sans-serif; font-size: 13px;
-  padding: 13px 16px; outline: none; transition: border-color .2s;
-}
+.nl-input { flex: 1; background: #fff; border: 1px solid rgba(10,10,10,.15); color: var(--blackout); font-family: 'Inter', sans-serif; font-size: 13px; padding: 13px 16px; outline: none; transition: border-color .2s; }
 .nl-input::placeholder { color: var(--gray); }
 .nl-input:focus { border-color: var(--red); }
-.nl-submit {
-  background: var(--blackout); color: #fff; border: none;
-  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500;
-  letter-spacing: .1em; text-transform: uppercase;
-  padding: 13px 20px; cursor: pointer; white-space: nowrap; transition: background .2s;
-}
+.nl-submit { background: var(--blackout); color: #fff; border: none; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: 13px 20px; cursor: pointer; white-space: nowrap; transition: background .2s; }
 .nl-submit:hover { background: var(--red); }
-
-/* Preview card */
 .nl-preview { background: var(--blackout); border-top: 2px solid var(--red); }
-.nl-preview-header {
-  padding: 20px 28px; border-bottom: 1px solid var(--rule);
-  display: flex; align-items: baseline; justify-content: space-between;
-}
+.nl-preview-header { padding: 20px 28px; border-bottom: 1px solid var(--rule); display: flex; align-items: baseline; justify-content: space-between; }
 .nl-preview-name { font-size: 16px; font-weight: 500; letter-spacing: -.3px; color: var(--bone); }
 .nl-preview-tag { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--red); }
 .nl-preview-body { padding: 28px; }
 .nl-preview-issue { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray); margin-bottom: 16px; }
 .nl-preview-hook { font-size: 17px; font-weight: 500; color: var(--bone); line-height: 1.4; margin-bottom: 14px; }
 .nl-preview-blurb { font-size: 13px; font-weight: 300; color: var(--gray); line-height: 1.65; margin-bottom: 20px; }
-.nl-preview-cta {
-  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--red); border-bottom: 1px solid var(--red); padding-bottom: 2px; cursor: pointer;
-}
-
-/* ─── FINAL CTA ─── */
-.final-cta {
-  background: var(--blackout); padding: 160px 48px;
-  text-align: center; position: relative; overflow: hidden;
-}
+.nl-preview-cta { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--red); border-bottom: 1px solid var(--red); padding-bottom: 2px; cursor: pointer; }
+.final-cta { background: var(--blackout); padding: 160px 48px; text-align: center; position: relative; overflow: hidden; }
 .final-top-rule { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--red); }
-.final-bg-svg {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  pointer-events: none; opacity: .04;
-}
-.final-eyebrow {
-  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--red); margin-bottom: 24px;
-}
-.final-h2 {
-  font-size: clamp(40px, 6vw, 80px); font-weight: 500;
-  letter-spacing: -2px; color: #fff; line-height: 1.04; margin-bottom: 24px;
-  position: relative;
-}
+.final-bg-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .04; }
+.final-eyebrow { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--red); margin-bottom: 24px; }
+.final-h2 { font-size: clamp(40px, 6vw, 80px); font-weight: 500; letter-spacing: -2px; color: #fff; line-height: 1.04; margin-bottom: 24px; position: relative; }
 .final-h2 em { color: var(--red); font-style: normal; }
-.final-sub {
-  font-size: 15px; font-weight: 300; color: var(--gray);
-  max-width: 400px; margin: 0 auto 48px; line-height: 1.7; position: relative;
-}
-.final-promise {
-  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
-  color: rgba(136,135,128,.4); margin-top: 36px;
-}
-
-/* ─── FOOTER ─── */
-footer {
-  background: var(--deep-surface); padding: 40px 48px;
-  border-top: 1px solid var(--rule);
-  display: grid; grid-template-columns: 1fr auto 1fr;
-  align-items: center; gap: 24px;
-}
+.final-sub { font-size: 15px; font-weight: 300; color: var(--gray); max-width: 400px; margin: 0 auto 48px; line-height: 1.7; position: relative; }
+.final-promise { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: rgba(136,135,128,.4); margin-top: 36px; }
+footer { background: var(--deep-surface); padding: 40px 48px; border-top: 1px solid var(--rule); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
 .footer-logo { display: flex; flex-direction: column; gap: 2px; }
 .footer-logo-word { font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--bone); }
 .footer-logo-ai { font-size: 8px; letter-spacing: .26em; text-transform: uppercase; color: var(--red); }
@@ -445,63 +174,25 @@ footer {
 .footer-right { text-align: right; }
 .footer-copy { font-size: 11px; color: rgba(136,135,128,.5); }
 .footer-promise { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgba(136,135,128,.35); margin-top: 4px; }
-
-/* ─── RESPONSIVE ─── */
 @media (max-width: 960px) {
-  nav { padding: 0 24px; }
-  .nav-links { display: none; }
-
-  .hero { grid-template-columns: 1fr; }
-  .hero-left { padding: 60px 24px; border-right: none; border-bottom: 1px solid var(--rule); }
-  .hero-right { min-height: 300px; }
-
+  nav { padding: 0 24px; } .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; } .hero-left { padding: 60px 24px; border-right: none; border-bottom: 1px solid var(--rule); } .hero-right { min-height: 300px; }
   .problem, .offer, .process, .deliverables, .results, .newsletter, .final-cta { padding: 80px 24px; }
-
-  .pain-grid { grid-template-columns: 1fr; }
-  .offer-cards { grid-template-columns: 1fr; }
-  .offer-header { flex-direction: column; align-items: flex-start; }
-  .offer-price { text-align: left; }
-  .timeline { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .del-grid { grid-template-columns: 1fr; }
-  .stats-row, .testimonials { grid-template-columns: 1fr; }
-  .nl-grid { grid-template-columns: 1fr; }
-
-  footer { grid-template-columns: 1fr; gap: 20px; }
-  .footer-right { text-align: left; }
-  .final-cta { padding: 100px 24px; }
+  .pain-grid { grid-template-columns: 1fr; } .offer-cards { grid-template-columns: 1fr; } .offer-header { flex-direction: column; align-items: flex-start; }
+  .timeline { grid-template-columns: 1fr 1fr; gap: 32px; } .del-grid { grid-template-columns: 1fr; } .stats-row, .testimonials { grid-template-columns: 1fr; } .nl-grid { grid-template-columns: 1fr; }
+  footer { grid-template-columns: 1fr; gap: 20px; } .footer-right { text-align: left; } .final-cta { padding: 100px 24px; }
 }
-
-@media (max-width: 600px) {
-  .hero-h1 { font-size: 34px; }
-  .timeline { grid-template-columns: 1fr; }
-  .nl-form { flex-direction: column; }
-  .nl-submit { padding: 13px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-curve, .hero-dot, .timeline-redline { animation: none; stroke-dashoffset: 0; width: 100%; opacity: 1; }
-}
-
-/* ─── ABOUT ─── */
+@media (max-width: 600px) { .hero-h1 { font-size: 34px; } .timeline { grid-template-columns: 1fr; } .nl-form { flex-direction: column; } .nl-submit { padding: 13px; } }
+@media (prefers-reduced-motion: reduce) { .hero-curve, .hero-dot, .timeline-redline { animation: none; stroke-dashoffset: 0; width: 100%; opacity: 1; } }
 .about { background: var(--blackout); padding: 120px 48px; }
-.about-top {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 80px; align-items: end; margin-bottom: 80px;
-}
+.about-top { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; margin-bottom: 80px; }
 .about-top h2 { color: #fff; }
 .about-top-right { display: flex; flex-direction: column; gap: 20px; }
 .about-top-right p { font-size: 15px; font-weight: 300; color: var(--gray); line-height: 1.78; }
 .about-top-right p strong { color: var(--bone); font-weight: 500; }
-.mission-block {
-  background: var(--bone); padding: 64px 48px;
-  display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: center;
-  margin-bottom: 2px;
-}
+.mission-block { background: var(--bone); padding: 64px 48px; display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: center; margin-bottom: 2px; }
 .mission-label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--red); }
-.mission-statement {
-  font-size: clamp(20px, 2.2vw, 28px); font-weight: 500;
-  color: var(--blackout); letter-spacing: -.4px; line-height: 1.35;
-}
+.mission-statement { font-size: clamp(20px, 2.2vw, 28px); font-weight: 500; color: var(--blackout); letter-spacing: -.4px; line-height: 1.35; }
 .mission-statement em { color: var(--red); font-style: normal; border-bottom: 2px solid var(--red); }
 .method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 2px; }
 .method-card { background: var(--deep-surface); padding: 36px 32px; }
@@ -509,44 +200,24 @@ footer {
 .method-card-title { font-size: 16px; font-weight: 500; color: var(--bone); margin-bottom: 12px; line-height: 1.35; }
 .method-card-body { font-size: 13px; font-weight: 300; color: var(--gray); line-height: 1.68; }
 .belief-stack { display: flex; flex-direction: column; margin-top: 2px; }
-.belief-item {
-  display: flex; gap: 20px; align-items: flex-start;
-  padding: 24px 0; border-bottom: 1px solid var(--rule);
-}
+.belief-item { display: flex; gap: 20px; align-items: flex-start; padding: 24px 0; border-bottom: 1px solid var(--rule); }
 .belief-item:first-child { border-top: 1px solid var(--rule); }
 .belief-marker { color: var(--red); font-size: 10px; font-weight: 500; letter-spacing: .1em; min-width: 20px; margin-top: 3px; }
 .belief-text { font-size: 14px; font-weight: 300; color: var(--bone); line-height: 1.68; }
 .belief-text strong { font-weight: 500; color: #fff; }
 .about-stats { display: flex; gap: 0; margin-top: 80px; }
-.about-stat-item {
-  flex: 1; padding: 28px 24px;
-  border-right: 1px solid var(--rule);
-}
+.about-stat-item { flex: 1; padding: 28px 24px; border-right: 1px solid var(--rule); }
 .about-stat-item:first-child { border-left: 1px solid var(--rule); }
 .asi-num { font-size: 32px; font-weight: 500; color: #fff; letter-spacing: -1px; }
 .asi-num span { color: var(--red); font-size: 20px; }
 .asi-label { font-size: 12px; font-weight: 300; color: var(--gray); margin-top: 6px; line-height: 1.5; }
-.closing-strip {
-  background: var(--deep-surface); padding: 40px 48px;
-  border-left: 2px solid var(--red);
-  display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap;
-  margin-top: 2px;
-}
+.closing-strip { background: var(--deep-surface); padding: 40px 48px; border-left: 2px solid var(--red); display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; margin-top: 2px; }
 .closing-strip-text { font-size: 18px; font-weight: 500; color: var(--bone); letter-spacing: -.3px; max-width: 520px; line-height: 1.45; }
 .closing-strip-text em { color: var(--red); font-style: normal; }
-
 @media (max-width: 960px) {
-  .about { padding: 80px 24px; }
-  .about-top { grid-template-columns: 1fr; gap: 40px; }
-  .mission-block { grid-template-columns: 1fr; gap: 24px; padding: 40px 24px; }
-  .method-grid { grid-template-columns: 1fr; }
-  .about-stats { flex-direction: column; }
-  .about-stat-item { border-right: none; border-bottom: 1px solid var(--rule); }
-  .about-stat-item:first-child { border-left: none; }
-  .closing-strip { padding: 32px 24px; }
+  .about { padding: 80px 24px; } .about-top { grid-template-columns: 1fr; gap: 40px; } .mission-block { grid-template-columns: 1fr; gap: 24px; padding: 40px 24px; } .method-grid { grid-template-columns: 1fr; }
+  .about-stats { flex-direction: column; } .about-stat-item { border-right: none; border-bottom: 1px solid var(--rule); } .about-stat-item:first-child { border-left: none; } .closing-strip { padding: 32px 24px; }
 }
-
-/* ─── FIT / QUALIFIER ─── */
 .fit-section { background: var(--bone); padding: 120px 48px; }
 .fit-section .sec-label { color: var(--red); }
 .fit-section .sec-label::before { background: var(--red); }
@@ -554,15 +225,11 @@ footer {
 .fit-top h2 { color: var(--blackout); margin-bottom: 16px; }
 .fit-top h2 em { color: var(--red); font-style: normal; }
 .fit-sub { font-size: 15px; font-weight: 300; color: #5a5955; line-height: 1.75; max-width: 560px; }
-
 .fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 2px; }
 .fit-col { padding: 40px 36px; }
 .fit-col.yes { background: #fff; }
 .fit-col.no { background: var(--blackout); }
-.fit-col-title {
-  font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
-  margin-bottom: 24px;
-}
+.fit-col-title { font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 24px; }
 .fit-col.yes .fit-col-title { color: var(--red); }
 .fit-col.no .fit-col-title { color: var(--gray); }
 .fit-list { display: flex; flex-direction: column; gap: 18px; }
@@ -572,30 +239,14 @@ footer {
 .fit-marker { font-size: 13px; font-weight: 500; min-width: 16px; margin-top: 1px; }
 .fit-col.yes .fit-marker { color: var(--red); }
 .fit-col.no .fit-marker { color: var(--gray); }
-
-.fit-spectrum {
-  background: var(--deep-surface); padding: 32px 36px;
-  border-left: 2px solid var(--red);
-  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
-}
+.fit-spectrum { background: var(--deep-surface); padding: 32px 36px; border-left: 2px solid var(--red); display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
 .fit-spectrum-text { font-size: 14px; font-weight: 300; color: var(--bone); line-height: 1.7; max-width: 620px; }
 .fit-spectrum-text strong { font-weight: 500; color: #fff; }
-
-@media (max-width: 960px) {
-  .fit-section { padding: 80px 24px; }
-  .fit-grid { grid-template-columns: 1fr; }
-  .fit-spectrum { padding: 28px 24px; }
-}
-
-/* ─── TRUST ─── */
+@media (max-width: 960px) { .fit-section { padding: 80px 24px; } .fit-grid { grid-template-columns: 1fr; } .fit-spectrum { padding: 28px 24px; } }
 .trust { background: var(--deep-surface); padding: 120px 48px; }
 .trust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-top: 64px; }
 .trust-photo-wrap { position: relative; }
-.trust-photo {
-  width: 100%; aspect-ratio: 1/1; object-fit: cover; object-position: top center;
-  border-top: 2px solid var(--red); display: block;
-  filter: grayscale(0.15) contrast(1.05);
-}
+.trust-photo { width: 100%; aspect-ratio: 1/1; object-fit: cover; object-position: top center; border-top: 2px solid var(--red); display: block; filter: grayscale(0.15) contrast(1.05); }
 .trust-photo-meta { margin-top: 16px; display: flex; flex-direction: column; gap: 4px; }
 .trust-name { font-size: 18px; font-weight: 500; color: #fff; }
 .trust-title { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--red); }
@@ -607,17 +258,11 @@ footer {
 .trust-cred-item { background: var(--blackout); padding: 20px 24px; }
 .trust-cred-label { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray); margin-bottom: 6px; }
 .trust-cred-val { font-size: 14px; font-weight: 500; color: var(--bone); }
-
-@media (max-width: 960px) {
-  .trust { padding: 80px 24px; }
-  .trust-grid { grid-template-columns: 1fr; gap: 32px; }
-  .trust-cred-row { grid-template-columns: 1fr; }
-}
+@media (max-width: 960px) { .trust { padding: 80px 24px; } .trust-grid { grid-template-columns: 1fr; gap: 32px; } .trust-cred-row { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
-<!-- ── NAV ── -->
 <nav>
   <a class="nav-logo" href="#" aria-label="Sightline AI home">
     <span class="nav-logo-word">Sightline</span>
@@ -629,36 +274,27 @@ footer {
     <a href="#process">Process</a>
     <a href="#newsletter">Clear Line</a>
     <a href="#about">About</a>
-    <a href="#insights">Insights</a>
   </div>
-  <a href="#audit" class="nav-cta">Book the Audit</a>
+  <a href="mailto:hello@sightlineai.tech?subject=I%27m%20interested%20in%20the%20Sightline%20Audit&body=Hi%20Janae%2C%0A%0AI%27d%20like%20to%20learn%20more%20about%20the%20Sightline%20Audit.%0A%0AA%20bit%20about%20my%20business%3A%0A" class="nav-cta">Book the Audit</a>
 </nav>
 
-<!-- ── HERO ── -->
 <section class="hero" id="home" aria-label="Hero">
   <div class="hero-top-rule"></div>
-
   <div class="hero-left">
     <p class="hero-eyebrow">Sightline AI — Decision Intelligence for Operators</p>
-    <h1 class="hero-h1">
-      Draw the <em class="word-line">line</em> between where you are and where you need to be.
-    </h1>
+    <h1 class="hero-h1">Draw the <em class="word-line">line</em> between where you are and where you need to be.</h1>
     <p class="hero-sub">Most businesses don't have an AI problem. They have a constraint problem. We identify what's actually limiting growth — then show you exactly where AI creates leverage.</p>
     <div class="hero-ctas">
-      <a href="#audit" class="btn-primary">
+      <a href="mailto:hello@sightlineai.tech?subject=I%27m%20interested%20in%20the%20Sightline%20Audit&body=Hi%20Janae%2C%0A%0AI%27d%20like%20to%20learn%20more%20about%20the%20Sightline%20Audit.%0A%0AA%20bit%20about%20my%20business%3A%0A" class="btn-primary">
         Book the Sightline Audit
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <a href="#newsletter" class="btn-ghost">Read Clear Line free →</a>
     </div>
   </div>
-
   <div class="hero-right" aria-hidden="true">
     <div class="hero-right-inner">
       <svg class="hero-svg" viewBox="0 0 500 700" fill="none" preserveAspectRatio="xMidYMid meet">
-        <!-- Grid lines -->
         <line x1="0" y1="0" x2="500" y2="0" stroke="rgba(245,244,240,.04)" stroke-width="1"/>
         <line x1="0" y1="175" x2="500" y2="175" stroke="rgba(245,244,240,.04)" stroke-width="1"/>
         <line x1="0" y1="350" x2="500" y2="350" stroke="rgba(245,244,240,.04)" stroke-width="1"/>
@@ -667,74 +303,39 @@ footer {
         <line x1="125" y1="0" x2="125" y2="700" stroke="rgba(245,244,240,.03)" stroke-width="1"/>
         <line x1="250" y1="0" x2="250" y2="700" stroke="rgba(245,244,240,.03)" stroke-width="1"/>
         <line x1="375" y1="0" x2="375" y2="700" stroke="rgba(245,244,240,.03)" stroke-width="1"/>
-
-        <!-- Curved red path -->
-        <path
-          class="hero-curve"
-          d="M 80 620 C 100 560, 160 500, 200 430 C 240 360, 180 300, 240 230 C 290 170, 350 150, 380 90"
-          stroke="#CC2200" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-
-        <!-- Dot at end -->
+        <path class="hero-curve" d="M 80 620 C 100 560, 160 500, 200 430 C 240 360, 180 300, 240 230 C 290 170, 350 150, 380 90" stroke="#CC2200" stroke-width="1.5" fill="none" stroke-linecap="round"/>
         <circle class="hero-dot" cx="380" cy="90" r="5" fill="#CC2200"/>
-
-        <!-- Step labels -->
-        <!-- 01 -->
         <circle cx="80" cy="620" r="3" fill="#CC2200" opacity=".8"/>
         <text x="96" y="624" fill="#CC2200" font-family="Inter,sans-serif" font-size="9" letter-spacing="2" text-anchor="start">01</text>
         <text x="96" y="638" fill="#888780" font-family="Inter,sans-serif" font-size="11" text-anchor="start">Current State</text>
-
-        <!-- 02 -->
         <circle cx="200" cy="430" r="3" fill="#CC2200" opacity=".8"/>
         <text x="216" y="434" fill="#CC2200" font-family="Inter,sans-serif" font-size="9" letter-spacing="2" text-anchor="start">02</text>
         <text x="216" y="448" fill="#888780" font-family="Inter,sans-serif" font-size="11" text-anchor="start">Complexity</text>
-
-        <!-- 03 -->
         <circle cx="240" cy="230" r="3" fill="#CC2200" opacity=".8"/>
         <text x="256" y="234" fill="#CC2200" font-family="Inter,sans-serif" font-size="9" letter-spacing="2" text-anchor="start">03</text>
         <text x="256" y="248" fill="#888780" font-family="Inter,sans-serif" font-size="11" text-anchor="start">Clarity</text>
-
-        <!-- 04 -->
         <text x="300" y="88" fill="#CC2200" font-family="Inter,sans-serif" font-size="9" letter-spacing="2" text-anchor="start">04</text>
         <text x="300" y="102" fill="#888780" font-family="Inter,sans-serif" font-size="11" text-anchor="start">The Next Move</text>
       </svg>
-
-      <div class="hero-corner">
-        <p>We find the line.</p>
-        <p>You make the move.</p>
-      </div>
+      <div class="hero-corner"><p>We find the line.</p><p>You make the move.</p></div>
     </div>
   </div>
 </section>
 
 <div class="rule-h"></div>
 
-<!-- ── PROBLEM ── -->
 <section class="problem" id="problem">
   <div class="problem-top">
     <p class="sec-label">The Problem</p>
     <h2>Most businesses don't have an AI problem. They have a <em>sightline</em> problem.</h2>
     <p class="body-copy" style="margin-top:20px;">The tools exist. The information is everywhere. But without a clear line from where you stand to what actually moves your business — you're just spending money on noise.</p>
   </div>
-
   <div class="pain-grid">
-    <div class="pain-card">
-      <span class="pain-num">01</span>
-      <p class="pain-text"><strong>You know AI is moving.</strong> You just can't see which moves are yours to make.</p>
-    </div>
-    <div class="pain-card">
-      <span class="pain-num">02</span>
-      <p class="pain-text"><strong>ChatGPT here. A tool there.</strong> Nothing connected to revenue — and no way to know if any of it is actually working.</p>
-    </div>
-    <div class="pain-card">
-      <span class="pain-num">03</span>
-      <p class="pain-text"><strong>You can't afford to experiment.</strong> Your competitors are moving and you're still evaluating.</p>
-    </div>
-    <div class="pain-card">
-      <span class="pain-num">04</span>
-      <p class="pain-text"><strong>The advice is generic.</strong> None of it was built for a business that runs like yours.</p>
-    </div>
+    <div class="pain-card"><span class="pain-num">01</span><p class="pain-text"><strong>You know AI is moving.</strong> You just can't see which moves are yours to make.</p></div>
+    <div class="pain-card"><span class="pain-num">02</span><p class="pain-text"><strong>ChatGPT here. A tool there.</strong> Nothing connected to revenue — and no way to know if any of it is actually working.</p></div>
+    <div class="pain-card"><span class="pain-num">03</span><p class="pain-text"><strong>You can't afford to experiment.</strong> Your competitors are moving and you're still evaluating.</p></div>
+    <div class="pain-card"><span class="pain-num">04</span><p class="pain-text"><strong>The advice is generic.</strong> None of it was built for a business that runs like yours.</p></div>
   </div>
-
   <div class="pull-quote">
     <blockquote>"I kept hearing AI would change everything. Nobody could tell me what to change first."</blockquote>
     <cite>— SMB Operator, before the Sightline Audit</cite>
@@ -743,14 +344,12 @@ footer {
 
 <div class="rule-h"></div>
 
-<!-- ── FIT / QUALIFIER ── -->
 <section class="fit-section" id="fit">
   <div class="fit-top">
     <p class="sec-label">Is This For You?</p>
     <h2>Built for operators who are already moving — just not in a <em>straight line.</em></h2>
     <p class="fit-sub">The Sightline Audit isn't for everyone, and it shouldn't be. Here's how to know in thirty seconds.</p>
   </div>
-
   <div class="fit-grid">
     <div class="fit-col yes">
       <p class="fit-col-title">This is for you if</p>
@@ -773,7 +372,6 @@ footer {
       </div>
     </div>
   </div>
-
   <div class="fit-spectrum">
     <p class="fit-spectrum-text"><strong>Wherever you're starting from, the audit meets you there.</strong> Haven't touched AI yet? We build the line from zero. Already have tools running with no strategy behind them? We find the line through the noise. Same diagnostic framework. Delivered in 24 hours for Tier 1, 72 hours for Tier 2. Different starting point.</p>
   </div>
@@ -781,7 +379,6 @@ footer {
 
 <div class="rule-h"></div>
 
-<!-- ── OFFER ── -->
 <section class="offer" id="audit">
   <div class="offer-header">
     <div>
@@ -789,37 +386,19 @@ footer {
       <h2 style="color:var(--blackout);">We identify the real problem first. Then we show you exactly where AI creates leverage.</h2>
     </div>
   </div>
-
   <div class="offer-wrap">
     <svg class="offer-line-svg" viewBox="0 0 1200 260" fill="none" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M 0 220 C 200 200, 400 80, 600 130 C 800 180, 1000 60, 1200 40"
-        stroke="#CC2200" stroke-width="1" fill="none" opacity=".18" stroke-dasharray="4 6"/>
+      <path d="M 0 220 C 200 200, 400 80, 600 130 C 800 180, 1000 60, 1200 40" stroke="#CC2200" stroke-width="1" fill="none" opacity=".18" stroke-dasharray="4 6"/>
     </svg>
     <div class="offer-cards">
-      <div class="offer-card">
-        <p class="offer-card-tag">The Line™</p>
-        <p class="offer-card-title">The single constraint most responsible for limiting growth</p>
-        <p class="offer-card-body">Not symptoms. Not observations. The constraint. Every other finding flows from this one sentence — and most operators have never had it named this clearly before.</p>
-      </div>
-      <div class="offer-card">
-        <p class="offer-card-tag">The Cost™</p>
-        <p class="offer-card-title">What that constraint is actually costing you right now</p>
-        <p class="offer-card-body">Revenue leakage. Capacity leakage. Decision delays. We put directional numbers on what most businesses treat as an operational inconvenience — and the total is almost always a surprise.</p>
-      </div>
-      <div class="offer-card">
-        <p class="offer-card-tag">The Leverage™</p>
-        <p class="offer-card-title">Exactly where AI creates the most value in your business</p>
-        <p class="offer-card-body">Three specific AI implementations — with current state, future state, estimated outcome, and recommended approach. Not ideas. Not a tool list. A sequenced plan you can act on Monday morning.</p>
-      </div>
+      <div class="offer-card"><p class="offer-card-tag">The Line™</p><p class="offer-card-title">The single constraint most responsible for limiting growth</p><p class="offer-card-body">Not symptoms. Not observations. The constraint. Every other finding flows from this one sentence — and most operators have never had it named this clearly before.</p></div>
+      <div class="offer-card"><p class="offer-card-tag">The Cost™</p><p class="offer-card-title">What that constraint is actually costing you right now</p><p class="offer-card-body">Revenue leakage. Capacity leakage. Decision delays. We put directional numbers on what most businesses treat as an operational inconvenience — and the total is almost always a surprise.</p></div>
+      <div class="offer-card"><p class="offer-card-tag">The Leverage™</p><p class="offer-card-title">Exactly where AI creates the most value in your business</p><p class="offer-card-body">Three specific AI implementations — with current state, future state, estimated outcome, and recommended approach. Not ideas. Not a tool list. A sequenced plan you can act on Monday morning.</p></div>
     </div>
   </div>
-
-  <!-- 3-Tier Pricing -->
   <div style="margin-top:64px;">
     <p class="sec-label" style="margin-bottom:32px;">Three ways to engage</p>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
-
-      <!-- Tier 1 -->
       <div style="background:var(--bone);padding:36px 32px;">
         <p style="font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:16px;">Tier 1 — Sightline Report</p>
         <p style="font-size:28px;font-weight:500;color:var(--blackout);letter-spacing:-1px;margin-bottom:4px;">$495–$995</p>
@@ -827,8 +406,6 @@ footer {
         <p style="font-size:13px;font-weight:300;color:#5a5955;line-height:1.65;margin-bottom:20px;">The complete diagnostic — The Line™, Constraint Map, Revenue Leakage Analysis, Opportunity Map, Risk Assessment, and 30/60/90 Day Plan. No meeting included.</p>
         <p style="font-size:11px;color:var(--gray);">Ideal for 10–50 person operators seeking clarity before investing in consultants, software, or AI tools.</p>
       </div>
-
-      <!-- Tier 2 -->
       <div style="background:var(--blackout);padding:36px 32px;border-top:2px solid var(--red);">
         <p style="font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:16px;">Tier 2 — Executive Review</p>
         <p style="font-size:28px;font-weight:500;color:#fff;letter-spacing:-1px;margin-bottom:4px;">$2,500–$5,000</p>
@@ -836,8 +413,6 @@ footer {
         <p style="font-size:13px;font-weight:300;color:var(--gray);line-height:1.65;margin-bottom:20px;">Everything in Tier 1, plus human-reviewed findings, custom financial impact analysis, a 90-minute live executive review, and a recorded leadership Q&A session.</p>
         <p style="font-size:11px;color:var(--gray);">Ideal for operators seeking executive-level clarity and decision support.</p>
       </div>
-
-      <!-- Tier 3 -->
       <div style="background:var(--deep-surface);padding:36px 32px;">
         <p style="font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:16px;">Tier 3 — Sightline Architecture</p>
         <p style="font-size:28px;font-weight:500;color:#fff;letter-spacing:-1px;margin-bottom:4px;">Custom</p>
@@ -845,50 +420,26 @@ footer {
         <p style="font-size:13px;font-weight:300;color:var(--gray);line-height:1.65;margin-bottom:20px;">Everything in Tier 2, plus implementation roadmap, AI opportunity architecture, KPI design, governance recommendations, team enablement, and quarterly reviews.</p>
         <p style="font-size:11px;color:var(--gray);">Pricing discussed after Janae personally engages post-discovery. Never self-serve.</p>
       </div>
-
     </div>
   </div>
 </section>
 
 <div class="rule-h"></div>
 
-<!-- ── PROCESS ── -->
 <section class="process" id="process">
   <p class="sec-label">How It Works</p>
   <h2>24–72 hours. Three phases. One clear line forward.</h2>
   <p class="body-copy process-sub">We don't need months to find your line. Tier 1 delivers in 24 hours. Tier 2 delivers in 72. Both start with your honesty about where things actually stand.</p>
-
   <div class="timeline-wrap">
     <div class="timeline-line"></div>
     <div class="timeline-redline"></div>
     <div class="timeline">
-      <div class="timeline-step">
-        <div class="ts-dot"></div>
-        <p class="ts-day">Day 1 — Discover</p>
-        <p class="ts-title">We learn your operation</p>
-        <p class="ts-body">A focused 30-minute intake session. We ask the questions most consultants skip — about your real constraints, your actual revenue levers, and where you're already losing ground.</p>
-      </div>
-      <div class="timeline-step">
-        <div class="ts-dot"></div>
-        <p class="ts-day">Day 1–2 — Analyze</p>
-        <p class="ts-title">We draw the line</p>
-        <p class="ts-body">We map your AI opportunity landscape against your specific business model. Every finding filtered through one question: does this actually move the needle for this operator?</p>
-      </div>
-      <div class="timeline-step">
-        <div class="ts-dot"></div>
-        <p class="ts-day">Day 3 — Deliver</p>
-        <p class="ts-title">You receive the audit</p>
-        <p class="ts-body">A complete written deliverable. Executive summary, opportunity map, risk assessment, and a sequenced 30-day action plan. Built to be executed, not filed away.</p>
-      </div>
-      <div class="timeline-step">
-        <div class="ts-dot"></div>
-        <p class="ts-day">Day 3 — Move</p>
-        <p class="ts-title">You make the move</p>
-        <p class="ts-body">A 30-minute walkthrough call. We answer every question, confirm the sequence, and hand you complete ownership of the plan. From here, the line is yours.</p>
-      </div>
+      <div class="timeline-step"><div class="ts-dot"></div><p class="ts-day">Day 1 — Discover</p><p class="ts-title">We learn your operation</p><p class="ts-body">A focused 30-minute intake session. We ask the questions most consultants skip — about your real constraints, your actual revenue levers, and where you're already losing ground.</p></div>
+      <div class="timeline-step"><div class="ts-dot"></div><p class="ts-day">Day 1–2 — Analyze</p><p class="ts-title">We draw the line</p><p class="ts-body">We map your AI opportunity landscape against your specific business model. Every finding filtered through one question: does this actually move the needle for this operator?</p></div>
+      <div class="timeline-step"><div class="ts-dot"></div><p class="ts-day">Day 3 — Deliver</p><p class="ts-title">You receive the audit</p><p class="ts-body">A complete written deliverable. Executive summary, opportunity map, risk assessment, and a sequenced 30-day action plan. Built to be executed, not filed away.</p></div>
+      <div class="timeline-step"><div class="ts-dot"></div><p class="ts-day">Day 3 — Move</p><p class="ts-title">You make the move</p><p class="ts-body">A 30-minute walkthrough call. We answer every question, confirm the sequence, and hand you complete ownership of the plan. From here, the line is yours.</p></div>
     </div>
   </div>
-
   <div class="promise-card">
     <p class="promise-card-quote">"Clarity today. Advantage tomorrow."</p>
     <p class="promise-card-detail">The Sightline Audit is designed to be the last time you wonder where to start with AI. After this, you know exactly what to do — and in what order.</p>
@@ -897,58 +448,18 @@ footer {
 
 <div class="rule-h"></div>
 
-<!-- ── DELIVERABLES ── -->
 <section class="deliverables" id="deliverables">
   <p class="sec-label">What You Receive</p>
   <h2 style="color:var(--blackout);">An 11-page document worth more than the engagement it came from.</h2>
-
   <div class="del-grid">
     <div class="del-list">
-      <div class="del-item">
-        <span class="del-counter">01</span>
-        <div class="del-content">
-          <p class="del-title">The Line™</p>
-          <p class="del-desc">One sentence. The single constraint most responsible for limiting growth — with evidence, business impact, and why it matters now.</p>
-        </div>
-      </div>
-      <div class="del-item">
-        <span class="del-counter">02</span>
-        <div class="del-content">
-          <p class="del-title">What You Think vs. What's Actually Happening</p>
-          <p class="del-desc">The gap between your stated belief about the problem and what the data actually shows. This is the page that makes executives say "damn."</p>
-        </div>
-      </div>
-      <div class="del-item">
-        <span class="del-counter">03</span>
-        <div class="del-content">
-          <p class="del-title">Constraint Map™</p>
-          <p class="del-desc">Where the constraint shows up across People, Process, Technology, Data, and Decisions — with the primary constraint clearly marked.</p>
-        </div>
-      </div>
-      <div class="del-item">
-        <span class="del-counter">04</span>
-        <div class="del-content">
-          <p class="del-title">Revenue Leakage Analysis™</p>
-          <p class="del-desc">Directional dollar ranges showing what the constraint is costing across conversion, capacity, decision delays, and process bottlenecks.</p>
-        </div>
-      </div>
-      <div class="del-item">
-        <span class="del-counter">05</span>
-        <div class="del-content">
-          <p class="del-title">AI Opportunity Architecture™</p>
-          <p class="del-desc">Three specific AI implementations — Current State, Future State, Estimated Outcome, Difficulty, and Recommended Approach. Not ideas. A plan.</p>
-        </div>
-      </div>
-      <div class="del-item">
-        <span class="del-counter">06–11</span>
-        <div class="del-content">
-          <p class="del-title">Risk Map · Executive Decisions · Working Examples · 30/60/90 Path · If Nothing Changes · If This Is Executed</p>
-          <p class="del-desc">The complete picture — from what to protect, to the three decisions only leadership can make, to a working example of your top AI opportunity built out in full.</p>
-        </div>
-      </div>
+      <div class="del-item"><span class="del-counter">01</span><div><p class="del-title">The Line™</p><p class="del-desc">One sentence. The single constraint most responsible for limiting growth — with evidence, business impact, and why it matters now.</p></div></div>
+      <div class="del-item"><span class="del-counter">02</span><div><p class="del-title">What You Think vs. What's Actually Happening</p><p class="del-desc">The gap between your stated belief about the problem and what the data actually shows. This is the page that makes executives say "damn."</p></div></div>
+      <div class="del-item"><span class="del-counter">03</span><div><p class="del-title">Constraint Map™</p><p class="del-desc">Where the constraint shows up across People, Process, Technology, Data, and Decisions — with the primary constraint clearly marked.</p></div></div>
+      <div class="del-item"><span class="del-counter">04</span><div><p class="del-title">Revenue Leakage Analysis™</p><p class="del-desc">Directional dollar ranges showing what the constraint is costing across conversion, capacity, decision delays, and process bottlenecks.</p></div></div>
+      <div class="del-item"><span class="del-counter">05</span><div><p class="del-title">AI Opportunity Architecture™</p><p class="del-desc">Three specific AI implementations — Current State, Future State, Estimated Outcome, Difficulty, and Recommended Approach. Not ideas. A plan.</p></div></div>
+      <div class="del-item"><span class="del-counter">06–11</span><div><p class="del-title">Risk Map · Executive Decisions · Working Examples · 30/60/90 Path · If Nothing Changes · If This Is Executed</p><p class="del-desc">The complete picture — from what to protect, to the three decisions only leadership can make, to a working example of your top AI opportunity built out in full.</p></div></div>
     </div>
-
-    <!-- Document mockup -->
     <div class="doc-mockup">
       <div class="doc-outer">
         <p style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);">The Sightline Audit™</p>
@@ -978,180 +489,81 @@ footer {
 
 <div class="rule-h"></div>
 
-<!-- ── RESULTS ── -->
 <section class="results" id="proof">
   <p class="sec-label">Results</p>
   <h2>What operators say after they see the line.</h2>
-
   <div class="stats-row" style="margin-top:64px;">
-    <div class="stat-block">
-      <p class="stat-num">72<span>hrs</span></p>
-      <p class="stat-label">From intake call to complete audit deliverable</p>
-    </div>
-    <div class="stat-block">
-      <p class="stat-num">30<span>days</span></p>
-      <p class="stat-label">To full AI implementation with the plan in hand</p>
-    </div>
-    <div class="stat-block">
-      <p class="stat-num">1<span>doc</span></p>
-      <p class="stat-label">That answers every question your leadership team has</p>
-    </div>
+    <div class="stat-block"><p class="stat-num">72<span>hrs</span></p><p class="stat-label">From intake call to complete audit deliverable</p></div>
+    <div class="stat-block"><p class="stat-num">30<span>days</span></p><p class="stat-label">To full AI implementation with the plan in hand</p></div>
+    <div class="stat-block"><p class="stat-num">1<span>doc</span></p><p class="stat-label">That answers every question your leadership team has</p></div>
   </div>
-
   <div class="testimonials" style="margin-top:2px;">
-    <div class="testimonial-card">
-      <p class="t-quote">"Finally, someone connected AI to our actual operations. The audit paid for itself before we implemented a single thing."</p>
-      <p class="t-name">Sarah M.</p>
-      <p class="t-role">COO, Manufacturing</p>
-    </div>
-    <div class="testimonial-card">
-      <p class="t-quote">"The first time an AI consultant didn't try to sell us tools. They showed us where to win."</p>
-      <p class="t-name">Jason T.</p>
-      <p class="t-role">CEO, Distribution</p>
-    </div>
-    <div class="testimonial-card">
-      <p class="t-quote">"Clear, specific, and built for our business. Not generic. Not theoretical. Exactly what we needed."</p>
-      <p class="t-name">Lisa R.</p>
-      <p class="t-role">Founder, Services</p>
-    </div>
+    <div class="testimonial-card"><p class="t-quote">"Finally, someone connected AI to our actual operations. The audit paid for itself before we implemented a single thing."</p><p class="t-name">Sarah M.</p><p class="t-role">COO, Manufacturing</p></div>
+    <div class="testimonial-card"><p class="t-quote">"The first time an AI consultant didn't try to sell us tools. They showed us where to win."</p><p class="t-name">Jason T.</p><p class="t-role">CEO, Distribution</p></div>
+    <div class="testimonial-card"><p class="t-quote">"Clear, specific, and built for our business. Not generic. Not theoretical. Exactly what we needed."</p><p class="t-name">Lisa R.</p><p class="t-role">Founder, Services</p></div>
   </div>
 </section>
 
 <div class="rule-h"></div>
 
-<!-- ── ABOUT ── -->
 <section class="about" id="about">
-
   <div class="about-top">
-    <div>
-      <p class="sec-label">About Sightline AI</p>
-      <h2>We built the firm we wished existed when AI entered the room.</h2>
-    </div>
+    <div><p class="sec-label">About Sightline AI</p><h2>We built the firm we wished existed when AI entered the room.</h2></div>
     <div class="about-top-right">
       <p>Most AI consulting firms sell one of two things: tools or transformation. Neither is what operators actually need. <strong>What operators need is a clear line</strong> — from where their business stands today to the specific moves that create advantage tomorrow.</p>
       <p>Sightline AI was built to draw that line. We combine deep revenue operations expertise with rigorous AI strategy — not as separate disciplines, but as the same work. Because in a real business, they are.</p>
     </div>
   </div>
-
-  <!-- Mission — bone white -->
   <div class="mission-block">
-    <div>
-      <p class="mission-label">Our mission</p>
-    </div>
+    <div><p class="mission-label">Our mission</p></div>
     <p class="mission-statement">To give every operator the <em>clarity</em> to move with confidence in an AI-driven market — before their competitors find their line first.</p>
   </div>
-
-  <!-- Method cards -->
   <div class="method-grid">
-    <div class="method-card">
-      <p class="method-card-tag">How we think</p>
-      <p class="method-card-title">Revenue operations first. AI strategy second.</p>
-      <p class="method-card-body">AI only creates value when it's connected to the decisions that actually move revenue. We start with your business model — not the tool landscape — and work backwards to find where AI belongs.</p>
-    </div>
-    <div class="method-card">
-      <p class="method-card-tag">How we work</p>
-      <p class="method-card-title">Diagnostic before prescription. Always.</p>
-      <p class="method-card-body">Every Sightline engagement begins with a structured assessment of your operation. No assumptions. No pre-built recommendations. Your line is specific to you, and we treat it that way.</p>
-    </div>
-    <div class="method-card">
-      <p class="method-card-tag">How we measure</p>
-      <p class="method-card-title">Clarity delivered. Execution enabled.</p>
-      <p class="method-card-body">We measure success by one thing: can your team pick up the deliverable and move immediately? If the plan needs a translator, we haven't done our job. Clarity is the product.</p>
-    </div>
+    <div class="method-card"><p class="method-card-tag">How we think</p><p class="method-card-title">Revenue operations first. AI strategy second.</p><p class="method-card-body">AI only creates value when it's connected to the decisions that actually move revenue. We start with your business model — not the tool landscape — and work backwards to find where AI belongs.</p></div>
+    <div class="method-card"><p class="method-card-tag">How we work</p><p class="method-card-title">Diagnostic before prescription. Always.</p><p class="method-card-body">Every Sightline engagement begins with a structured assessment of your operation. No assumptions. No pre-built recommendations. Your line is specific to you, and we treat it that way.</p></div>
+    <div class="method-card"><p class="method-card-tag">How we measure</p><p class="method-card-title">Clarity delivered. Execution enabled.</p><p class="method-card-body">We measure success by one thing: can your team pick up the deliverable and move immediately? If the plan needs a translator, we haven't done our job. Clarity is the product.</p></div>
   </div>
-
-  <!-- Beliefs -->
   <div class="belief-stack">
-    <div class="belief-item">
-      <span class="belief-marker">01</span>
-      <p class="belief-text"><strong>Clarity beats complexity.</strong> Every time. The best AI strategy is the one your team can actually execute on Monday.</p>
-    </div>
-    <div class="belief-item">
-      <span class="belief-marker">02</span>
-      <p class="belief-text"><strong>Generic advice is expensive.</strong> A framework built for every business is built for no business. Your operation is specific. Your plan should be too.</p>
-    </div>
-    <div class="belief-item">
-      <span class="belief-marker">03</span>
-      <p class="belief-text"><strong>The line already exists.</strong> We don't invent it. We find it — using your business model, your constraints, and your actual revenue levers.</p>
-    </div>
-    <div class="belief-item">
-      <span class="belief-marker">04</span>
-      <p class="belief-text"><strong>You make the move.</strong> We're not here to own your AI strategy. We're here to hand you the clearest possible picture — then step back.</p>
-    </div>
+    <div class="belief-item"><span class="belief-marker">01</span><p class="belief-text"><strong>Clarity beats complexity.</strong> Every time. The best AI strategy is the one your team can actually execute on Monday.</p></div>
+    <div class="belief-item"><span class="belief-marker">02</span><p class="belief-text"><strong>Generic advice is expensive.</strong> A framework built for every business is built for no business. Your operation is specific. Your plan should be too.</p></div>
+    <div class="belief-item"><span class="belief-marker">03</span><p class="belief-text"><strong>The line already exists.</strong> We don't invent it. We find it — using your business model, your constraints, and your actual revenue levers.</p></div>
+    <div class="belief-item"><span class="belief-marker">04</span><p class="belief-text"><strong>You make the move.</strong> We're not here to own your AI strategy. We're here to hand you the clearest possible picture — then step back.</p></div>
   </div>
-
-  <!-- Stats -->
   <div class="about-stats">
-    <div class="about-stat-item">
-      <p class="asi-num">72<span>hrs</span></p>
-      <p class="asi-label">Average time from intake to complete audit</p>
-    </div>
-    <div class="about-stat-item">
-      <p class="asi-num">15<span>+</span></p>
-      <p class="asi-label">Years of revenue operations experience behind every audit</p>
-    </div>
-    <div class="about-stat-item">
-      <p class="asi-num">4</p>
-      <p class="asi-label">Proprietary AI frameworks powering the methodology</p>
-    </div>
-    <div class="about-stat-item">
-      <p class="asi-num">1</p>
-      <p class="asi-label">Clear deliverable. No follow-up retainer required.</p>
-    </div>
+    <div class="about-stat-item"><p class="asi-num">72<span>hrs</span></p><p class="asi-label">Average time from intake to complete audit</p></div>
+    <div class="about-stat-item"><p class="asi-num">15<span>+</span></p><p class="asi-label">Years of revenue operations experience behind every audit</p></div>
+    <div class="about-stat-item"><p class="asi-num">4</p><p class="asi-label">Proprietary AI frameworks powering the methodology</p></div>
+    <div class="about-stat-item"><p class="asi-num">1</p><p class="asi-label">Clear deliverable. No follow-up retainer required.</p></div>
   </div>
-
-  <!-- Closing strip -->
   <div class="closing-strip">
-    <p class="closing-strip-text">We don't build dependency. We build <em>clarity</em> — and then we hand you the line.</p>
-    <a href="#audit" class="btn-primary">
+    <p class="closing-strip-text">We don't build dependency. We build <em>clarity</em> — and then we hand you the line. <span style="display:block; font-size:13px; color:var(--gray); font-weight:300; margin-top:10px;">To start, email <a href="mailto:hello@sightlineai.tech" style="color:#C0261E; text-decoration:none; font-weight:500;">hello@sightlineai.tech</a></span></p>
+    <a href="mailto:hello@sightlineai.tech?subject=I%27m%20interested%20in%20the%20Sightline%20Audit&body=Hi%20Janae%2C%0A%0AI%27d%20like%20to%20learn%20more%20about%20the%20Sightline%20Audit.%0A%0AA%20bit%20about%20my%20business%3A%0A" class="btn-primary">
       Book the Sightline Audit
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-        <path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </div>
-
 </section>
 
 <div class="rule-h"></div>
 
-<!-- ── TRUST ── -->
 <section class="trust" id="trust">
   <p class="sec-label">Why Operators Trust This</p>
   <h2 style="max-width:640px;">The methodology has a name. So does the person who built it.</h2>
-
   <div class="trust-grid">
     <div class="trust-photo-wrap">
       <img class="trust-photo" src="janae-fullbody.jpg" alt="Janae Gilliam, founder of Sightline AI" />
-      <div class="trust-photo-meta">
-        <p class="trust-name">Janae Gilliam</p>
-        <p class="trust-title">Founder, Sightline AI</p>
-      </div>
+      <div class="trust-photo-meta"><p class="trust-name">Janae Gilliam</p><p class="trust-title">Founder, Sightline AI</p></div>
     </div>
-
     <div class="trust-right">
       <div class="trust-body">
         <p>Sightline AI's methodology — <strong>AI Precision Architecture™</strong> — was built from 15+ years spent inside real revenue operations, not from a weekend with a chatbot. The same diagnostic thinking used to untangle complex, high-stakes sales organizations — scaled down to fit a 10–50 person operation.</p>
         <p>This isn't a productized template wearing an AI label. It's a sharp operator's diagnostic, applied to your business, delivered in 24–72 hours depending on tier.</p>
       </div>
-
       <div class="trust-cred-row">
-        <div class="trust-cred-item">
-          <p class="trust-cred-label">Experience</p>
-          <p class="trust-cred-val">15+ years in revenue operations</p>
-        </div>
-        <div class="trust-cred-item">
-          <p class="trust-cred-label">Methodology</p>
-          <p class="trust-cred-val">AI Precision Architecture™</p>
-        </div>
-        <div class="trust-cred-item">
-          <p class="trust-cred-label">Built for</p>
-          <p class="trust-cred-val">10–50 person operations</p>
-        </div>
-        <div class="trust-cred-item">
-          <p class="trust-cred-label">Focus</p>
-          <p class="trust-cred-val">AI strategy for operators</p>
-        </div>
+        <div class="trust-cred-item"><p class="trust-cred-label">Experience</p><p class="trust-cred-val">15+ years in revenue operations</p></div>
+        <div class="trust-cred-item"><p class="trust-cred-label">Methodology</p><p class="trust-cred-val">AI Precision Architecture™</p></div>
+        <div class="trust-cred-item"><p class="trust-cred-label">Built for</p><p class="trust-cred-val">10–50 person operations</p></div>
+        <div class="trust-cred-item"><p class="trust-cred-label">Focus</p><p class="trust-cred-val">AI strategy for operators</p></div>
       </div>
     </div>
   </div>
@@ -1159,7 +571,6 @@ footer {
 
 <div class="rule-h"></div>
 
-<!-- ── NEWSLETTER ── -->
 <section class="newsletter" id="newsletter">
   <p class="sec-label">Free Weekly Intel</p>
   <div class="nl-grid">
@@ -1168,30 +579,17 @@ footer {
       <p class="nl-sub-label">Weekly AI Intelligence for Operators</p>
       <p class="nl-desc">The weekly AI intelligence brief for SMB operators who are done guessing which tools matter, which are hype, and what to actually do Monday morning. No noise. Just the move.</p>
       <div class="nl-meta">
-        <div class="nl-meta-item">
-          <p class="nl-meta-label">Cadence</p>
-          <p class="nl-meta-val">Every Tuesday</p>
-        </div>
-        <div class="nl-meta-item">
-          <p class="nl-meta-label">Read time</p>
-          <p class="nl-meta-val">4 minutes</p>
-        </div>
-        <div class="nl-meta-item">
-          <p class="nl-meta-label">Premium</p>
-          <p class="nl-meta-val">$35 / month</p>
-        </div>
+        <div><p class="nl-meta-label">Cadence</p><p class="nl-meta-val">Every Tuesday</p></div>
+        <div><p class="nl-meta-label">Read time</p><p class="nl-meta-val">4 minutes</p></div>
+        <div><p class="nl-meta-label">Premium</p><p class="nl-meta-val">$35 / month</p></div>
       </div>
       <div class="nl-form">
         <input class="nl-input" type="email" placeholder="your@email.com" aria-label="Email address"/>
         <button class="nl-submit">Subscribe to Clear Line →</button>
       </div>
     </div>
-
     <div class="nl-preview">
-      <div class="nl-preview-header">
-        <span class="nl-preview-name">Clear Line</span>
-        <span class="nl-preview-tag">Weekly intel for operators</span>
-      </div>
+      <div class="nl-preview-header"><span class="nl-preview-name">Clear Line</span><span class="nl-preview-tag">Weekly intel for operators</span></div>
       <div class="nl-preview-body">
         <p class="nl-preview-issue">Issue 001</p>
         <p class="nl-preview-hook">Stop staring at the noise. Start seeing the move.</p>
@@ -1204,39 +602,31 @@ footer {
 
 <div class="rule-h"></div>
 
-<!-- ── FINAL CTA ── -->
 <section class="final-cta" id="cta">
   <div class="final-top-rule"></div>
   <svg class="final-bg-svg" viewBox="0 0 1200 600" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
-    <path d="M 100 500 C 200 400, 350 300, 500 250 C 650 200, 750 180, 900 120 C 1000 80, 1100 60, 1200 40"
-      stroke="white" stroke-width="1" fill="none"/>
+    <path d="M 100 500 C 200 400, 350 300, 500 250 C 650 200, 750 180, 900 120 C 1000 80, 1100 60, 1200 40" stroke="white" stroke-width="1" fill="none"/>
     <circle cx="1200" cy="40" r="12" stroke="white" stroke-width="1" fill="none"/>
     <circle cx="1200" cy="40" r="4" fill="white"/>
   </svg>
   <p class="final-eyebrow">Ready to See the Line?</p>
   <h2 class="final-h2">Let's draw <em>the line.</em></h2>
-  <p class="final-sub">Three ways to engage. One diagnostic framework. Start with the report or go straight to the executive review — either way, the line gets drawn.</p>
-  <a href="#" class="btn-primary" style="display:inline-flex;">
+  <p class="final-sub">Three ways to engage. One diagnostic framework. To get started, email us and we'll take it from there.</p>
+  <a href="mailto:hello@sightlineai.tech?subject=I%27m%20interested%20in%20the%20Sightline%20Audit&body=Hi%20Janae%2C%0A%0AI%27d%20like%20to%20learn%20more%20about%20the%20Sightline%20Audit.%0A%0AA%20bit%20about%20my%20business%3A%0A" class="btn-primary" style="display:inline-flex;">
     Book the Sightline Audit
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
+  <p style="font-size:14px; color:var(--gray); margin-top:28px; position:relative;">Or email us directly at<br><a href="mailto:hello@sightlineai.tech" style="color:#fff; font-weight:500; font-size:18px; text-decoration:none; letter-spacing:.3px;">hello@sightlineai.tech</a></p>
   <p class="final-promise">We find the line. You make the move.</p>
 </section>
 
-<!-- ── FOOTER ── -->
 <footer>
-  <div class="footer-logo">
-    <span class="footer-logo-word">Sightline</span>
-    <span class="footer-logo-ai">AI</span>
-  </div>
+  <div class="footer-logo"><span class="footer-logo-word">Sightline</span><span class="footer-logo-ai">AI</span></div>
   <div class="footer-links">
     <a href="#audit">The Audit</a>
     <a href="#process">Process</a>
     <a href="#newsletter">Clear Line</a>
     <a href="#about">About</a>
-    <a href="#">Privacy</a>
   </div>
   <div class="footer-right">
     <p class="footer-copy">© 2026 Sightline AI. All rights reserved.</p>
