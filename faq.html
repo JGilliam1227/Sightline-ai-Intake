@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FAQ — Sightline AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root { --blackout:#0A0A0A; --deep-surface:#1E1E1E; --red:#CC2200; --bone:#F5F4F0; --gray:#888780; --rule:rgba(245,244,240,.08); }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--blackout);color:var(--bone);-webkit-font-smoothing:antialiased;line-height:1.7;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(10,10,10,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--rule);}
+.nav-logo{display:flex;flex-direction:column;gap:1px;text-decoration:none;line-height:1;}
+.nav-logo-word{font-size:13px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--bone);}
+.nav-logo-ai{font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--red);}
+.nav-back{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--bone);}
+.wrap{max-width:760px;margin:0 auto;padding:140px 48px 100px;}
+.page-label{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+.page-label::before{content:'';width:24px;height:1px;background:var(--red);}
+h1{font-size:clamp(32px,4vw,48px);font-weight:500;letter-spacing:-1px;line-height:1.1;color:#fff;margin-bottom:16px;}
+.intro{font-size:15px;font-weight:300;color:var(--gray);margin-bottom:48px;max-width:560px;}
+.faq-item{border-top:1px solid var(--rule);padding:32px 0;}
+.faq-item:last-of-type{border-bottom:1px solid var(--rule);}
+.faq-q{font-size:18px;font-weight:500;color:#fff;margin-bottom:12px;letter-spacing:-.3px;display:flex;gap:14px;align-items:flex-start;}
+.faq-q-num{color:var(--red);font-size:12px;font-weight:500;letter-spacing:.1em;margin-top:5px;min-width:24px;}
+.faq-a{font-size:15px;font-weight:300;color:var(--gray);padding-left:38px;}
+.faq-a strong{color:var(--bone);font-weight:500;}
+.faq-a a{color:var(--red);text-decoration:none;}
+.faq-a a:hover{text-decoration:underline;}
+.cta-strip{background:var(--deep-surface);border-left:2px solid var(--red);padding:36px 40px;margin-top:56px;}
+.cta-strip-text{font-size:17px;font-weight:500;color:var(--bone);letter-spacing:-.3px;margin-bottom:8px;}
+.cta-strip-sub{font-size:14px;font-weight:300;color:var(--gray);}
+.cta-strip-sub a{color:var(--red);text-decoration:none;font-weight:500;}
+footer{background:var(--deep-surface);padding:40px 48px;border-top:1px solid var(--rule);text-align:center;}
+.footer-logo-word{font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--bone);}
+.footer-logo-ai{font-size:8px;letter-spacing:.26em;text-transform:uppercase;color:var(--red);}
+.footer-copy{font-size:11px;color:rgba(136,135,128,.5);margin-top:12px;}
+.footer-links{margin-top:16px;}
+.footer-links a{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray);text-decoration:none;margin:0 12px;}
+.footer-links a:hover{color:var(--bone);}
+@media(max-width:600px){nav{padding:0 24px;}.wrap{padding:120px 24px 80px;}.faq-a{padding-left:0;}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html" aria-label="Sightline AI home">
+    <span class="nav-logo-word">Sightline</span><span class="nav-logo-ai">AI</span>
+  </a>
+  <a href="index.html" class="nav-back">← Back to site</a>
+</nav>
+
+<div class="wrap">
+  <p class="page-label">FAQ</p>
+  <h1>Questions, answered.</h1>
+  <p class="intro">The things operators ask before they engage. If your question isn't here, just email us — we'll answer honestly.</p>
+
+  <div class="faq-item">
+    <div class="faq-q"><span class="faq-q-num">01</span><span>What exactly is the Sightline Audit?</span></div>
+    <p class="faq-a">It's a diagnostic. We identify the single operational constraint most responsible for limiting your growth, quantify what it's costing you, and map exactly where AI creates real leverage in your business. You get a clear, written deliverable — not a tool pitch, not a generic framework.</p>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q"><span class="faq-q-num">02</span><span>How much does it cost?</span></div>
+    <p class="faq-a">There are three ways to engage. <strong>Tier 1 (Sightline Report)</strong> is the fully automated diagnostic. <strong>Tier 2 (Executive Review)</strong> adds human-reviewed findings and a live 90-minute session. <strong>Tier 3 (Sightline Architecture)</strong> is a custom strategic engagement, priced after a discovery conversation. Email us for current pricing on the tier that fits.</p>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q"><span class="faq-q-num">03</span><span>How long does it take?</span></div>
+    <p class="faq-a">The Tier 1 report is delivered in <strong>24 hours</strong>. The Tier 2 executive review is delivered in <strong>72 hours</strong>, including the live session. We don't need months to find your line.</p>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q"><span class="faq-q-num">04</span><span>Who is this for?</span></div>
+    <p class="faq-a">Operators running <strong>10–50 person businesses</strong> with real revenue, who make the decisions. It works whether you've never touched AI or you've got tools scattered everywhere with no strategy connecting them. It's <strong>not</strong> built for enterprises needing procurement and committee sign-off, or for solo operators with no team yet.</p>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q"><span class="faq-q-num">05</span><span>What if AI isn't actually the answer for my business?</span></div>
+    <p class="faq-a">Then we tell you that — plainly. We're not here to sell you AI. If the real leverage is somewhere else, we name the gap honestly and point you toward who can help. Our job is clarity, not selling you tools you don't need.</p>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q"><span class="faq-q-num">06</span><span>Do I have to buy anything or install tools?</span></div>
+    <p class="faq-a">No. The audit is a diagnostic and a plan — you own it completely. There's no software to install, no retainer required, and no obligation to implement anything a particular way. What you do with the plan is entirely up to you.</p>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q"><span class="faq-q-num">07</span><span>How do I get started?</span></div>
+    <p class="faq-a">Email us at <a href="mailto:hello@sightlineai.tech">hello@sightlineai.tech</a> and tell us a bit about your business. We'll take it from there and walk you through the right starting point.</p>
+  </div>
+
+  <div class="cta-strip">
+    <p class="cta-strip-text">Still have a question?</p>
+    <p class="cta-strip-sub">Email <a href="mailto:hello@sightlineai.tech">hello@sightlineai.tech</a> — we answer honestly, and we won't pitch you.</p>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-logo-word">Sightline</span> <span class="footer-logo-ai">AI</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="mailto:hello@sightlineai.tech">Contact</a>
+  </div>
+  <p class="footer-copy">© 2026 Sightline AI. All rights reserved.</p>
+</footer>
+</body>
+</html>
