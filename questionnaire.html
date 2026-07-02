@@ -208,7 +208,7 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--paper); co
 
     <p class="sb-progress-label">Your progress</p>
     <p class="sb-progress-pct" id="sb-pct">8%</p>
-    <p class="sb-progress-time" id="sb-time">4 of 50 minutes</p>
+    <p class="sb-progress-time" id="sb-time">4 of 60 minutes</p>
     <div class="sb-progress-track"><div class="sb-progress-fill" id="sb-progress-fill"></div></div>
 
     <nav class="sb-nav" id="sb-nav"></nav>
@@ -236,7 +236,7 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--paper); co
       <div class="full-screen-inner">
         <p class="mh-eyebrow" style="text-align:center;">The Sightline Audit™</p>
         <h2 class="serif">Constraint Intelligence Questionnaire</h2>
-        <p>A 72-hour AI clarity assessment built for your business. Not a template. This takes about 25–35 minutes across 11 short sections — you'll always know where you are, and you can save and return anytime.</p>
+        <p>A 72-hour AI clarity assessment built for your business. Not a template. This takes about 30–40 minutes across 13 short sections — you'll always know where you are, and you can save and return anytime.</p>
         <button class="btn-continue" id="start-btn" style="margin:0 auto;">
           Begin the diagnostic
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -269,7 +269,7 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--paper); co
       <div class="info-row">
         <div class="info-item">
           <svg class="info-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-          <div><p class="info-label">Estimated time</p><p class="info-val">25–35 minutes</p></div>
+          <div><p class="info-label">Estimated time</p><p class="info-val">30–40 minutes</p></div>
         </div>
         <div class="info-item">
           <svg class="info-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="8" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="8" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>
@@ -322,6 +322,14 @@ const REVENUE_OPTIONS = ["Under $1M","$1M–$3M","$3M–$5M","$5M–$10M","$10M�
 const EMPLOYEE_OPTIONS = ["1–10","11–25","26–50","51–100","101–250","250+"];
 const PCT_OPTIONS = ["Less than 10%","10-25%","25-50%","50-75%","More than 75%"];
 const CHANGE_OPTIONS = ["Immediately","Within 30 Days","Within 90 Days","Within 6 Months","Unsure"];
+const MARGIN_OPTIONS = ["Under 10%","10–20%","20–35%","35–50%","Over 50%","Not sure"];
+const SALESTEAM_OPTIONS = ["1–2","3–5","6–10","11–20","20+"];
+const WINRATE_OPTIONS = ["Under 10%","10–25%","25–40%","40–60%","Over 60%","We don't track this"];
+const DEALSIZE_OPTIONS = ["Under $1K","$1K–$10K","$10K–$50K","$50K–$250K","$250K+","Varies significantly"];
+const PIPELINE_OPTIONS = ["Under 10","10–50","50–200","200–500","500+","No visibility into this"];
+const CYCLE_OPTIONS = ["Days","2–4 weeks","1–3 months","3–6 months","6+ months","Varies significantly"];
+const SALESCOST_OPTIONS = ["Under $250K","$250K–$500K","$500K–$1M","$1M–$2.5M","$2.5M–$5M","Over $5M","Not sure"];
+const CEILING_OPTIONS = ["Customer service / order processing","Fulfillment / shipping","Finance / billing","Production / manufacturing","Technology / IT","More than one","Unsure"];
 const TREND_OPTIONS = ["Increased","Decreased","Remained flat"];
 
 const sections = [
@@ -343,6 +351,18 @@ const sections = [
     { id:"q13", label:"Approximately what percentage of revenue depends on one individual?", help:"Your best estimate is fine.", type:"grid", options:PCT_OPTIONS },
     { id:"q14", label:"If revenue doubled tomorrow, what breaks first?", type:"textarea" },
     { id:"q15", label:"What opportunity do you believe you're currently missing?", type:"textarea" },
+  ]},
+  { name: "Financial Intelligence", desc: "These questions are the difference between a diagnosis and a diagnosis with a dollar figure attached. You don't have to be precise — directional answers work. But the more specific you are here, the more precisely we can quantify what your constraint is costing you. Every number stays confidential and directly shapes your Revenue Leakage Analysis™.", fields: [
+    { id:"qf1", label:"What is your approximate gross margin?", help:"Required. Without margin, we can't convert lost revenue into lost profit — a missed deal means something very different at 12% vs. 45%.", type:"grid", options:MARGIN_OPTIONS },
+    { id:"qf2", label:"How many people are currently in a sales or business-development role?", help:"Required. This lets us calculate revenue-per-rep and pinpoint whether the constraint is capacity or productivity.", type:"grid", options:SALESTEAM_OPTIONS },
+    { id:"qf3", label:"What was your sales team's revenue target last year — and what did they actually achieve?", help:"Required. The gap between target and actual is the most direct measure of what your constraint costs. Directional is fine (e.g. 'target ~$80M, hit ~$67M' or 'about 85% of goal').", type:"textarea" },
+    { id:"qf4", label:"Of the opportunities your sales team pursues, approximately what percentage do you win?", help:"Required. Win rate plus deal volume tells us the revenue recoverable if the constraint is removed. 'We don't track this' is itself a finding.", type:"grid", options:WINRATE_OPTIONS },
+    { id:"qf5", label:"What is the approximate average value of a sale, deal, or order?", help:"Required. Combined with win rate, this lets us calculate what a single point of conversion improvement is worth per year.", type:"grid", options:DEALSIZE_OPTIONS },
+    { id:"qf6", label:"At any given time, approximately how many active opportunities or prospects is your team working?", help:"Required. Pipeline size × win rate × deal value = the revenue at stake. 'No visibility' is a constraint worth naming.", type:"grid", options:PIPELINE_OPTIONS },
+    { id:"qf7", label:"From first contact to closed deal, approximately how long is your typical sales cycle?", help:"Required. Longer cycles amplify the cost of every bottleneck — a 6-month cycle with a follow-up gap is a different problem than a 2-week one.", type:"grid", options:CYCLE_OPTIONS },
+    { id:"qf8", label:"Approximately what does your sales team cost per year — total comp, including commission, benefits, and management?", help:"Required. Even a rough range is enough, and it stays confidential. Revenue-per-dollar-of-sales-cost is the cleanest measure of what the constraint is really costing.", type:"grid", options:SALESCOST_OPTIONS },
+    { id:"qf9", label:"Which function would most likely break if your volume increased 50% in the next 12 months — and roughly how many people run it today?", help:"Required. Name the function below, then tell us the headcount in the box. This is the capacity-ceiling question — it lets us model exactly what automation or hiring would need to look like.", type:"grid", options:CEILING_OPTIONS },
+    { id:"qf9b", label:"How many people currently run that function?", help:"Just a rough number is fine — e.g. '2 people' or 'a team of 5'.", type:"text", placeholder:"e.g. 2 people" },
   ]},
   { name: "Customer Signals", desc: "Constraints often show up with customers before leadership names them. Be candid here.", fields: [
     { id:"q16", label:"What do customers complain about most often?", type:"textarea" },
@@ -370,14 +390,20 @@ const sections = [
     { id:"q30", label:"What metrics are currently difficult to access?", type:"textarea" },
     { id:"q31", label:"Where are decisions made with incomplete information?", type:"textarea" },
   ]},
-  { name: "Technology & AI", desc: "What's in place today, what's been tried, and where AI may help.", fields: [
-    { id:"q32", label:"What software tools do you currently use?", type:"textarea" },
+  { name: "Technology & AI", desc: "What's in place today, what's been tried, and where AI may help. Be specific here — the exact tools you name shape every recommendation we make.", fields: [
+    { id:"qt1", label:"Name the specific systems you run — by product name.", help:"Required. Please name the actual products, not categories. For example: ERP / financials (e.g. Sage 100, NetSuite, QuickBooks), order entry, field sales / mobile (e.g. Simply Depo), warehouse / WMS, and CRM. This one question prevents us from building recommendations on the wrong software.", type:"textarea", placeholder:"ERP/financials: …   Order entry: …   Field sales/mobile: …   Warehouse/WMS: …   CRM: …" },
+    { id:"q32", label:"What other software tools do you currently use?", type:"textarea" },
     { id:"q33", label:"What have you attempted to automate?", type:"textarea" },
     { id:"q34", label:"What failed?", type:"textarea" },
     { id:"q35", label:"What work is still highly manual?", type:"textarea" },
     { id:"q36", label:"Where does duplicate work occur?", type:"textarea" },
     { id:"q37", label:"What information do people regularly ask for that should be easy to access?", type:"textarea" },
     { id:"q38", label:"What is your team's attitude toward AI and automation?", type:"textarea" },
+  ]},
+  { name: "What You've Already Built", desc: "Most of this assessment asks what's broken. This short section asks the opposite — what already works. Companies often have strong systems, playbooks, or processes in place that simply aren't enforced or fully used. Naming them here keeps us from recommending you build something you already have.", fields: [
+    { id:"qb1", label:"What systems, processes, or playbooks have you already built that work well?", help:"Required. Sales playbooks, SOPs, onboarding programs, pricing frameworks, quality systems — anything documented and working. Be specific.", type:"textarea", placeholder:"e.g. a documented multi-stage sales process, onboarding plan, objection-handling framework, AR/credit rules…" },
+    { id:"qb2", label:"Of what you just named, what exists but isn't consistently followed or enforced?", help:"Required. This is one of the most revealing questions in the assessment — the gap between what you've built and what actually gets used is often where the real constraint lives.", type:"textarea" },
+    { id:"qb3", label:"What operating framework or methodology does your business run on, if any?", help:"Optional. For example: EOS/Traction, Scaling Up, Lean, or your own internal system. Helps us align recommendations with how you already operate.", type:"textarea" },
   ]},
   { name: "Strategic Priorities & Risk", desc: "What does leadership believe matters most — and what's the exposure if it doesn't happen?", fields: [
     { id:"q39", label:"What are your top three priorities for the next 12 months?", type:"textarea" },
@@ -437,21 +463,26 @@ sections.forEach((section, sIdx) => {
     head.innerHTML = `<span class="field-num">${qCounter}.</span><div><div class="field-title">${f.label}</div>${f.help ? `<div class="field-help">${f.help}</div>` : ''}</div>`;
     field.appendChild(head);
 
+    // Readable name for Formspree submissions: "Q## — question text" (truncated).
+    // This is what shows up in the inbox, so it must be human-readable, not a code like "qf3".
+    const shortLabel = f.label.length > 90 ? f.label.slice(0, 87) + '…' : f.label;
+    const submitName = `Q${qCounter} — ${shortLabel}`;
+
     if (f.type === 'text') {
       const input = document.createElement('input');
-      input.type = 'text'; input.className = 'field-input'; input.name = f.id; input.id = f.id;
+      input.type = 'text'; input.className = 'field-input'; input.name = submitName; input.id = f.id;
       if (f.placeholder) input.placeholder = f.placeholder;
       field.appendChild(input);
     } else if (f.type === 'textarea') {
       const ta = document.createElement('textarea');
-      ta.className = 'field-textarea'; ta.name = f.id; ta.id = f.id;
+      ta.className = 'field-textarea'; ta.name = submitName; ta.id = f.id;
       field.appendChild(ta);
     } else if (f.type === 'currency') {
       const wrap = document.createElement('div');
       wrap.className = 'currency-wrap';
       wrap.innerHTML = `<span class="currency-sign">$</span>`;
       const input = document.createElement('input');
-      input.type = 'text'; input.className = 'field-input'; input.name = f.id; input.id = f.id;
+      input.type = 'text'; input.className = 'field-input'; input.name = submitName; input.id = f.id;
       input.placeholder = '0';
       wrap.appendChild(input);
       field.appendChild(wrap);
@@ -462,7 +493,7 @@ sections.forEach((section, sIdx) => {
         const wrap = document.createElement('div');
         wrap.className = 'grid-option';
         const inp = document.createElement('input');
-        inp.type = 'radio'; inp.name = f.id; inp.id = f.id + '_' + i; inp.value = o;
+        inp.type = 'radio'; inp.name = submitName; inp.id = f.id + '_' + i; inp.value = o;
         const lab = document.createElement('label');
         lab.setAttribute('for', f.id + '_' + i);
         lab.textContent = o;
@@ -479,14 +510,14 @@ sections.forEach((section, sIdx) => {
         const lab = document.createElement('label');
         lab.textContent = r;
         const inp = document.createElement('input');
-        inp.type = 'text'; inp.className = 'field-input'; inp.name = f.id + '_rank' + (i+1);
+        inp.type = 'text'; inp.className = 'field-input'; inp.name = `Q${qCounter} — ${r}`;
         inp.placeholder = 'Issue';
         item.appendChild(lab); item.appendChild(inp);
         grid.appendChild(item);
       });
       field.appendChild(grid);
       const why = document.createElement('textarea');
-      why.className = 'field-textarea'; why.name = f.id + '_why';
+      why.className = 'field-textarea'; why.name = `Q${qCounter} — Why these three, in this order`;
       why.placeholder = 'Why these three, in this order?';
       why.style.marginTop = '10px';
       field.appendChild(why);
@@ -507,7 +538,7 @@ function render() {
   });
   const pct = Math.round(((currentStep+1)/total)*100);
   document.getElementById('sb-pct').textContent = pct + '%';
-  document.getElementById('sb-time').textContent = Math.round(((currentStep+1)/total)*35) + ' of 35 minutes';
+  document.getElementById('sb-time').textContent = Math.round(((currentStep+1)/total)*40) + ' of 40 minutes';
   document.getElementById('sb-progress-fill').style.width = pct + '%';
   document.getElementById('back-btn').disabled = currentStep === 0;
 
