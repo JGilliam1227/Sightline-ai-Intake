@@ -40,7 +40,7 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--paper); co
 .sb-progress-pct { font-size: 36px; font-weight: 500; letter-spacing: -1px; color: #fff; margin-bottom: 4px; }
 .sb-progress-time { font-size: 11px; color: var(--sidebar-muted); margin-bottom: 14px; }
 .sb-progress-track { height: 3px; background: rgba(245,244,240,.1); margin-bottom: 32px; }
-.sb-progress-fill { height: 100%; background: var(--red); width: 8%; transition: width .3s ease; }
+.sb-progress-fill { height: 100%; background: var(--red); width: 0%; transition: width .3s ease; }
 
 .sb-nav { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; margin: 0 -8px; padding: 0 8px; }
 .sb-item {
@@ -207,8 +207,8 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--paper); co
     </div>
 
     <p class="sb-progress-label">Your progress</p>
-    <p class="sb-progress-pct" id="sb-pct">8%</p>
-    <p class="sb-progress-time" id="sb-time">4 of 60 minutes</p>
+    <p class="sb-progress-pct" id="sb-pct">0%</p>
+    <p class="sb-progress-time" id="sb-time">0 of 40 minutes</p>
     <div class="sb-progress-track"><div class="sb-progress-fill" id="sb-progress-fill"></div></div>
 
     <nav class="sb-nav" id="sb-nav"></nav>
@@ -536,9 +536,9 @@ function render() {
     s.classList.toggle('active', i === currentStep);
     s.classList.toggle('done', i < currentStep);
   });
-  const pct = Math.round(((currentStep+1)/total)*100);
+  const pct = Math.round((currentStep/total)*100);
   document.getElementById('sb-pct').textContent = pct + '%';
-  document.getElementById('sb-time').textContent = Math.round(((currentStep+1)/total)*40) + ' of 40 minutes';
+  document.getElementById('sb-time').textContent = Math.round((currentStep/total)*40) + ' of 40 minutes';
   document.getElementById('sb-progress-fill').style.width = pct + '%';
   document.getElementById('back-btn').disabled = currentStep === 0;
 
